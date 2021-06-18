@@ -9,7 +9,7 @@ namespace GameBerry
         private int m_spawnMaxCount = 8;
         private float m_monsterPosGab = 1.0f;
         
-        private int m_maxMonsterWave = 10;
+        private int m_maxMonsterWave = 3;
         private int m_currentWave = 0;
 
         //------------------------------------------------------------------------------------

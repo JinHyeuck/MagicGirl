@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5768094906273400901}
   - component: {fileID: 5768094906273400922}
-  m_Layer: 6
+  - component: {fileID: 4585139739647544121}
+  m_Layer: 8
   m_Name: DunjeonBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -82,3 +83,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!114 &4585139739647544121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5768094906273400923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbc2d207b4a6b8a4b83baf6dad499253, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_spriteRenderer: {fileID: 5768094906273400922}
+  m_addXSize: 10

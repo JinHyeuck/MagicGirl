@@ -221,7 +221,7 @@ public class AppInitializeUI : MonoBehaviour
             m_nickNameCallBack(m_nickNameInputField.text);
     }
     //------------------------------------------------------------------------------------
-    public void VisiblePatchzProcess()
+    public void VisiblePatchProcess()
     {
 
     }

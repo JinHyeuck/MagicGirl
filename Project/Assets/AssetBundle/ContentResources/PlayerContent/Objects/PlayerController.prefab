@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 543574845013356952}
   - component: {fileID: 543574845013356953}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3c6180eed8a71f42ba4808cc7726d6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_playerAnimator: {fileID: 543574846982529053}
+  m_playerAnimator: {fileID: 7112187828392389601}
 --- !u!1 &543574846982529040
 GameObject:
   m_ObjectHideFlags: 0
@@ -54,7 +54,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 543574846982529054}
-  - component: {fileID: 543574846982529053}
+  - component: {fileID: 7112187828392389601}
   - component: {fileID: 543574846982529055}
   m_Layer: 6
   m_Name: Character
@@ -77,7 +77,7 @@ Transform:
   m_Father: {fileID: 543574845013356952}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &543574846982529053
+--- !u!95 &7112187828392389601
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0

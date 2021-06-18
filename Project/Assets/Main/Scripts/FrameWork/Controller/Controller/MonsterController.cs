@@ -37,17 +37,14 @@ namespace GameBerry
         public bool IsDead { get { return m_currentState == MonsterState.Dead; } }
 
         // Dead
-        private float m_releaseWaitTime = 0.5f;
+        private float m_releaseWaitTime = 1.0f;
         private float m_monsterDeadTime = 0.0f;
 
         // Attack
         private bool m_readyPlayerAttack = false;
-        private float m_attackRange = 1.0f;
+        private float m_attackRange = 2.0f;
 
-        private float m_attackWaitStartTime = 0.0f;
-        private float m_attackWaitTime = 0.5f;
-
-        private float m_attackRecoveryStartTime = 0.0f;
+        private float m_attackWaitTime = 0.3f; 
         private float m_attackRecoveryTime = 2.0f;
 
         // Hit
@@ -63,6 +60,8 @@ namespace GameBerry
             if (m_attackScript == null)
                 m_attackScript = new Action_Attack();
 
+            m_attackScript.SetAttackWaitTime(m_attackWaitTime);
+            m_attackScript.SetAttackRecovery(m_attackRecoveryTime);
             m_attackScript.ConnectAttackCallBack(OnAttack);
             m_attackScript.ConnectFinishCallBack(OnEndAttack);
         }
@@ -74,7 +73,7 @@ namespace GameBerry
             if (m_monsterRenderer != null)
                 m_monsterRenderer.sprite = Managers.MonsterManager.Instance.GetMonsterSprite(data.MonsterImageName);
 
-            m_monsterMaxHp = m_myMonsterData.HP;
+            m_monsterMaxHp = m_myMonsterData.HP * 2;
             m_monsterCurrentHp = m_monsterMaxHp;
             m_monsterDamage = m_myMonsterData.Damage;
         }
@@ -85,6 +84,9 @@ namespace GameBerry
             Color color = m_monsterRenderer.color;
             color.a = 1.0f;
             m_monsterRenderer.color = color;
+
+            m_monsterRenderer.transform.localEulerAngles = Vector3.zero;
+
             ReadyPlayerAttack(false);
             ChangeState(MonsterState.Idle);
         }
@@ -132,7 +134,7 @@ namespace GameBerry
                     if (m_releaseWaitTime > 0.0f)
                     {
                         Color color = m_monsterRenderer.color;
-                        color.a = (m_monsterDeadTime - Time.time) / m_releaseWaitTime;
+                        color.a = (m_releaseWaitTime - (Time.time - m_monsterDeadTime)) / m_releaseWaitTime;
                         m_monsterRenderer.color = color;
                     }
                 }
@@ -142,7 +144,7 @@ namespace GameBerry
         public void OnDamage(int damage)
         {
             m_monsterCurrentHp -= damage;
-
+            Debug.Log(string.Format("몬스터 맞음 데미지 {0}, CurrentHP {1}, MaxHP {2}", damage, m_monsterCurrentHp, m_monsterMaxHp));
             if (m_monsterCurrentHp <= 0)
             {
                 ChangeState(MonsterState.Dead);
@@ -187,9 +189,10 @@ namespace GameBerry
         //------------------------------------------------------------------------------------
         private void ChangeState(MonsterState state)
         {
-            m_currentState = state;
+            if (m_currentState == state)
+                return;
 
-            Debug.LogWarning(state);
+            m_currentState = state;
 
             switch (state)
             {
@@ -216,6 +219,7 @@ namespace GameBerry
                     {
                         PlayAnimation(Define.AniTrigger_Dead);
                         Managers.MonsterManager.Instance.DeadMonster(m_spawnID);
+                        m_monsterDeadTime = Time.time;
                         break;
                     }
                 default:
@@ -230,8 +234,7 @@ namespace GameBerry
         {
             if (m_monsterAnimator != null)
             {
-                //m_monsterAnimator.ResetTrigger(trigger);
-                m_monsterAnimator.SetTrigger(trigger);
+                m_monsterAnimator.Play(trigger);
             }
         }
         //------------------------------------------------------------------------------------

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 750104556290695487}
   - component: {fileID: 750104556290695484}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Monster0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 750104556747606672}
   - component: {fileID: 750104556747606673}
   - component: {fileID: 7774413907813476644}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Monster
   m_TagString: Untagged
   m_Icon: {fileID: 0}

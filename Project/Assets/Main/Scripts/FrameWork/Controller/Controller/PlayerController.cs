@@ -23,24 +23,42 @@ namespace GameBerry
 
         private float m_attackRange = 2.0f;
 
-        private int m_maxHP = 0;
+        private int m_maxHP = 1000;
         private int m_currentHP = 0;
 
         private int m_maxMP = 0;
-        private int m_currentMP = 0;
+        private int m_currentMP = 100;
+
+        private float m_moveSpeed = 2.0f;
+
+        private float m_attackWaitTime = 0.3f;
+        private float m_attackRecoveryTime = 0.5f;
 
         private PlayerState m_characterState = PlayerState.None;
 
         private Action_Attack m_attackScript = new Action_Attack();
+
+        // Hit
+        private float m_hitRecoveryStartTime = 0.0f;
+        private float m_hitRecoveryTime = 1.0f;
+
+        private Vector3 m_originPos = Vector3.one;
+
+        public UnityEngine.UI.Text TestText;
 
         //------------------------------------------------------------------------------------
         public void Init()
         {
             if (m_attackScript == null)
                 m_attackScript = new Action_Attack();
-
+                
+            m_attackScript.SetAttackWaitTime(m_attackWaitTime);
+            m_attackScript.SetAttackRecovery(m_attackRecoveryTime);
             m_attackScript.ConnectAttackCallBack(OnAttack);
             m_attackScript.ConnectFinishCallBack(OnEndAttack);
+            m_currentHP = m_maxHP;
+
+            m_originPos = transform.position;
         }
         //------------------------------------------------------------------------------------
         public void StartHunting()
@@ -50,6 +68,7 @@ namespace GameBerry
         //------------------------------------------------------------------------------------
         public void ResetPlayer()
         { // 주로 다른던전에 들어갈 때 직후나 던전 리트라이를 할 때 한다.
+            transform.position = m_originPos;
             ChangeState(PlayerState.Idle);
         }
         //------------------------------------------------------------------------------------
@@ -61,6 +80,8 @@ namespace GameBerry
         public void OnDamage(int damage)
         {
             m_currentHP -= damage;
+            Debug.Log(string.Format("플레이어 맞음 데미지 {0}, CurrentHP {1}, MaxHP {2}", damage, m_currentHP, m_maxHP));
+
             if (m_currentHP <= 0)
             { 
                 m_currentHP = 0;
@@ -74,21 +95,58 @@ namespace GameBerry
         {
             SelectState();
 
-            if (m_characterState == PlayerState.Attack)
+            switch (m_characterState)
             {
-                m_attackScript.Updated();
+                case PlayerState.Run:
+                    {
+                        Vector3 pos = transform.position;
+                        pos.x += m_moveSpeed * Time.deltaTime;
+                        transform.position = pos;
+                        break;
+                    }
+                case PlayerState.Attack:
+                    {
+                        if (m_attackScript != null)
+                            m_attackScript.Updated();
+                        break;
+                    }
+                case PlayerState.Hit:
+                    {
+
+                        break;
+                    }
+                case PlayerState.Dead:
+                    {
+                        break;
+                    }
+                case PlayerState.None:
+                    {
+                        break;
+                    }
             }
+
         }
         //------------------------------------------------------------------------------------
         private void SelectState()
         {
-            if (m_characterState == PlayerState.None)
+            if (m_characterState == PlayerState.None || m_characterState == PlayerState.Dead)
                 return;
+
+            if (m_characterState == PlayerState.Hit)
+            {
+                if (Time.time > m_hitRecoveryStartTime + m_hitRecoveryTime)
+                {
+                    ChangeState(PlayerState.Idle);
+                    return;
+                }
+                else
+                    return;
+            }
 
             if (Managers.MonsterManager.Instance.GetForeFrontMonster() != null)
             {
                 if (m_nextAttackSkill == null)
-                    Managers.SkillManager.Instance.GetNextSkill(m_currentMP);
+                    m_nextAttackSkill = Managers.SkillManager.Instance.GetNextSkill(m_currentMP);
 
                 if (m_nextAttackSkill != null)
                 {
@@ -107,17 +165,17 @@ namespace GameBerry
                     }
                 }
             }
-
-            
         }
         //------------------------------------------------------------------------------------
         private void OnAttack()
         {
+            Debug.LogWarning("OnAttack---------------------");
             UseSkill(m_nextAttackSkill);
         }
         //------------------------------------------------------------------------------------
         private void OnEndAttack()
         {
+            Debug.LogWarning("OnEndAttack---------------------");
             ChangeState(PlayerState.Run);
         }
         //------------------------------------------------------------------------------------
@@ -128,32 +186,58 @@ namespace GameBerry
         //------------------------------------------------------------------------------------
         private void ChangeState(PlayerState characterState)
         {
+            if (m_characterState == characterState)
+                return;
+
             m_characterState = characterState;
 
-            switch (characterState)
+            if (TestText != null)
+                TestText.text = characterState.ToString();
+
+            Debug.LogWarning("CharacterState : " + m_characterState);
+
+            switch (m_characterState)
             {
                 case PlayerState.Idle:
                     {
+                        PlayAnimation(Define.AniTrigger_Idle);
                         break;
                     }
                 case PlayerState.Run:
                     {
+                        PlayAnimation(Define.AniTrigger_Run);
                         break;
                     }
                 case PlayerState.Attack:
                     {
+                        Debug.LogError("----------" + characterState);
+                        PlayAnimation(Define.AniTrigger_Attack);
                         if (m_attackScript != null)
                             m_attackScript.PlayAttack();
                         break;
                     }
                 case PlayerState.Hit:
                     {
+                        Debug.LogError("----------" + characterState);
+                        PlayAnimation(Define.AniTrigger_Hit);
+                        m_hitRecoveryStartTime = Time.time;
+                        if (m_attackScript != null)
+                            m_attackScript.Release();
                         break;
                     }
                 case PlayerState.Dead:
                     {
+                        PlayAnimation(Define.AniTrigger_Dead);
                         break;
                     }
+            }
+        }
+        //------------------------------------------------------------------------------------
+        private void PlayAnimation(string trigger)
+        {
+            if (m_playerAnimator != null)
+            { 
+                m_playerAnimator.Play(trigger);
             }
         }
         //------------------------------------------------------------------------------------

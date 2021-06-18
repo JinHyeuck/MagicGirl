@@ -6,8 +6,6 @@ namespace GameBerry.Managers
 {
     public class MonsterManager : MonoSingleton<MonsterManager>
     {
-        private int m_createCount = 0;
-
         private int m_defaultCreateCount = 10;
         private int m_runTimeCreateCount = 3;
 
@@ -45,7 +43,7 @@ namespace GameBerry.Managers
         //------------------------------------------------------------------------------------
         public void SpawnMonster(string monsterid, Vector3 pos)
         {  // 던전 매니저에서 포지션이랑 데이터를 넣어줘서 솬한다.
-            if (m_monsterPool.Count > 0)
+            if (m_monsterPool.Count <= 0)
             {
                 CreateMonster(m_runTimeCreateCount);
             }
@@ -136,7 +134,7 @@ namespace GameBerry.Managers
             if (m_spawnedMonster_Dic.TryGetValue(spawnid, out monster) == true)
             {
                 m_spawnedMonster_Dic.Remove(spawnid);
-                monster.gameObject.SetActive(false);
+                //monster.gameObject.SetActive(false);
 
                 if (m_spawnedMonster_Linked.First.Value == monster)
                 {
@@ -159,7 +157,6 @@ namespace GameBerry.Managers
             if (m_spawnedMonster_Dic.Count <= 0)
             {
                 AllReleaseMonster();
-                DunjeonManager.Instance.CreateMonster();
             }
         }
         //------------------------------------------------------------------------------------
@@ -186,6 +183,7 @@ namespace GameBerry.Managers
         //------------------------------------------------------------------------------------
         public void ReleaseMonster(MonsterController monster)
         {
+            monster.gameObject.SetActive(false);
             m_monsterPool.Enqueue(monster);
         }
         //------------------------------------------------------------------------------------

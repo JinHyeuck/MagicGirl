@@ -24,8 +24,7 @@ namespace GameBerry.Managers
 
         private DunjeonKinds m_currentDunjeonKinds = DunjeonKinds.DefaultDunjeon;
 
-        private SpriteRenderer m_bgRenderer = null;
-        private Vector2 m_bgRendererOriginSize = 7.0f.ToVector3();
+        private InGameBGScaler m_bgRenderer = null;
 
         private float m_monsterStartPosGab = 3.5f;
 
@@ -40,12 +39,10 @@ namespace GameBerry.Managers
 
                 if (clone != null)
                 {
-                    m_bgRenderer = clone.GetComponent<SpriteRenderer>();
+                    m_bgRenderer = clone.GetComponent<InGameBGScaler>();
+                    m_bgRenderer.SetOperationTarget(Managers.PlayerManager.Instance.GetInGameCameraController().transform);
                 }
             });
-
-            if (m_bgRenderer != null)
-                m_bgRendererOriginSize = m_bgRenderer.size;
 
             m_dunjeonLocalTable = TableManager.Instance.GetTableClass<DunjeonLocalTable>();
 
@@ -81,14 +78,6 @@ namespace GameBerry.Managers
             m_currentDunjeonData = m_dunjeonLocalTable.GetDunjeonData(m_currentDunjeonKey);
             MonsterManager.Instance.SetDunjeonMonsterReward(m_currentDunjeonData.Reward);
             PlayerManager.Instance.ResetPlayer();
-
-            ReleaseDunjeonBG();
-        }
-        //------------------------------------------------------------------------------------
-        private void ReleaseDunjeonBG()
-        {
-            if (m_bgRenderer != null)
-                m_bgRenderer.size = m_bgRendererOriginSize;
         }
         //------------------------------------------------------------------------------------
         public void PlayDunjeon()
@@ -100,8 +89,8 @@ namespace GameBerry.Managers
         //------------------------------------------------------------------------------------
         private IEnumerator PlayDunjeonDirection()
         { // 시작에 대한 연출이 있다면 여기서 해야한다.
-
-            yield return null;
+            Contents.GlobalContent.DoFade(true);
+            yield return new WaitForSeconds(1.5f);
 
             StartDunjeon();
         }
@@ -118,7 +107,8 @@ namespace GameBerry.Managers
         //------------------------------------------------------------------------------------
         private IEnumerator EndDunjeonDirection()
         { // 끝나는 연출이 있다면 여기서 해야한다.
-            yield return null;
+            Contents.GlobalContent.DoFade(false);
+            yield return new WaitForSeconds(1.5f);
 
             SetDunjeon();
             PlayDunjeon();

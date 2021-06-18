@@ -7,7 +7,7 @@ namespace GameBerry.Managers
     public class PlayerManager : MonoSingleton<PlayerManager>
     {
         private PlayerController m_playerController;
-        private Camera m_inGameCamera;
+        private InGameCameraController m_inGameCamera;
 
         //------------------------------------------------------------------------------------
         protected override void Init()
@@ -19,7 +19,10 @@ namespace GameBerry.Managers
                 GameObject clone = Instantiate(obj, transform);
 
                 if (clone != null)
+                { 
                     m_playerController = clone.GetComponent<PlayerController>();
+                    m_playerController.Init();
+                }
             });
 
             AssetBundleLoader.Instance.Load<GameObject>("ContentResources/PlayerContent", "InGameCamera", o =>
@@ -29,13 +32,22 @@ namespace GameBerry.Managers
                 GameObject clone = Instantiate(obj, transform);
 
                 if (clone != null)
-                    m_inGameCamera = clone.GetComponent<Camera>();
+                { 
+                    m_inGameCamera = clone.GetComponent<InGameCameraController>();
+                    if (m_playerController != null)
+                        m_inGameCamera.SetFlowTarget(m_playerController.transform);
+                }
             });
         }
         //------------------------------------------------------------------------------------
         public PlayerController GetPlayerController()
         {
             return m_playerController;
+        }
+        //------------------------------------------------------------------------------------
+        public InGameCameraController GetInGameCameraController()
+        {
+            return m_inGameCamera;
         }
         //------------------------------------------------------------------------------------
         public void StartHunting()

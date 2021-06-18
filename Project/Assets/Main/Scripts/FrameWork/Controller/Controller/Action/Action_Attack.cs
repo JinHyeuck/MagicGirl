@@ -14,9 +14,6 @@ namespace GameBerry
 
     public class Action_Attack
     {
-        private bool m_readyPlayerAttack = false;
-        private float m_attackRange = 1.0f;
-
         private float m_attackWaitStartTime = 0.0f;
         private float m_attackWaitTime = 0.5f;
 
@@ -28,6 +25,16 @@ namespace GameBerry
         private System.Action m_onAttackCallBack = null;
         private System.Action m_onFinishCallBack = null;
 
+        //------------------------------------------------------------------------------------
+        public void SetAttackWaitTime(float waittime)
+        {
+            m_attackWaitTime = waittime;
+        }
+        //------------------------------------------------------------------------------------
+        public void SetAttackRecovery(float recovery)
+        {
+            m_attackRecoveryTime = recovery;
+        }
         //------------------------------------------------------------------------------------
         public void ConnectAttackCallBack(System.Action callback)
         {
