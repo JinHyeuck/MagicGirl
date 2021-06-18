@@ -15,6 +15,8 @@ namespace GameBerry.Managers
         private Dictionary<string, MonsterController> m_spawnedMonster_Dic = new Dictionary<string, MonsterController>();
         private LinkedList<MonsterController> m_spawnedMonster_Linked = new LinkedList<MonsterController>();
 
+        private Dictionary<string, Sprite> m_catchingMonsterSprite = new Dictionary<string, Sprite>();
+
         private MonsterLocalTable m_monsterLocalTable = null;
 
         private DunjeonMonsterReward m_rewardData = null;
@@ -67,6 +69,24 @@ namespace GameBerry.Managers
             m_spawnedMonster_Linked.AddLast(monster);
             m_spawnedMonster_Dic.Add(spawnid, monster);
 
+        }
+        //------------------------------------------------------------------------------------
+        public Sprite GetMonsterSprite(string spritename)
+        {
+            Sprite sprite = null;
+
+            if (m_catchingMonsterSprite.TryGetValue(spritename, out sprite) == false)
+            {
+                AssetBundleLoader.Instance.Load<UnityEngine.U2D.SpriteAtlas>("ContentResources/MonsterContent", "MonsterAtlas", o =>
+                {
+                    UnityEngine.U2D.SpriteAtlas spriteAtlas = o as UnityEngine.U2D.SpriteAtlas;
+
+                    sprite = spriteAtlas.GetSprite(spritename);
+
+                });
+            }
+
+            return sprite;
         }
         //------------------------------------------------------------------------------------
         public void SetDunjeonMonsterReward(DunjeonMonsterReward reward)

@@ -72,7 +72,7 @@ namespace GameBerry
             m_myMonsterData = data;
             m_spawnID = spawnid;
             if (m_monsterRenderer != null)
-                m_monsterRenderer.sprite = Util.GetSpriteOnAssetBundle("ContentResources/MonsterContent", data.MonsterImageName);
+                m_monsterRenderer.sprite = Managers.MonsterManager.Instance.GetMonsterSprite(data.MonsterImageName);
 
             m_monsterMaxHp = m_myMonsterData.HP;
             m_monsterCurrentHp = m_monsterMaxHp;

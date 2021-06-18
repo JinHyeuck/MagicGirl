@@ -45,17 +45,17 @@ namespace GameBerry
         //------------------------------------------------------------------------------------
         public void StartHunting()
         {  // 사냥을 시작해야 할 때 호출
-
+            ChangeState(PlayerState.Run);
         }
         //------------------------------------------------------------------------------------
         public void ResetPlayer()
         { // 주로 다른던전에 들어갈 때 직후나 던전 리트라이를 할 때 한다.
-            ChangeState(PlayerState.None);
+            ChangeState(PlayerState.Idle);
         }
         //------------------------------------------------------------------------------------
         public void StopPlayer()
         { // 캐릭터를 멈춘다. 완전 리셋되는건 아니고 그냥 멈추기만 한다.
-
+            ChangeState(PlayerState.Idle);
         }
         //------------------------------------------------------------------------------------
         public void OnDamage(int damage)
@@ -82,6 +82,9 @@ namespace GameBerry
         //------------------------------------------------------------------------------------
         private void SelectState()
         {
+            if (m_characterState == PlayerState.None)
+                return;
+
             if (Managers.MonsterManager.Instance.GetForeFrontMonster() != null)
             {
                 if (m_nextAttackSkill == null)
@@ -96,9 +99,16 @@ namespace GameBerry
                             ChangeState(PlayerState.Attack);
                             return;
                         }
+                        else
+                        { 
+                            ChangeState(PlayerState.Run);
+                            return;
+                        }
                     }
                 }
             }
+
+            
         }
         //------------------------------------------------------------------------------------
         private void OnAttack()
@@ -108,7 +118,7 @@ namespace GameBerry
         //------------------------------------------------------------------------------------
         private void OnEndAttack()
         {
-            ChangeState(PlayerState.None);
+            ChangeState(PlayerState.Run);
         }
         //------------------------------------------------------------------------------------
         private void UseSkill(SkillData skillData)
