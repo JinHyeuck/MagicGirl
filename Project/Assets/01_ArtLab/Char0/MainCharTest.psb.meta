@@ -1,5 +1,18 @@
 fileFormatVersion: 2
 guid: 62e22cb2d7ea64b03b8d21819ea0740b
+labels:
+- name
+- Head
+- spriteId
+- 567d31b4c0dbe4f0c9c1488e22f7fbb5
+- name
+- LeftHand
+- spriteId
+- b1ad4843795e6452b83fbfd9ec5a072a
+- name
+- Hat
+- spriteId
+- 821b2bf6e2d9743bd884d46a1f5b2460
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -137,7 +150,7 @@ ScriptedImporter:
         boneIndex1: 0
         boneIndex2: 0
         boneIndex3: 0
-    - position: {x: 0, y: 7}
+    - position: {x: 0, y: 8}
       boneWeight:
         weight0: 1
         weight1: 0
@@ -268,14 +281,14 @@ ScriptedImporter:
     internalID: 0
     spriteBone:
     - name: RightArm_0
-      position: {x: 0.16086006, y: 9.88488, z: 0}
-      rotation: {x: 0, y: 0, z: -0.5852803, w: 0.8108311}
-      length: 5.422705
+      position: {x: 0.16091156, y: 9.884842, z: 0}
+      rotation: {x: 0, y: 0, z: -0.5852844, w: 0.81082815}
+      length: 5.422706
       parentId: -1
     - name: RightArm_1
-      position: {x: 5.422705, y: 0.0000006170533, z: 0}
-      rotation: {x: 0, y: 0, z: -0.14924261, w: 0.9888006}
-      length: 4.495424
+      position: {x: 5.4226995, y: 0.0000011430063, z: 0}
+      rotation: {x: 0, y: 0, z: -0.14924262, w: 0.9888006}
+      length: 4.4954233
       parentId: 0
     spriteOutline: []
     vertices:
@@ -485,9 +498,9 @@ ScriptedImporter:
     internalID: 0
     spriteBone:
     - name: Weapon
-      position: {x: 0.10467148, y: -0.5519943, z: 0}
-      rotation: {x: 0, y: 0, z: 0.1919709, w: 0.9814006}
-      length: 3.255263
+      position: {x: 0.1046257, y: -0.5519333, z: 0}
+      rotation: {x: 0, y: 0, z: 0.19196601, w: 0.98140156}
+      length: 3.255264
       parentId: -1
     spriteOutline: []
     vertices:
@@ -909,10 +922,10 @@ ScriptedImporter:
     - name: RightLeg_0
       position: {x: 0.039470673, y: 10.252029, z: 0}
       rotation: {x: 0, y: 0, z: -0.68283564, w: 0.7305721}
-      length: 6.6232076
+      length: 6.62321
       parentId: -1
     - name: RightLeg_1
-      position: {x: 6.6232066, y: 0.0000010084277, z: 0}
+      position: {x: 6.623209, y: 0.0000008475644, z: 0}
       rotation: {x: 0, y: 0, z: 0.085054405, w: 0.9963764}
       length: 3.4707856
       parentId: 0
@@ -1124,9 +1137,9 @@ ScriptedImporter:
     internalID: 0
     spriteBone:
     - name: Hat
-      position: {x: 20.44516, y: 7.3565063, z: 0}
-      rotation: {x: 0, y: 0, z: 0.78583974, w: 0.61843014}
-      length: 18.180391
+      position: {x: 20.44516, y: 7.356514, z: 0}
+      rotation: {x: 0, y: 0, z: 0.78583974, w: 0.61843026}
+      length: 18.18039
       parentId: -1
     spriteOutline: []
     vertices:
@@ -1488,14 +1501,14 @@ ScriptedImporter:
     internalID: 0
     spriteBone:
     - name: LeftArm_0
-      position: {x: 4.7499847, y: 10.849945, z: 0}
-      rotation: {x: 0, y: 0, z: 0.7914971, w: -0.61117285}
-      length: 5.6090884
+      position: {x: 4.750046, y: 10.849983, z: 0}
+      rotation: {x: 0, y: 0, z: 0.7915002, w: -0.61116886}
+      length: 5.609088
       parentId: -1
     - name: LeftArm_1
-      position: {x: 5.609091, y: -0.000002163793, z: 0}
-      rotation: {x: 0, y: 0, z: 0.0069996184, w: 0.99997556}
-      length: 5.124209
+      position: {x: 5.609091, y: -0.0000020122577, z: 0}
+      rotation: {x: 0, y: 0, z: 0.006999581, w: 0.9999755}
+      length: 5.1242137
       parentId: 0
     spriteOutline: []
     vertices:
@@ -1703,9 +1716,9 @@ ScriptedImporter:
     internalID: 0
     spriteBone:
     - name: Head
-      position: {x: 16.267067, y: 15.931808, z: 0}
-      rotation: {x: 0, y: 0, z: 0.7320364, w: 0.6812656}
-      length: 11.454222
+      position: {x: 16.267069, y: 15.931816, z: 0}
+      rotation: {x: 0, y: 0, z: 0.7320367, w: 0.68126523}
+      length: 11.454224
       parentId: -1
     spriteOutline: []
     vertices:
@@ -2059,8 +2072,8 @@ ScriptedImporter:
     spriteBone:
     - name: Chest
       position: {x: 5.433607, y: 0.730278, z: 0}
-      rotation: {x: 0, y: 0, z: 0.71523535, w: 0.6988838}
-      length: 7.203453
+      rotation: {x: 0, y: 0, z: 0.7152318, w: 0.6988874}
+      length: 7.2034626
       parentId: -1
     spriteOutline: []
     vertices:
@@ -2233,6 +2246,17 @@ ScriptedImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     androidETC2FallbackOverride: 0
+  - name: iPhone
+    overridden: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
   mosaicLayers: 1
   documentPivot: {x: 0, y: 0}
   documentAlignment: 7
@@ -2243,7 +2267,11 @@ ScriptedImporter:
   paperDollMode: 0
   keepDupilcateSpriteName: 0
   spriteCategoryList:
-    categories: []
+    categories:
+    - name: Test
+      labels:
+      - name: Normal
+        spriteId: 567d31b4c0dbe4f0c9c1488e22f7fbb5
   textureActualWidth: 64
   textureActualHeight: 128
   spritePackingTag: 
@@ -2333,13 +2361,13 @@ ScriptedImporter:
       parentId: 1
     - name: LeftArm_0
       position: {x: 6.203207, y: 3.5411339, z: 0}
-      rotation: {x: 0, y: -0, z: 0.9902969, w: 0.13896793}
-      length: 5.609087
+      rotation: {x: 0, y: -0, z: 0.99029696, w: 0.13896793}
+      length: 5.6090856
       parentId: 10
     - name: LeftArm_1
-      position: {x: 5.609088, y: -0.00000025771715, z: 0}
+      position: {x: 5.6090856, y: -0.0000010439089, z: 0}
       rotation: {x: 0, y: 0, z: 0.006999644, w: 0.9999755}
-      length: 5.124207
+      length: 5.1242104
       parentId: 3
     - name: LeftLeg_0
       position: {x: -0.15479438, y: 2.041988, z: 0}
@@ -2354,31 +2382,31 @@ ScriptedImporter:
     - name: RightLeg_0
       position: {x: -0.12984642, y: -1.6002176, z: 0}
       rotation: {x: 0, y: -0, z: -0.9996058, w: 0.028077206}
-      length: 6.623206
+      length: 6.6232085
       parentId: 0
     - name: RightLeg_1
-      position: {x: 6.623206, y: 0.0000008321964, z: 0}
+      position: {x: 6.6232085, y: 0.0000006713327, z: 0}
       rotation: {x: 0, y: 0, z: 0.08505441, w: 0.9963764}
       length: 3.4707854
       parentId: 7
     - name: Weapon
-      position: {x: 5.124209, y: -0.000008370886, z: 0}
-      rotation: {x: 0, y: 0, z: -0.89094645, w: -0.45410845}
+      position: {x: 5.124211, y: -0.000009702103, z: 0}
+      rotation: {x: 0, y: 0, z: -0.8909465, w: -0.45410833}
       length: 3.2552621
       parentId: 4
     - name: Chest
       position: {x: 2.3664863, y: -0.022611726, z: 0}
-      rotation: {x: 0, y: 0, z: 0.0058822185, w: 0.9999827}
-      length: 7.203453
+      rotation: {x: 0, y: 0, z: 0.00587715, w: 0.9999827}
+      length: 7.203462
       parentId: 0
     - name: Head
-      position: {x: 7.2034535, y: -0.00002563789, z: 0}
-      rotation: {x: 0, y: 0, z: 0.02434316, w: 0.9997037}
-      length: 11.454222
+      position: {x: 7.2034626, y: 0.000045225777, z: 0}
+      rotation: {x: 0, y: 0, z: 0.024348667, w: 0.9997035}
+      length: 11.454224
       parentId: 10
     - name: Hat
-      position: {x: 11.454223, y: 0.0000134088605, z: 0}
-      rotation: {x: 0, y: 0, z: 0.08265219, w: 0.99657845}
+      position: {x: 11.454224, y: 0.0000062696754, z: 0}
+      rotation: {x: 0, y: 0, z: 0.0826517, w: 0.9965786}
       length: 18.18039
       parentId: 11
     parts:
