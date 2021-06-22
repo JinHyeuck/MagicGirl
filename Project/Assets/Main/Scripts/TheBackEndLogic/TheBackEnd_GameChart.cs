@@ -18,7 +18,7 @@ namespace GameBerry.TheBackEnd
             {
                 if (callback.IsSuccess() == true)
                 {
-                    Debug.Log("테이블 목록 가져옴");
+                    Debug.Log("차트 목록 가져옴");
                     // 이후 작업
                     var data = callback.FlattenRows();
 
@@ -35,7 +35,7 @@ namespace GameBerry.TheBackEnd
                 }
                 else
                 {
-                    Debug.Log("테이블 목록 못가져옴ㅠㅠ");
+                    Debug.Log("차트 목록 못가져옴ㅠㅠ");
                 }
 
                 Message.Send(new Event.GetAllGameChartResponseMsg { IsSuccess = callback.IsSuccess() });
@@ -46,7 +46,7 @@ namespace GameBerry.TheBackEnd
         {
             SendQueue.Enqueue(Backend.Chart.GetOneChartAndSave, TableChartFileld[fileidkey.ToLower()], (callback) =>
             {
-                Debug.Log("테이블 저장했는데 과연?");
+                Debug.Log("차트 저장했는데 과연?");
 
                 Debug.Log(callback.GetReturnValue());
 

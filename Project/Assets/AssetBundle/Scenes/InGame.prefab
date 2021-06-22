@@ -49,4 +49,9 @@ MonoBehaviour:
   - PlayerContent
   - MonsterContent
   - DunjeonContent
-  defaultContentList: []
+  - InGameContent
+  defaultContentList:
+  - PlayerContent
+  - MonsterContent
+  - DunjeonContent
+  - InGameContent

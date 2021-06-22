@@ -8,7 +8,6 @@ namespace GameBerry.Scene
     {
         protected override void OnLoadComplete()
         {
-            UnityEngine.Debug.LogError("메인씬 로드 완료");
             SceneManager.Instance.Load(Constants.SceneName.InGame);
         }
     }

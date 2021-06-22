@@ -144,7 +144,6 @@ namespace GameBerry
         public void OnDamage(int damage)
         {
             m_monsterCurrentHp -= damage;
-            Debug.Log(string.Format("몬스터 맞음 데미지 {0}, CurrentHP {1}, MaxHP {2}", damage, m_monsterCurrentHp, m_monsterMaxHp));
             if (m_monsterCurrentHp <= 0)
             {
                 ChangeState(MonsterState.Dead);

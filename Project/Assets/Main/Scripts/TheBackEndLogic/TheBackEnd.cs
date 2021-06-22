@@ -72,6 +72,11 @@ namespace GameBerry.TheBackEnd
             TheBackEnd_Login.CreateNickName(nickname);
         }
         //------------------------------------------------------------------------------------
+        public string GetNickPlayerName()
+        {
+            return TheBackEnd_Login.NickName;
+        }
+        //------------------------------------------------------------------------------------
         #endregion
         //------------------------------------------------------------------------------------
         #region TheBackEnd_GameChart
@@ -89,6 +94,20 @@ namespace GameBerry.TheBackEnd
         public string GetLocalChartData(string fileidkey)
         {
             return TheBackEnd_GameChart.GetLocalChartData(fileidkey);
+        }
+        //------------------------------------------------------------------------------------
+        #endregion
+        //------------------------------------------------------------------------------------
+        #region TheBackEnd_PlayerTable
+        //------------------------------------------------------------------------------------
+        public void GetTableData()
+        {
+            TheBackEnd_PlayerTable.GetTableData();
+        }
+        //------------------------------------------------------------------------------------
+        public void PlayerTableUpdate()
+        {
+            TheBackEnd_PlayerTable.PlayerTableUpdate();
         }
         //------------------------------------------------------------------------------------
         #endregion

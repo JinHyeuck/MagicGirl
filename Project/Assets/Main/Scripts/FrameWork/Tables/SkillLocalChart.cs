@@ -38,7 +38,7 @@ namespace GameBerry
         public int NeedMP;
     }
 
-    public class SkillLocalTable
+    public class SkillLocalChart
     {
         [SerializeField]
         public List<SkillData> m_SkillDatas = new List<SkillData>();
@@ -47,7 +47,7 @@ namespace GameBerry
         //------------------------------------------------------------------------------------
         public void InitData()
         {
-            JsonData chartJson = JsonMapper.ToObject(TheBackEnd.TheBackEnd.Instance.GetLocalChartData(Define.SkillItemTableKey));
+            JsonData chartJson = JsonMapper.ToObject(TheBackEnd.TheBackEnd.Instance.GetLocalChartData(Define.SkillItemChartKey));
 
             var rows = chartJson["rows"];
 

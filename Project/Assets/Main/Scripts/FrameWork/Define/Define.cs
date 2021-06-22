@@ -10,10 +10,38 @@ public static class Define
     public static readonly string EquipSkillKey = "equipskillKey";
 
     //TheBackEndChartKey
-    public static readonly string EquipmentTableKey = "equipmenttable";
-    public static readonly string SkillItemTableKey = "skilltable";
-    public static readonly string MonsterTableKey = "monstertable";
-    public static readonly string DunjeonTableKey = "dunjeontable";
+    public static readonly string EquipmentChartKey = "equipmentchart";
+    public static readonly string SkillItemChartKey = "skillchart";
+    public static readonly string MonsterChartKey = "monsterchart";
+    public static readonly string DunjeonChartKey = "dunjeonchart";
+    public static readonly string ExpchartKey = "expchartchart";
+
+
+    //CharacterInfoTableKey
+    public static readonly string CharacterInfoTable = "charinfo";
+
+    //CharacterInfoRowKey
+    public static readonly string PlayerLevel = "level";
+    public static readonly string PlayerExp = "exp";
+
+    public static readonly string PlayerGold = "gold";
+    public static readonly string PlayerDia = "dia";
+
+    public static readonly string PlayerEquipmentSton = "equipmentston";
+    public static readonly string PlayerSkillSton = "skillston";
+
+    //CharacterInfoRowKey-UpGrade
+    public static readonly string PlayerUpGradeDamage = "playerupgradedamage";
+    public static readonly string PlayerUpGradeCriticalDamage = "playerupgradecriticaldamage";
+    public static readonly string PlayerUpGradeCriticalPer = "playerupgradecriticalper";
+    public static readonly string PlayerUpGradeAddGold = "playerupgradeaddgold";
+    public static readonly string PlayerUpGradeMP = "playerupgrademp";
+    public static readonly string PlayerUpGradeMPRecovery = "playerupgrademprecovery";
+    public static readonly string PlayerUpGradeCastingSpeed = "playerupgradecastingspeed";
+    public static readonly string PlayerUpGradeMoveSpeed = "playerupgrademovespeed";
+
+    public static readonly string PlayerDayQuestStep = "dayqueststep";
+    public static readonly string PlayerDunJeonStep = "dunjeonstep";
 
     //AnimationTrigger
     public static readonly string AniTrigger_Idle = "Idle";
@@ -21,6 +49,4 @@ public static class Define
     public static readonly string AniTrigger_Attack = "Attack";
     public static readonly string AniTrigger_Hit = "Hit";
     public static readonly string AniTrigger_Dead = "Dead";
-
-
 }

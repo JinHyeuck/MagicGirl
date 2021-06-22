@@ -57,24 +57,24 @@ namespace GameBerry.Managers
                 _tables.Add(Type.GetType("GameBerry.SoundTableAsset"), soundtable);
 
 
-            EquipmentLocalTable equipmentLocalTable = new EquipmentLocalTable();
+            EquipmentLocalChart equipmentLocalTable = new EquipmentLocalChart();
             equipmentLocalTable.InitData();
-            _tables.Add(Type.GetType("GameBerry.EquipmentLocalTable"), equipmentLocalTable);
+            _tables.Add(Type.GetType("GameBerry.EquipmentLocalChart"), equipmentLocalTable);
 
 
-            SkillLocalTable skillLocalTable = new SkillLocalTable();
+            SkillLocalChart skillLocalTable = new SkillLocalChart();
             skillLocalTable.InitData();
-            _tables.Add(Type.GetType("GameBerry.SkillLocalTable"), skillLocalTable);
+            _tables.Add(Type.GetType("GameBerry.SkillLocalChart"), skillLocalTable);
 
 
-            MonsterLocalTable monsterLocalTable = new MonsterLocalTable();
+            MonsterLocalChart monsterLocalTable = new MonsterLocalChart();
             monsterLocalTable.InitData();
-            _tables.Add(Type.GetType("GameBerry.MonsterLocalTable"), monsterLocalTable);
+            _tables.Add(Type.GetType("GameBerry.MonsterLocalChart"), monsterLocalTable);
 
 
-            DunjeonLocalTable dunjeonLocalTable = new DunjeonLocalTable();
+            DunjeonLocalChart dunjeonLocalTable = new DunjeonLocalChart();
             dunjeonLocalTable.InitData();
-            _tables.Add(Type.GetType("GameBerry.DunjeonLocalTable"), dunjeonLocalTable);
+            _tables.Add(Type.GetType("GameBerry.DunjeonLocalChart"), dunjeonLocalTable);
 
 
             _alreadyLoading = false;

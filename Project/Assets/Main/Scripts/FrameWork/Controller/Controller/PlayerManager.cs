@@ -79,12 +79,14 @@ namespace GameBerry.Managers
         }
         //------------------------------------------------------------------------------------
         public void RecvMonsterKillReward(DunjeonMonsterReward reward)
-        { 
-
+        { // 몬스터를 죽였을 때 얻는거
+            PlayerDataManager.Instance.AddGold(reward.Gold);
+            PlayerDataManager.Instance.AddExp(reward.Exp);
+            PlayerDataManager.Instance.AddEquipmentSton(reward.EquipmentSton);
         }
         //------------------------------------------------------------------------------------
         public void RecvDunjeonReward(DunjeonMonsterReward reward)
-        {
+        { // 각종 던전을 깼을 때 얻는거
 
         }
         //------------------------------------------------------------------------------------

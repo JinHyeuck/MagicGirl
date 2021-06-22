@@ -80,7 +80,6 @@ namespace GameBerry
         public void OnDamage(int damage)
         {
             m_currentHP -= damage;
-            Debug.Log(string.Format("플레이어 맞음 데미지 {0}, CurrentHP {1}, MaxHP {2}", damage, m_currentHP, m_maxHP));
 
             if (m_currentHP <= 0)
             { 
@@ -169,13 +168,11 @@ namespace GameBerry
         //------------------------------------------------------------------------------------
         private void OnAttack()
         {
-            Debug.LogWarning("OnAttack---------------------");
             UseSkill(m_nextAttackSkill);
         }
         //------------------------------------------------------------------------------------
         private void OnEndAttack()
         {
-            Debug.LogWarning("OnEndAttack---------------------");
             ChangeState(PlayerState.Run);
         }
         //------------------------------------------------------------------------------------
@@ -194,8 +191,6 @@ namespace GameBerry
             if (TestText != null)
                 TestText.text = characterState.ToString();
 
-            Debug.LogWarning("CharacterState : " + m_characterState);
-
             switch (m_characterState)
             {
                 case PlayerState.Idle:
@@ -210,7 +205,6 @@ namespace GameBerry
                     }
                 case PlayerState.Attack:
                     {
-                        Debug.LogError("----------" + characterState);
                         PlayAnimation(Define.AniTrigger_Attack);
                         if (m_attackScript != null)
                             m_attackScript.PlayAttack();
@@ -218,7 +212,6 @@ namespace GameBerry
                     }
                 case PlayerState.Hit:
                     {
-                        Debug.LogError("----------" + characterState);
                         PlayAnimation(Define.AniTrigger_Hit);
                         m_hitRecoveryStartTime = Time.time;
                         if (m_attackScript != null)

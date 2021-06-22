@@ -15,7 +15,7 @@ namespace GameBerry.Managers
 
         private Dictionary<string, Sprite> m_catchingMonsterSprite = new Dictionary<string, Sprite>();
 
-        private MonsterLocalTable m_monsterLocalTable = null;
+        private MonsterLocalChart m_monsterLocalTable = null;
 
         private DunjeonMonsterReward m_rewardData = null;
         private DunjeonMonsterReward m_monsterKillRewardData = new DunjeonMonsterReward();
@@ -27,7 +27,7 @@ namespace GameBerry.Managers
         //------------------------------------------------------------------------------------
         protected override void Init()
         {
-            m_monsterLocalTable = TableManager.Instance.GetTableClass<MonsterLocalTable>();
+            m_monsterLocalTable = TableManager.Instance.GetTableClass<MonsterLocalChart>();
 
             AssetBundleLoader.Instance.Load<GameObject>("ContentResources/MonsterContent", "Monster", o =>
             {
@@ -164,7 +164,7 @@ namespace GameBerry.Managers
         {
             m_monsterKillRewardData.Gold = (int)((float)m_rewardData.Gold * Random.Range(0.9f, 1.0f));
             m_monsterKillRewardData.Exp = m_rewardData.Exp;
-            m_monsterKillRewardData.ReinForceCube = (int)((float)m_rewardData.ReinForceCube * Random.Range(0.9f, 1.0f));
+            m_monsterKillRewardData.EquipmentSton = (int)((float)m_rewardData.EquipmentSton * Random.Range(0.9f, 1.0f));
 
             PlayerManager.Instance.RecvMonsterKillReward(m_monsterKillRewardData);
         }

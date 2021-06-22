@@ -11,14 +11,13 @@ namespace GameBerry.Contents
         private int m_reSaveChartSuccessCount = 0; // 다시 세이브 보내서 성공한 카운트
 
         private int m_localChartSaveCount = 0;
-        EquipmentLocalTable localdata;
-        public List<EquipmentData> TestViewData;
 
         //------------------------------------------------------------------------------------
         protected override void OnLoadStart()
         {
             Message.AddListener<GameBerry.Event.GetAllGameChartResponseMsg>(GetAllGameChartResponse);
             Message.AddListener<GameBerry.Event.GetOneChartAndSaveResponseMsg>(GetOneChartAndSaveResponse);
+            Message.AddListener<GameBerry.Event.CompletePlayerTableLoadMsg>(CompletePlayerTableLoad);
 
             StartLoadData();
         }
@@ -27,6 +26,7 @@ namespace GameBerry.Contents
         {
             Message.RemoveListener<GameBerry.Event.GetAllGameChartResponseMsg>(GetAllGameChartResponse);
             Message.RemoveListener<GameBerry.Event.GetOneChartAndSaveResponseMsg>(GetOneChartAndSaveResponse);
+            Message.RemoveListener<GameBerry.Event.CompletePlayerTableLoadMsg>(CompletePlayerTableLoad);
         }
         //------------------------------------------------------------------------------------
         private void StartLoadData()
@@ -128,8 +128,11 @@ namespace GameBerry.Contents
         {
             yield return StartCoroutine(Managers.TableManager.Instance.Load());
 
-            TestViewData = Managers.TableManager.Instance.GetTableClass<EquipmentLocalTable>().m_equipmentDatas;
-
+            TheBackEnd.TheBackEnd.Instance.GetTableData();
+        }
+        //------------------------------------------------------------------------------------
+        private void CompletePlayerTableLoad(GameBerry.Event.CompletePlayerTableLoadMsg msg)
+        {
             SetLoadComplete();
         }
         //------------------------------------------------------------------------------------

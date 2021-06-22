@@ -17,7 +17,7 @@ namespace GameBerry
         public int Damage = 0;
     }
 
-    public class MonsterLocalTable
+    public class MonsterLocalChart
     {
         public List<MonsterData> m_monsterDatas = new List<MonsterData>();
         private Dictionary<string, MonsterData> m_monsterDatas_Dic = new Dictionary<string, MonsterData>();
@@ -25,7 +25,7 @@ namespace GameBerry
         //------------------------------------------------------------------------------------
         public void InitData()
         {
-            JsonData chartJson = JsonMapper.ToObject(TheBackEnd.TheBackEnd.Instance.GetLocalChartData(Define.MonsterTableKey));
+            JsonData chartJson = JsonMapper.ToObject(TheBackEnd.TheBackEnd.Instance.GetLocalChartData(Define.MonsterChartKey));
 
             var rows = chartJson["rows"];
 

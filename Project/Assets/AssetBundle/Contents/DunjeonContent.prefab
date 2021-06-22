@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4103645501766615351}
+  - component: {fileID: 3466451597695537350}
   - component: {fileID: 356637900047578924}
   m_Layer: 0
   m_Name: DunjeonContent
@@ -31,6 +32,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3466451597695537350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3442671935938399429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b483e986e19c1ac4f91dffa13e5315c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uiList:
+  - DunjeonPharmingDialog
+  dialogList: []
 --- !u!114 &356637900047578924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44,5 +60,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ContentName: 
-  _uiLoader: {fileID: 0}
+  _uiLoader: {fileID: 3466451597695537350}
   dontDestroy: 0

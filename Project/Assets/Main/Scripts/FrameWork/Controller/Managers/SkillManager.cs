@@ -12,7 +12,7 @@ namespace GameBerry.Managers
 
     public class SkillManager : MonoSingleton<SkillManager>
     {
-        private SkillLocalTable m_skillLocalTable = null;
+        private SkillLocalChart m_skillLocalTable = null;
 
         private List<SkillData> m_equipSkillList = new List<SkillData>(); // 슬롯에 등록한 스킬
 
@@ -31,7 +31,7 @@ namespace GameBerry.Managers
         //------------------------------------------------------------------------------------
         protected override void Init()
         {
-            m_skillLocalTable = TableManager.Instance.GetTableClass<SkillLocalTable>();
+            m_skillLocalTable = TableManager.Instance.GetTableClass<SkillLocalChart>();
 
             m_openSkillSlotCount = PlayerPrefs.GetInt(Define.OpenSkillSlotCountKey, 0);
 

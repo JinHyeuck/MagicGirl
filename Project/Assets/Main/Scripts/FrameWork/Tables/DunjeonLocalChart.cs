@@ -8,7 +8,7 @@ namespace GameBerry
     {
         public int Gold;
         public int Exp;
-        public int ReinForceCube;
+        public int EquipmentSton;
     }
 
     public class DunjeonData
@@ -26,7 +26,7 @@ namespace GameBerry
         public DunjeonMonsterReward Reward = new DunjeonMonsterReward();
     }
 
-    public class DunjeonLocalTable
+    public class DunjeonLocalChart
     {
         public List<DunjeonData> m_dunjeonDataDatas = new List<DunjeonData>();
         private Dictionary<string, DunjeonData> m_dunjeonDataDatas_Dic = new Dictionary<string, DunjeonData>();
@@ -34,7 +34,7 @@ namespace GameBerry
         //------------------------------------------------------------------------------------
         public void InitData()
         {
-            MonsterLocalTable monstertable = Managers.TableManager.Instance.GetTableClass<MonsterLocalTable>();
+            MonsterLocalChart monstertable = Managers.TableManager.Instance.GetTableClass<MonsterLocalChart>();
 
             for (int i = 0; i < 50; ++i)
             {
@@ -69,7 +69,7 @@ namespace GameBerry
 
                 data.Reward.Gold = (i + 1) * 5;
                 data.Reward.Exp = (i + 1) * 3;
-                data.Reward.ReinForceCube = (i + 1) * 4;
+                data.Reward.EquipmentSton = (i + 1) * 4;
 
                 m_dunjeonDataDatas.Add(data);
                 m_dunjeonDataDatas_Dic.Add(data.DunjeonID, data);

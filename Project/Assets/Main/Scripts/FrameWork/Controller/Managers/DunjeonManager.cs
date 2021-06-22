@@ -13,7 +13,7 @@ namespace GameBerry.Managers
 
     public class DunjeonManager : MonoSingleton<DunjeonManager>
     {
-        DunjeonLocalTable m_dunjeonLocalTable = null;
+        DunjeonLocalChart m_dunjeonLocalTable = null;
         private DunjeonData m_currentDunjeonData = null;
         private string m_currentDunjeonKey = string.Empty;
 
@@ -44,7 +44,7 @@ namespace GameBerry.Managers
                 }
             });
 
-            m_dunjeonLocalTable = TableManager.Instance.GetTableClass<DunjeonLocalTable>();
+            m_dunjeonLocalTable = TableManager.Instance.GetTableClass<DunjeonLocalChart>();
 
             m_currentDunjeonKey = PlayerPrefs.GetString(Define.CurrentDunjeonKey, m_dunjeonLocalTable.m_dunjeonDataDatas[0].DunjeonID);
 
@@ -123,7 +123,7 @@ namespace GameBerry.Managers
                         // 던전에 대한 보상을 주자
                         m_dunjeonReward.Gold = m_currentDunjeonData.Reward.Gold * 10;
                         m_dunjeonReward.Exp = m_currentDunjeonData.Reward.Exp * 10;
-                        m_dunjeonReward.ReinForceCube = 0;
+                        m_dunjeonReward.EquipmentSton = 0;
 
                         PlayerManager.Instance.RecvDunjeonReward(m_dunjeonReward);
                         DunjeonRePlay();

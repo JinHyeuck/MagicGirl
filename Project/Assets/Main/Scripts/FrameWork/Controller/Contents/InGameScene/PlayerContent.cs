@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GameBerry.UI;
 
 namespace GameBerry.Contents
 {
@@ -9,6 +10,11 @@ namespace GameBerry.Contents
         protected override void OnLoadComplete()
         {
             Managers.PlayerManager manager = Managers.PlayerManager.Instance;
+        }
+
+        protected override void OnEnter()
+        {
+            IDialog.RequestDialogEnter<PlayerInfoDialog>();
         }
     }
 }

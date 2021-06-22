@@ -27,7 +27,7 @@ namespace GameBerry
         public int CriticalDamage = 0;
     }
 
-    public class EquipmentLocalTable
+    public class EquipmentLocalChart
     {
         public List<EquipmentData> m_equipmentDatas = new List<EquipmentData>();
         private Dictionary<string, EquipmentData> m_equipmentDatas_Dic = new Dictionary<string, EquipmentData>();
@@ -35,7 +35,7 @@ namespace GameBerry
         //------------------------------------------------------------------------------------
         public void InitData()
         {
-            JsonData chartJson = JsonMapper.ToObject(TheBackEnd.TheBackEnd.Instance.GetLocalChartData(Define.EquipmentTableKey));
+            JsonData chartJson = JsonMapper.ToObject(TheBackEnd.TheBackEnd.Instance.GetLocalChartData(Define.EquipmentChartKey));
 
             var rows = chartJson["rows"];
 
