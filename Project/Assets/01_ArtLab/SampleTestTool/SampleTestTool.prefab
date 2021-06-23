@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14992e3e649de8e42b8c2a4289fe978d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Animator: {fileID: 2809261995623768366}
+  Animator: {fileID: 1747446046192756806}
   AniPlayerList:
   - Key: 49
     AniName: idle
@@ -96,7 +96,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2537137196339049056}
+  - {fileID: 1747446046192756807}
   m_Father: {fileID: 6561068044644460020}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -849,13 +849,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3af82c9caa77e14448a1229ca1879a5f, type: 3}
---- !u!4 &2537137196339049056 stripped
+--- !u!4 &1747446046192756807 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 8662709384310148783, guid: 3af82c9caa77e14448a1229ca1879a5f, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4849730785759794312, guid: 3af82c9caa77e14448a1229ca1879a5f, type: 3}
   m_PrefabInstance: {fileID: 6561068044205423823}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &2809261995623768366 stripped
+--- !u!95 &1747446046192756806 stripped
 Animator:
-  m_CorrespondingSourceObject: {fileID: 9075061633846287841, guid: 3af82c9caa77e14448a1229ca1879a5f, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4849730785759794313, guid: 3af82c9caa77e14448a1229ca1879a5f, type: 3}
   m_PrefabInstance: {fileID: 6561068044205423823}
   m_PrefabAsset: {fileID: 0}
