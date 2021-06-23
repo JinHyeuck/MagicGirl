@@ -37,6 +37,11 @@ namespace GameBerry.Managers
                 TheBackEnd.TheBackEnd.Instance.PlayerTableUpdate();
                 m_playerInfoDataSaveTimer = Time.time + m_playerInfoDataSaveTime;
             }
+
+            //if (Input.GetKeyUp(KeyCode.A))
+            //{
+            //    TheBackEnd.TheBackEnd.Instance.PlayerTableUpdate();
+            //}
         }
         //------------------------------------------------------------------------------------
         public int GetLevel()

@@ -103,7 +103,6 @@ namespace GameBerry
                     }
                 default:
                     {
-                        OnFinishAttackState();
                         break;
                     }
             }

@@ -134,12 +134,8 @@ namespace GameBerry
             if (m_characterState == PlayerState.Hit)
             {
                 if (Time.time > m_hitRecoveryStartTime + m_hitRecoveryTime)
-                {
                     ChangeState(PlayerState.Idle);
-                    return;
-                }
-                else
-                    return;
+                return;
             }
 
             if (Managers.MonsterManager.Instance.GetForeFrontMonster() != null)
@@ -190,6 +186,8 @@ namespace GameBerry
 
             if (TestText != null)
                 TestText.text = characterState.ToString();
+
+            Debug.Log(string.Format("캐릭터 상태 바뀜 {0}", m_characterState));
 
             switch (m_characterState)
             {

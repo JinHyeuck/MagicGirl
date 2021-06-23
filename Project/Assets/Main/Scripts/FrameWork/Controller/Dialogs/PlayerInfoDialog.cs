@@ -20,7 +20,7 @@ namespace GameBerry.UI
         private Text m_playerNameText = null;
 
         [SerializeField]
-        private Text m_upGradeStonCountText = null;
+        private Text m_equipmentStonCountText = null;
 
         [SerializeField]
         private Text m_diaCountText = null;
@@ -88,8 +88,8 @@ namespace GameBerry.UI
             if (m_diaCountText != null)
                 m_diaCountText.text = Managers.PlayerDataManager.Instance.GetDia().ToString();
 
-            if (m_upGradeStonCountText != null)
-                m_upGradeStonCountText.text = Managers.PlayerDataManager.Instance.GetEquipmentSton().ToString();
+            if (m_equipmentStonCountText != null)
+                m_equipmentStonCountText.text = Managers.PlayerDataManager.Instance.GetEquipmentSton().ToString();
 
             int currentLevel = Managers.PlayerDataManager.Instance.GetLevel();
             int currentExp = Managers.PlayerDataManager.Instance.GetExp();
@@ -159,8 +159,8 @@ namespace GameBerry.UI
         //------------------------------------------------------------------------------------
         private void RefrashEquipmentSton(GameBerry.Event.RefrashEquipmentStonMsg msg)
         {
-            if (m_upGradeStonCountText != null)
-                m_upGradeStonCountText.text = Managers.PlayerDataManager.Instance.GetEquipmentSton().ToString();
+            if (m_equipmentStonCountText != null)
+                m_equipmentStonCountText.text = Managers.PlayerDataManager.Instance.GetEquipmentSton().ToString();
         }
         //------------------------------------------------------------------------------------
         private void RefrashSkillSton(GameBerry.Event.RefrashSkillStonMsg msg)

@@ -4,6 +4,14 @@ using UnityEngine;
 
 namespace GameBerry
 {
+    public enum DunjeonRewardType : byte
+    {
+        None = 0,
+        Gold,
+        Exp,
+        EquipmentSton,
+    }
+
     public class DunjeonMonsterReward
     {
         public int Gold;

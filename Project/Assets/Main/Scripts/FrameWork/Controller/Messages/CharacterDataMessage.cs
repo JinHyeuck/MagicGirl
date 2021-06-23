@@ -23,4 +23,10 @@ namespace GameBerry.Event
     public class RefrashSkillStonMsg : Message
     {
     }
+
+    public class DunjeonPharmingRewardMsg : Message
+    {
+        public DunjeonRewardType RewardType = DunjeonRewardType.None;
+        public int RewardCount = 0;
+    }
 }

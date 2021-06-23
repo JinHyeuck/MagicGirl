@@ -8,6 +8,8 @@ namespace GameBerry.Managers
     {
         private PlayerController m_playerController;
         private InGameCameraController m_inGameCamera;
+        private Event.DunjeonPharmingRewardMsg m_dunjeonPharmingRewardMsg = new Event.DunjeonPharmingRewardMsg();
+
 
         //------------------------------------------------------------------------------------
         protected override void Init()
@@ -83,6 +85,27 @@ namespace GameBerry.Managers
             PlayerDataManager.Instance.AddGold(reward.Gold);
             PlayerDataManager.Instance.AddExp(reward.Exp);
             PlayerDataManager.Instance.AddEquipmentSton(reward.EquipmentSton);
+
+            if (reward.Gold > 0)
+            {
+                m_dunjeonPharmingRewardMsg.RewardType = DunjeonRewardType.Gold;
+                m_dunjeonPharmingRewardMsg.RewardCount = reward.Gold;
+                Message.Send(m_dunjeonPharmingRewardMsg);
+            }
+
+            if (reward.Exp > 0)
+            {
+                m_dunjeonPharmingRewardMsg.RewardType = DunjeonRewardType.Exp;
+                m_dunjeonPharmingRewardMsg.RewardCount = reward.Exp;
+                Message.Send(m_dunjeonPharmingRewardMsg);
+            }
+
+            if (reward.EquipmentSton > 0)
+            {
+                m_dunjeonPharmingRewardMsg.RewardType = DunjeonRewardType.EquipmentSton;
+                m_dunjeonPharmingRewardMsg.RewardCount = reward.EquipmentSton;
+                Message.Send(m_dunjeonPharmingRewardMsg);
+            }
         }
         //------------------------------------------------------------------------------------
         public void RecvDunjeonReward(DunjeonMonsterReward reward)
