@@ -14,17 +14,5 @@ namespace GameBerry
 
         public static int EquipmentSton;
         public static int SkillSton;
-
-        //------------------------------------------------------------------------------------
-        public static void Init()
-        { 
-
-        }
-        //------------------------------------------------------------------------------------
-        public static void MakePlayerInfo(string rowkey)
-        { 
-
-        }
-        //------------------------------------------------------------------------------------
     }
 }

@@ -77,6 +77,10 @@ namespace GameBerry.Managers
             _tables.Add(Type.GetType("GameBerry.DunjeonLocalChart"), dunjeonLocalTable);
 
 
+            LevelLocalChart levelLocalChart = new LevelLocalChart();
+            levelLocalChart.InitData();
+            _tables.Add(Type.GetType("GameBerry.LevelLocalChart"), levelLocalChart);
+
             _alreadyLoading = false;
             _loadComplete = true;
         }

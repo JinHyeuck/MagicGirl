@@ -14,7 +14,7 @@ public static class Define
     public static readonly string SkillItemChartKey = "skillchart";
     public static readonly string MonsterChartKey = "monsterchart";
     public static readonly string DunjeonChartKey = "dunjeonchart";
-    public static readonly string ExpchartKey = "expchartchart";
+    public static readonly string LevelchartKey = "levelchart";
 
 
     //CharacterInfoTableKey
