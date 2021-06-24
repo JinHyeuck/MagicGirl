@@ -207,7 +207,7 @@ namespace GameBerry.UI
 		{
 		}
 
-        /// 애니메이션 대비 함수
+        #region 애니메이션 대비 함수
         protected virtual void OnEnterAniStart()
         {
         }
@@ -240,7 +240,7 @@ namespace GameBerry.UI
                     OnExitAniFinish();
             }
         }
-        /// 애니메이션 대비 함수
+        #endregion
 
         public static void RequestDialogEnter<T>(bool _playAni = false) where T : IDialog
 		{

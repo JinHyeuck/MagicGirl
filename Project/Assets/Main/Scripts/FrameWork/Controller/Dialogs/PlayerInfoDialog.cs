@@ -107,11 +107,14 @@ namespace GameBerry.UI
             }
 
             float ratio = (float)currentExp / (float)leveldata.Exp;
+            if (ratio > 1.0f)
+                ratio = 1.0f;
+
             if (m_expFilledImage != null)
                 m_expFilledImage.fillAmount = ratio;
 
             if (m_expPercentText != null)
-                m_expPercentText.text = string.Format("{0}/{1}", currentExp, leveldata.Exp);
+                m_expPercentText.text = string.Format("{0:0.00#}%", ratio * 100.0f);
         }
         //------------------------------------------------------------------------------------
         private void RefrashLevel(GameBerry.Event.RefrashLevelMsg msg)
@@ -142,7 +145,7 @@ namespace GameBerry.UI
                 m_expFilledImage.fillAmount = ratio;
 
             if (m_expPercentText != null)
-                m_expPercentText.text = string.Format("{0}/{1}", currentExp, leveldata.Exp);
+                m_expPercentText.text = string.Format("{0:0.00#}%", ratio * 100.0f);
         }
         //------------------------------------------------------------------------------------
         private void RefrashGold(GameBerry.Event.RefrashGoldMsg msg)

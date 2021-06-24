@@ -40,7 +40,7 @@ namespace GameBerry
 
         // Hit
         private float m_hitRecoveryStartTime = 0.0f;
-        private float m_hitRecoveryTime = 1.0f;
+        private float m_hitRecoveryTime = 0.5f;
 
         private Vector3 m_originPos = Vector3.one;
 

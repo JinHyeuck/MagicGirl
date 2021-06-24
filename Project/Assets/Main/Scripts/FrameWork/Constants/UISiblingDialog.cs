@@ -10,9 +10,12 @@
         // Login
 
         // InGame
-        InGamePlayMenuDialog,
         DunjeonPharmingDialog,
+
+        PlayerStatDialog,
+
         PlayerInfoDialog,
+        InGamePlayMenuDialog,
         // Global UI 501 ~ 999
         GlobalUI = 500,
 

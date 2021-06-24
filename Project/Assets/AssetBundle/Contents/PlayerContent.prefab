@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _uiList:
   - PlayerInfoDialog
+  - PlayerStatDialog
   dialogList: []
 --- !u!114 &416250220032087589
 MonoBehaviour:

@@ -16,5 +16,17 @@ namespace GameBerry.Contents
         {
             IDialog.RequestDialogEnter<PlayerInfoDialog>();
         }
+
+        private void Update()
+        {
+            if (Input.GetKeyUp(KeyCode.D))
+            {
+                IDialog.RequestDialogEnter<PlayerStatDialog>();
+            }
+            else if (Input.GetKeyUp(KeyCode.F))
+            {
+                IDialog.RequestDialogExit<PlayerStatDialog>();
+            }
+        }
     }
 }
