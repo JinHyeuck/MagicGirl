@@ -14,8 +14,8 @@ namespace GameBerry
 
     public class DunjeonMonsterReward
     {
-        public int Gold;
-        public int Exp;
+        public double Gold;
+        public double Exp;
         public int EquipmentSton;
     }
 

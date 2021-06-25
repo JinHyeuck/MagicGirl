@@ -187,8 +187,6 @@ namespace GameBerry
             if (TestText != null)
                 TestText.text = characterState.ToString();
 
-            Debug.Log(string.Format("캐릭터 상태 바뀜 {0}", m_characterState));
-
             switch (m_characterState)
             {
                 case PlayerState.Idle:

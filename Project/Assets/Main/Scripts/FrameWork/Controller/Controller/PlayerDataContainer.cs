@@ -7,9 +7,9 @@ namespace GameBerry
     public static class PlayerDataContainer
     {
         public static int Level;
-        public static int Exp;
+        public static double Exp;
 
-        public static int Gold;
+        public static double Gold;
         public static int Dia;
 
         public static int EquipmentSton;

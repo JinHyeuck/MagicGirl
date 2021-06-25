@@ -27,6 +27,6 @@ namespace GameBerry.Event
     public class DunjeonPharmingRewardMsg : Message
     {
         public DunjeonRewardType RewardType = DunjeonRewardType.None;
-        public int RewardCount = 0;
+        public double RewardCount = 0;
     }
 }

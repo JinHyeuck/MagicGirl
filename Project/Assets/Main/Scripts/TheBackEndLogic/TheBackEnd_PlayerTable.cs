@@ -71,11 +71,11 @@ namespace GameBerry.TheBackEnd
                             }
                             else if (key == Define.PlayerExp)
                             {
-                                PlayerDataContainer.Exp = ((int)data[i][key]);
+                                PlayerDataContainer.Exp = (System.Convert.ToDouble(data[i][key].ToString()));
                             }
                             else if (key == Define.PlayerGold)
                             {
-                                PlayerDataContainer.Gold = ((int)data[i][key]);
+                                PlayerDataContainer.Gold = (System.Convert.ToDouble(data[i][key].ToString()));
                             }
                             else if (key == Define.PlayerDia)
                             {

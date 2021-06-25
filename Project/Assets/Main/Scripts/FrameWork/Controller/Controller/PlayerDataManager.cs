@@ -54,7 +54,7 @@ namespace GameBerry.Managers
             PlayerDataContainer.Level += 1;
         }
         //------------------------------------------------------------------------------------
-        public void AddExp(int exp)
+        public void AddExp(double exp)
         {
             PlayerDataContainer.Exp += exp;
 
@@ -71,18 +71,18 @@ namespace GameBerry.Managers
             Message.Send(m_refrashExpMsg);
         }
         //------------------------------------------------------------------------------------
-        public int GetExp()
+        public double GetExp()
         {
             return PlayerDataContainer.Exp;
         }
         //------------------------------------------------------------------------------------
-        public void AddGold(int gold)
+        public void AddGold(double gold)
         {
             PlayerDataContainer.Gold += gold;
             Message.Send(m_refrashGoldMsg);
         }
         //------------------------------------------------------------------------------------
-        public int GetGold()
+        public double GetGold()
         {
             return PlayerDataContainer.Gold;
         }

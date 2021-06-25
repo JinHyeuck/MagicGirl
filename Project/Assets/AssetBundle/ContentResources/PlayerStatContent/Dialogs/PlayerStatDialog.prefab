@@ -683,6 +683,14 @@ MonoBehaviour:
   dialogView: {fileID: 5811766214988533396}
   _uiInAnimations: []
   _uiOutAnimations: []
+  m_changeTab_Upgrade: {fileID: 0}
+  m_changeTab_Promotion: {fileID: 0}
+  m_playerIcon: {fileID: 0}
+  m_levelText: {fileID: 0}
+  m_expBar: {fileID: 0}
+  m_expText: {fileID: 0}
+  m_expPerText: {fileID: 0}
+  m_upGradeContentRoot: {fileID: 0}
 --- !u!1 &3830626526505833172
 GameObject:
   m_ObjectHideFlags: 0
@@ -1065,7 +1073,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &978113994732416670
 RectTransform:
   m_ObjectHideFlags: 0

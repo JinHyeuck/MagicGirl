@@ -17,7 +17,7 @@ namespace GameBerry.UI
     {
         public DunjeonRewardType RewardType;
         public Sprite RewardIcon;
-        public int RewardCount;
+        public double RewardCount;
     }
 
     public class DunjeonPharmingDialog : IDialog

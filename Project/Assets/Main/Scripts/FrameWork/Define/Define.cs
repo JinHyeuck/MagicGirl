@@ -15,10 +15,12 @@ public static class Define
     public static readonly string MonsterChartKey = "monsterchart";
     public static readonly string DunjeonChartKey = "dunjeonchart";
     public static readonly string LevelchartKey = "levelchart";
+    public static readonly string StatUpGradeChartKey = "statupgradechart";
 
 
     //CharacterInfoTableKey
     public static readonly string CharacterInfoTable = "charinfo";
+    public static readonly string CharacterUpGradeStatTable = "charupgradestat";
 
     //CharacterInfoRowKey
     public static readonly string PlayerLevel = "level";

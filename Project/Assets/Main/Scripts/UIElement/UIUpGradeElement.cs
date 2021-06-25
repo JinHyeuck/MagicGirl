@@ -53,6 +53,11 @@ namespace GameBerry.UI
             m_eventTrigger.triggers.Add(m_pointUpEntry);
         }
         //------------------------------------------------------------------------------------
+        public void SetElementUI(StatUpGradeType type, Sprite icon, int currupgrade)
+        { 
+
+        }
+        //------------------------------------------------------------------------------------
         private void Update()
         {
             if (m_isPointDown == true)
