@@ -15,7 +15,7 @@ public static class Define
     public static readonly string MonsterChartKey = "monsterchart";
     public static readonly string DunjeonChartKey = "dunjeonchart";
     public static readonly string LevelchartKey = "levelchart";
-    public static readonly string StatUpGradeChartKey = "statupgradechart";
+    public static readonly string StatUpGradeChartKey = "upgradestatchart";
 
 
     //CharacterInfoTableKey
@@ -33,7 +33,7 @@ public static class Define
     public static readonly string PlayerSkillSton = "skillston";
 
     //CharacterInfoRowKey-UpGrade
-    public static readonly string PlayerUpGradeDamage = "playerupgradedamage";
+    public static readonly string PlayerUpGradeAddDamage = "playerupgradeadddamage";
     public static readonly string PlayerUpGradeCriticalDamage = "playerupgradecriticaldamage";
     public static readonly string PlayerUpGradeCriticalPer = "playerupgradecriticalper";
     public static readonly string PlayerUpGradeAddGold = "playerupgradeaddgold";

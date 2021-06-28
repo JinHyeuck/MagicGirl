@@ -81,6 +81,10 @@ namespace GameBerry.Managers
             levelLocalChart.InitData();
             _tables.Add(Type.GetType("GameBerry.LevelLocalChart"), levelLocalChart);
 
+            StatUpGradeLocalChart statUpGradeLocalChart = new StatUpGradeLocalChart();
+            statUpGradeLocalChart.InitData();
+            _tables.Add(Type.GetType("GameBerry.StatUpGradeLocalChart"), statUpGradeLocalChart);
+
             _alreadyLoading = false;
             _loadComplete = true;
         }

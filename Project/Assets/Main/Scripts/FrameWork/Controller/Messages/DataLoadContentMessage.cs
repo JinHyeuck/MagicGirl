@@ -10,7 +10,12 @@ namespace GameBerry.Event
         public bool IsSuccess = false;
     }
 
-    public class CompletePlayerTableLoadMsg : Message
+    public class CompleteCharacterInfoTableLoadMsg : Message
+    {
+        public bool IsSuccess = false;
+    }
+
+    public class CompleteCharacterUpGradeStatTableLoadMsg : Message
     {
         public bool IsSuccess = false;
     }

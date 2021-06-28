@@ -100,14 +100,24 @@ namespace GameBerry.TheBackEnd
         //------------------------------------------------------------------------------------
         #region TheBackEnd_PlayerTable
         //------------------------------------------------------------------------------------
-        public void GetTableData()
+        public void GetCharacterInfoTableData()
         {
-            TheBackEnd_PlayerTable.GetTableData();
+            TheBackEnd_PlayerTable.GetCharacterInfoTableData();
         }
         //------------------------------------------------------------------------------------
-        public void PlayerTableUpdate()
+        public void UpdateCharacterInfoTable()
         {
-            TheBackEnd_PlayerTable.PlayerTableUpdate();
+            TheBackEnd_PlayerTable.UpdateCharacterInfoTable();
+        }
+        //------------------------------------------------------------------------------------
+        public void GetCharacterUpGradeStatTableData()
+        {
+            TheBackEnd_PlayerTable.GetCharacterUpGradeStatTableData();
+        }
+        //------------------------------------------------------------------------------------
+        public void UpdateCharacterUpGradeStatTable()
+        {
+            TheBackEnd_PlayerTable.UpdateCharacterUpGradeStatTable();
         }
         //------------------------------------------------------------------------------------
         #endregion

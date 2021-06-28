@@ -683,14 +683,34 @@ MonoBehaviour:
   dialogView: {fileID: 5811766214988533396}
   _uiInAnimations: []
   _uiOutAnimations: []
-  m_changeTab_Upgrade: {fileID: 0}
-  m_changeTab_Promotion: {fileID: 0}
-  m_playerIcon: {fileID: 0}
-  m_levelText: {fileID: 0}
-  m_expBar: {fileID: 0}
-  m_expText: {fileID: 0}
-  m_expPerText: {fileID: 0}
-  m_upGradeContentRoot: {fileID: 0}
+  m_changeTab_Upgrade: {fileID: 6272395449264212903}
+  m_changeTab_Promotion: {fileID: 5759749426886692947}
+  m_playerIcon: {fileID: 7278082626792446841}
+  m_levelText: {fileID: 4029980873732308935}
+  m_expFilledImage: {fileID: 6383934839404407262}
+  m_expText: {fileID: 6319000598017550125}
+  m_expPercentText: {fileID: 5592006284438074395}
+  m_upGradeContentRoot: {fileID: 6233564658674774487}
+  m_upGradeContentStartPos: {fileID: 7767044340763755813}
+  m_upGradeElementPosGab: -170
+  m_uIUpGradeElement: {fileID: 5570179486177258276, guid: 9c943e068dbef2b4d83008dade5e31c5, type: 3}
+  m_upGradeSpriteData:
+  - Type: 0
+    SpriteData: {fileID: 21300000, guid: d1db4721e51022f489aeeb94ffbef9a3, type: 3}
+  - Type: 1
+    SpriteData: {fileID: 21300000, guid: 7482f96d474cb0a40b17a5df13d71a95, type: 3}
+  - Type: 2
+    SpriteData: {fileID: 21300000, guid: 26a5c7320a2e8424a849dd6f807a2ed1, type: 3}
+  - Type: 3
+    SpriteData: {fileID: 21300000, guid: 85b9b3a89428dc543848734d4a385247, type: 3}
+  - Type: 4
+    SpriteData: {fileID: 21300000, guid: aa84ec3dd9cb4db40bdcf1c54e8e18bc, type: 3}
+  - Type: 5
+    SpriteData: {fileID: 21300000, guid: 1ea4f783c32bb1c4cb1fb28e4ac457c4, type: 3}
+  - Type: 6
+    SpriteData: {fileID: 21300000, guid: 2ea02bfaf140ac641afc33cb7c2a52e7, type: 3}
+  - Type: 7
+    SpriteData: {fileID: 21300000, guid: 5f56756b54cf363488e47d69a28411d1, type: 3}
 --- !u!1 &3830626526505833172
 GameObject:
   m_ObjectHideFlags: 0
@@ -950,7 +970,7 @@ GameObject:
   - component: {fileID: 6469234245950309701}
   - component: {fileID: 5592006284438074395}
   m_Layer: 5
-  m_Name: ExpPerText
+  m_Name: ExpPercentText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1252,6 +1272,41 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &7188705016746138329
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7767044340763755813}
+  m_Layer: 5
+  m_Name: StartPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &7767044340763755813
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7188705016746138329}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6233564658674774487}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -30}
+  m_SizeDelta: {x: -60, y: 140}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &7280817478811315989
 GameObject:
   m_ObjectHideFlags: 0
@@ -1432,7 +1487,8 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 7767044340763755813}
   m_Father: {fileID: 1104045002730354140}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1453,7 +1509,7 @@ GameObject:
   - component: {fileID: 9098604187108005637}
   - component: {fileID: 3581191363383266111}
   m_Layer: 5
-  m_Name: ExpBarBG
+  m_Name: ExpBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1611,7 +1667,7 @@ GameObject:
   - component: {fileID: 9003192682288187503}
   - component: {fileID: 6383934839404407262}
   m_Layer: 5
-  m_Name: ExpBar
+  m_Name: ExpFilledImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

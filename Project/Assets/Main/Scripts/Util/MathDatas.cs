@@ -385,6 +385,7 @@ public class MathDatas {
 			return sinLookUpTable[angleInt]+(sinLookUpTable[angleInt+1]-sinLookUpTable[angleInt])*angleFloat;
 		}
 	}
+
 	public static float Cos(float angle_p){
 		return Sin(angle_p+90f);
 	}
@@ -409,6 +410,18 @@ public class MathDatas {
 		if(val_p<0f){
 			return val_p*-1f;
 		} else{
+			return val_p;
+		}
+	}
+
+	public static int Abs(int val_p)
+	{
+		if (val_p < 0)
+		{
+			return val_p * -1;
+		}
+		else
+		{
 			return val_p;
 		}
 	}

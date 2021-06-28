@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameBerry.Managers
@@ -22,6 +20,7 @@ namespace GameBerry.Managers
         {
             m_playerInfoDataSaveTimer = Time.time + m_playerInfoDataSaveTime;
 
+            PlayerDataOperator.Init();
             m_levelLocalChart = Managers.TableManager.Instance.GetTableClass<LevelLocalChart>();
         }
         //------------------------------------------------------------------------------------
@@ -34,14 +33,10 @@ namespace GameBerry.Managers
         {
             if (m_playerInfoDataSaveTimer < Time.time)
             {
-                TheBackEnd.TheBackEnd.Instance.PlayerTableUpdate();
+                TheBackEnd.TheBackEnd.Instance.UpdateCharacterInfoTable();
+                TheBackEnd.TheBackEnd.Instance.UpdateCharacterUpGradeStatTable();
                 m_playerInfoDataSaveTimer = Time.time + m_playerInfoDataSaveTime;
             }
-
-            //if (Input.GetKeyUp(KeyCode.A))
-            //{
-            //    TheBackEnd.TheBackEnd.Instance.PlayerTableUpdate();
-            //}
         }
         //------------------------------------------------------------------------------------
         public int GetLevel()
@@ -82,6 +77,20 @@ namespace GameBerry.Managers
             Message.Send(m_refrashGoldMsg);
         }
         //------------------------------------------------------------------------------------
+        public bool UseGold(double gold)
+        {
+            bool isSuccess = false;
+
+            if (PlayerDataContainer.Gold > gold)
+            { 
+                PlayerDataContainer.Gold -= gold;
+                Message.Send(m_refrashGoldMsg);
+                isSuccess = true;
+            }
+
+            return isSuccess;
+        }
+        //------------------------------------------------------------------------------------
         public double GetGold()
         {
             return PlayerDataContainer.Gold;
@@ -118,6 +127,46 @@ namespace GameBerry.Managers
         public int GetSkillSton()
         {
             return PlayerDataContainer.SkillSton;
+        }
+        //------------------------------------------------------------------------------------
+        public int GetCurrentUpGradeStatLevel(StatUpGradeType type)
+        {
+            return PlayerDataContainer.m_upGradeStatLevel[type];
+        }
+        //------------------------------------------------------------------------------------
+        public double GetUpGradeStatPrice(StatUpGradeType type)
+        {
+            return PlayerDataOperator.GetUpGradePrice(type, GetCurrentUpGradeStatLevel(type));
+        }
+        //------------------------------------------------------------------------------------
+        public double GetCurrentUpGradeStatValue(StatUpGradeType type)
+        {
+            return PlayerDataOperator.GetCurrentUpGradeStatValue(type, GetCurrentUpGradeStatLevel(type));
+        }
+        //------------------------------------------------------------------------------------
+        public double GetNextUpGradeStatValue(StatUpGradeType type)
+        {
+            return PlayerDataOperator.GetCurrentUpGradeStatValue(type, GetCurrentUpGradeStatLevel(type) + 1);
+        }
+        //------------------------------------------------------------------------------------
+        public bool IsMaxUpGrade(StatUpGradeType type)
+        {
+            return PlayerDataOperator.IsMaxUpGrade(type, GetCurrentUpGradeStatLevel(type));
+        }
+        //------------------------------------------------------------------------------------
+        public bool InCreaseUpGradeStatLevel(StatUpGradeType type)
+        {
+            if (UseGold(GetUpGradeStatPrice(type)) == true)
+            {
+                PlayerDataContainer.m_upGradeStatLevel[type]++;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+            return false;
         }
         //------------------------------------------------------------------------------------
     }

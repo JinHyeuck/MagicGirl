@@ -17,7 +17,8 @@ namespace GameBerry.Contents
         {
             Message.AddListener<GameBerry.Event.GetAllGameChartResponseMsg>(GetAllGameChartResponse);
             Message.AddListener<GameBerry.Event.GetOneChartAndSaveResponseMsg>(GetOneChartAndSaveResponse);
-            Message.AddListener<GameBerry.Event.CompletePlayerTableLoadMsg>(CompletePlayerTableLoad);
+            Message.AddListener<GameBerry.Event.CompleteCharacterInfoTableLoadMsg>(CompletePlayerTableLoad);
+            Message.AddListener<GameBerry.Event.CompleteCharacterUpGradeStatTableLoadMsg>(CompleteCharacterUpGradeStatTableLoad);
 
             StartLoadData();
         }
@@ -26,7 +27,8 @@ namespace GameBerry.Contents
         {
             Message.RemoveListener<GameBerry.Event.GetAllGameChartResponseMsg>(GetAllGameChartResponse);
             Message.RemoveListener<GameBerry.Event.GetOneChartAndSaveResponseMsg>(GetOneChartAndSaveResponse);
-            Message.RemoveListener<GameBerry.Event.CompletePlayerTableLoadMsg>(CompletePlayerTableLoad);
+            Message.RemoveListener<GameBerry.Event.CompleteCharacterInfoTableLoadMsg>(CompletePlayerTableLoad);
+            Message.RemoveListener<GameBerry.Event.CompleteCharacterUpGradeStatTableLoadMsg>(CompleteCharacterUpGradeStatTableLoad);
         }
         //------------------------------------------------------------------------------------
         private void StartLoadData()
@@ -128,10 +130,15 @@ namespace GameBerry.Contents
         {
             yield return StartCoroutine(Managers.TableManager.Instance.Load());
 
-            TheBackEnd.TheBackEnd.Instance.GetTableData();
+            TheBackEnd.TheBackEnd.Instance.GetCharacterInfoTableData();
         }
         //------------------------------------------------------------------------------------
-        private void CompletePlayerTableLoad(GameBerry.Event.CompletePlayerTableLoadMsg msg)
+        private void CompletePlayerTableLoad(GameBerry.Event.CompleteCharacterInfoTableLoadMsg msg)
+        {
+            TheBackEnd.TheBackEnd.Instance.GetCharacterUpGradeStatTableData();
+        }
+        //------------------------------------------------------------------------------------
+        private void CompleteCharacterUpGradeStatTableLoad(GameBerry.Event.CompleteCharacterUpGradeStatTableLoadMsg msg)
         {
             SetLoadComplete();
         }

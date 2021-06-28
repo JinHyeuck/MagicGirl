@@ -33,14 +33,28 @@ namespace GameBerry.UI
 
         private float m_pointDownStartTime = 0.0f;
         private float m_pointDownDelay = 0.5f;
-        private float m_pointDownTurm = 0.1f;
+        private float m_pointDownTurm = 0.01f;
         private float m_pointDownTurmTimer = 0.0f;
 
         private bool m_isPointDown = false;
 
+        private StatUpGradeType m_isStatUpGradeType = StatUpGradeType.Max;
+
         //------------------------------------------------------------------------------------
-        private void Start()
+        public void Init(StatUpGradeType type, Sprite icon, int maxlevel)
         {
+            m_isStatUpGradeType = type;
+
+            if (m_upGradeIcon != null)
+                m_upGradeIcon.sprite = icon;
+
+            if (m_upGradeMaxLevel != null)
+                m_upGradeMaxLevel.text = maxlevel.ToString();
+
+            SetCurrentLevel();
+            SetUpGradeState();
+            SetUpGradePrice();
+
             m_pointDownEntry = new EventTrigger.Entry();
             m_pointDownEntry.eventID = EventTriggerType.PointerDown;
             m_pointDownEntry.callback.AddListener(OnPointDown_UpGrade);
@@ -51,11 +65,6 @@ namespace GameBerry.UI
 
             m_eventTrigger.triggers.Add(m_pointDownEntry);
             m_eventTrigger.triggers.Add(m_pointUpEntry);
-        }
-        //------------------------------------------------------------------------------------
-        public void SetElementUI(StatUpGradeType type, Sprite icon, int currupgrade)
-        { 
-
         }
         //------------------------------------------------------------------------------------
         private void Update()
@@ -97,6 +106,50 @@ namespace GameBerry.UI
         private void UpGrade()
         {
             Debug.LogWarning("업그레이드ㄱㄱ");
+
+            if (Managers.PlayerDataManager.Instance.IsMaxUpGrade(m_isStatUpGradeType) == true)
+            {
+                Debug.Log("이미 만랩");
+                return;
+            }
+
+            bool upgradeSuccess = Managers.PlayerDataManager.Instance.InCreaseUpGradeStatLevel(m_isStatUpGradeType);
+
+            if (upgradeSuccess == true)
+            {
+                SetCurrentLevel();
+                SetUpGradeState();
+                SetUpGradePrice();
+            }
+            else
+            {
+                Debug.Log("돈없으");
+            }
         }
+        //------------------------------------------------------------------------------------
+        private void SetCurrentLevel()
+        {
+            if (m_upGradeCurrentLevel != null)
+                m_upGradeCurrentLevel.text = Managers.PlayerDataManager.Instance.GetCurrentUpGradeStatLevel(m_isStatUpGradeType).ToString();
+        }
+        //------------------------------------------------------------------------------------
+        private void SetUpGradeState()
+        {
+            if (m_upGradeState != null)
+            {
+                string textstr = Managers.PlayerDataManager.Instance.IsMaxUpGrade(m_isStatUpGradeType) == true ? Managers.PlayerDataManager.Instance.GetCurrentUpGradeStatValue(m_isStatUpGradeType).ToString() : string.Format("{0} -> {1}", Managers.PlayerDataManager.Instance.GetCurrentUpGradeStatValue(m_isStatUpGradeType), Managers.PlayerDataManager.Instance.GetNextUpGradeStatValue(m_isStatUpGradeType));
+                m_upGradeState.text = textstr;
+            }
+        }
+        //------------------------------------------------------------------------------------
+        private void SetUpGradePrice()
+        {
+            if (m_upGradePrice != null)
+            {
+                string textstr = Managers.PlayerDataManager.Instance.IsMaxUpGrade(m_isStatUpGradeType) == true ? "MAX" : string.Format("{0:0}", Managers.PlayerDataManager.Instance.GetUpGradeStatPrice(m_isStatUpGradeType));
+                m_upGradePrice.text = textstr;
+            }
+        }
+        //------------------------------------------------------------------------------------
     }
 }

@@ -35,7 +35,7 @@ namespace GameBerry
         public double AddIncreaseLevelPrice = 0;
     }
 
-    public class StatUpGradeLocalChart : MonoBehaviour
+    public class StatUpGradeLocalChart
     {
         public List<StatUpGradeData> m_statUpGradeDatas = new List<StatUpGradeData>();
         private Dictionary<StatUpGradeType, StatUpGradeData> m_statUpGradeDatas_Dic = new Dictionary<StatUpGradeType, StatUpGradeData>();
@@ -71,7 +71,7 @@ namespace GameBerry
             }
         }
         //------------------------------------------------------------------------------------
-        public StatUpGradeData GetLevelData(StatUpGradeType type)
+        public StatUpGradeData GetStatUpGradeData(StatUpGradeType type)
         {
             StatUpGradeData data = null;
             m_statUpGradeDatas_Dic.TryGetValue(type, out data);

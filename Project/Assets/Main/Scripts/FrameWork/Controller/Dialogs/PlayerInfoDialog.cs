@@ -91,30 +91,7 @@ namespace GameBerry.UI
             if (m_equipmentStonCountText != null)
                 m_equipmentStonCountText.text = Managers.PlayerDataManager.Instance.GetEquipmentSton().ToString();
 
-            int currentLevel = Managers.PlayerDataManager.Instance.GetLevel();
-            double currentExp = Managers.PlayerDataManager.Instance.GetExp();
-
-            LevelData leveldata = m_levelLocalChart.GetLevelData(currentLevel);
-            if (leveldata == null)
-            {
-                if (m_expFilledImage != null)
-                    m_expFilledImage.fillAmount = 1.0f;
-
-                if (m_expPercentText != null)
-                    m_expPercentText.text = currentExp.ToString();
-
-                return;
-            }
-
-            double ratio = currentExp / leveldata.Exp;
-            if (ratio > 1.0f)
-                ratio = 1.0f;
-
-            if (m_expFilledImage != null)
-                m_expFilledImage.fillAmount = (float)ratio;
-
-            if (m_expPercentText != null)
-                m_expPercentText.text = string.Format("{0:0.00}%", ratio * 100.0f);
+            RefrashExp(null);
         }
         //------------------------------------------------------------------------------------
         private void RefrashLevel(GameBerry.Event.RefrashLevelMsg msg)
@@ -146,7 +123,7 @@ namespace GameBerry.UI
                 m_expFilledImage.fillAmount = (float)ratio;
 
             if (m_expPercentText != null)
-                m_expPercentText.text = string.Format("{0:0.00}%", ratio * 100.0f);
+                m_expPercentText.text = string.Format("{0:0.00}%", ratio * 100.0);
         }
         //------------------------------------------------------------------------------------
         private void RefrashGold(GameBerry.Event.RefrashGoldMsg msg)
