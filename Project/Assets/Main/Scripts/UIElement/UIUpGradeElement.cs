@@ -51,6 +51,9 @@ namespace GameBerry.UI
             if (m_upGradeMaxLevel != null)
                 m_upGradeMaxLevel.text = maxlevel.ToString();
 
+            if (m_upGradeTitle != null)
+                m_upGradeTitle.text = type.ToString();
+
             SetCurrentLevel();
             SetUpGradeState();
             SetUpGradePrice();
@@ -91,7 +94,6 @@ namespace GameBerry.UI
             m_isPointDown = true;
             m_pointDownStartTime = Time.time;
             m_pointDownTurmTimer = 0.0f;
-            Debug.LogError(string.Format("pointDown {0}", baseEventData.ToString()));
         }
         //------------------------------------------------------------------------------------
         private void OnPointUp_UpGrade(BaseEventData baseEventData)
@@ -99,8 +101,6 @@ namespace GameBerry.UI
             m_isPointDown = false;
             if(m_pointDownStartTime + m_pointDownDelay > Time.time)
                 UpGrade();
-
-            Debug.LogError(string.Format("pointUp {0}", baseEventData.ToString()));
         }
         //------------------------------------------------------------------------------------
         private void UpGrade()

@@ -437,6 +437,11 @@ namespace GameBerry
 
 			return outValue;
 		}
+
+		public static double ToDouble(this string s)
+		{
+			return Convert.ToDouble(s);
+		}
 	}
 
 

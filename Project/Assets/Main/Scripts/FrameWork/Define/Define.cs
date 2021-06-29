@@ -17,6 +17,10 @@ public static class Define
     public static readonly string LevelchartKey = "levelchart";
     public static readonly string StatUpGradeChartKey = "upgradestatchart";
 
+    public static readonly string WeaponChartKey = "weaponchart";
+    public static readonly string NecklaceChartKey = "necklacechart";
+    public static readonly string RingChartKey = "ringchart";
+
 
     //CharacterInfoTableKey
     public static readonly string CharacterInfoTable = "charinfo";
