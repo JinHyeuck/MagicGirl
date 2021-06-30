@@ -51,9 +51,11 @@ MonoBehaviour:
   - DunjeonContent
   - InGameContent
   - PlayerStatContent
+  - EquipmentContent
   defaultContentList:
   - PlayerContent
   - MonsterContent
   - DunjeonContent
   - InGameContent
   - PlayerStatContent
+  - EquipmentContent

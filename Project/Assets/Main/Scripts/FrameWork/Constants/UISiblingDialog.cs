@@ -13,6 +13,7 @@
         DunjeonPharmingDialog,
 
         PlayerStatDialog,
+        EquipmentDialog,
 
         PlayerInfoDialog,
         InGamePlayMenuDialog,
