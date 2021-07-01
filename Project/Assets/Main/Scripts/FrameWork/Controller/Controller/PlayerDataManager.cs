@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameBerry.Managers
@@ -168,6 +169,29 @@ namespace GameBerry.Managers
             }
 
             return false;
+        }
+        //------------------------------------------------------------------------------------
+        public PlayerEquipmentInfo GetPlayerEquipmentInfo(EquipmentType type, int id)
+        {
+            Dictionary<int, PlayerEquipmentInfo> dic = null;
+
+            if (PlayerDataContainer.m_equipmentInfo.TryGetValue(type, out dic) == true)
+            {
+                if (dic != null)
+                {
+                    PlayerEquipmentInfo equipmentinfo = null;
+                    if (dic.TryGetValue(id, out equipmentinfo) == true)
+                        return equipmentinfo;
+                    else
+                        return null;
+                }
+                else
+                    return null;
+            }
+            else
+                return null;
+
+            return PlayerDataContainer.m_equipmentInfo[type][id];
         }
         //------------------------------------------------------------------------------------
     }

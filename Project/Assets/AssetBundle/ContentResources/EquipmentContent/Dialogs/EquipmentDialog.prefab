@@ -1113,7 +1113,11 @@ MonoBehaviour:
   dialogView: {fileID: 1156322314230183660}
   _uiInAnimations: []
   _uiOutAnimations: []
-  m_equipmentElement: {fileID: 0}
+  m_changeTab_Weapon: {fileID: 1704500298567234527}
+  m_changeTab_Ring: {fileID: 1100323095062341675}
+  m_changeTab_Necklace: {fileID: 2614605770682649012}
+  m_equipmentRoot: {fileID: 1596963225095834031}
+  m_equipmentElement: {fileID: 2913278457839102384, guid: 540e8f872cc1f414299603dccfbea8e0, type: 3}
 --- !u!1 &8892999340273101098
 GameObject:
   m_ObjectHideFlags: 0

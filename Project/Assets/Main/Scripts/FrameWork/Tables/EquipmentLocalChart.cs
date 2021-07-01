@@ -41,7 +41,7 @@ namespace GameBerry
 
     public class EquipmentLocalChart : MonoBehaviour
     {
-        public Dictionary<int, EquipmentData> m_equipmentData_Dic = new Dictionary<int, EquipmentData>();
+        private Dictionary<int, EquipmentData> m_equipmentData_Dic = new Dictionary<int, EquipmentData>();
         private Dictionary<EquipmentType, List<EquipmentData>> m_equipmentDataList_Dic = new Dictionary<EquipmentType, List<EquipmentData>>();
 
         //------------------------------------------------------------------------------------
@@ -53,11 +53,13 @@ namespace GameBerry
 
             for (int i = 0; i < rows.Count; ++i)
             {
+                EquipmentType eqtype = EnumExtensions.Parse<EquipmentType>(rows[i]["type"]["S"].ToString());
+
                 EquipmentData data = new EquipmentData
                 {
                     Id = rows[i]["equipment_id"]["S"].ToString().FastStringToInt(),
 
-                    Type = EnumExtensions.Parse<EquipmentType>(rows[i]["equipment_id"]["S"].ToString()),
+                    Type = eqtype,
 
                     Grade = rows[i]["grade"]["S"].ToString().FastStringToInt(),
 
@@ -89,6 +91,12 @@ namespace GameBerry
                 };
 
                 m_equipmentData_Dic.Add(data.Id, data);
+                if (m_equipmentDataList_Dic.ContainsKey(eqtype) == false)
+                {
+                    m_equipmentDataList_Dic.Add(eqtype, new List<EquipmentData>());
+                }
+
+                m_equipmentDataList_Dic[eqtype].Add(data);
             }
         }
         //------------------------------------------------------------------------------------
@@ -98,6 +106,11 @@ namespace GameBerry
             m_equipmentData_Dic.TryGetValue(id, out data);
 
             return data;
+        }
+        //------------------------------------------------------------------------------------
+        public List<EquipmentData> GetEquipmentDataList(EquipmentType type)
+        {
+            return m_equipmentDataList_Dic[type];
         }
         //------------------------------------------------------------------------------------
     }

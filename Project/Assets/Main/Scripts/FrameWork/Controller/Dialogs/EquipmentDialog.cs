@@ -35,7 +35,7 @@ namespace GameBerry.UI
         {
             m_equipmentLocalChart = Managers.TableManager.Instance.GetTableClass<EquipmentLocalChart>();
 
-            CreateEquipmentElement();
+            CreateEquipmentElement(m_currentEquipmentType);
         }
         //------------------------------------------------------------------------------------
         private void ChangeEquipmentType(EquipmentType type)
@@ -43,16 +43,20 @@ namespace GameBerry.UI
             m_currentEquipmentType = type;
         }
         //------------------------------------------------------------------------------------
-        private void CreateEquipmentElement()
+        private void CreateEquipmentElement(EquipmentType type)
         {
-            //for (int i = 0; i < m_equipmentLocalChart.GetEquipmentList(m_currentEquipmentType).Count; ++i)
-            //{
-            //    GameObject clone = Instantiate(m_equipmentElement.gameObject, m_equipmentRoot.transform);
-            //    UIEquipmentElement element = clone.GetComponent<UIEquipmentElement>();
+            List<EquipmentData> datalist = m_equipmentLocalChart.GetEquipmentDataList(m_currentEquipmentType);
+            if (datalist == null)
+                return;
 
-            //    m_equipmentElement_List.Add(element);
+            for (int i = 0; i < datalist.Count; ++i)
+            {
+                GameObject clone = Instantiate(m_equipmentElement.gameObject, m_equipmentRoot.transform);
+                UIEquipmentElement element = clone.GetComponent<UIEquipmentElement>();
+                element.SetEquipmentElement(datalist[i], Managers.PlayerDataManager.Instance.GetPlayerEquipmentInfo(type, datalist[i].Id));
 
-            //}
+                m_equipmentElement_List.Add(element);
+            }
         }
         //------------------------------------------------------------------------------------
         private void SetElementUI()
