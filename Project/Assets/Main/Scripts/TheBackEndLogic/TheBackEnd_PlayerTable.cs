@@ -9,6 +9,7 @@ namespace GameBerry.TheBackEnd
     {
         public static string CharInfoInData = string.Empty;
         public static string CharUpGradeStatInData = string.Empty;
+        public static string CharEquipmentInfoInData = string.Empty;
 
         //------------------------------------------------------------------------------------
         public static void GetTableList()
@@ -214,38 +215,6 @@ namespace GameBerry.TheBackEnd
                             {
                                 PlayerDataContainer.m_upGradeStatLevel.Add(StatUpGradeType.MoveSpeed, (int)data[i][key]);
                             }
-                            //else if (key == Define.PlayerUpGradeDamage)
-                            //{
-                            //    PlayerDataContainer.UpGradeStat_AddDamage = ((int)data[i][key]);
-                            //}
-                            //else if (key == Define.PlayerUpGradeCriticalDamage)
-                            //{
-                            //    PlayerDataContainer.UpGradeStat_CriticalDamage = ((int)data[i][key]);
-                            //}
-                            //else if (key == Define.PlayerUpGradeCriticalPer)
-                            //{
-                            //    PlayerDataContainer.UpGradeStat_CriticalPercent = ((int)data[i][key]);
-                            //}
-                            //else if (key == Define.PlayerUpGradeAddGold)
-                            //{
-                            //    PlayerDataContainer.UpGradeStat_AddGold = ((int)data[i][key]);
-                            //}
-                            //else if (key == Define.PlayerUpGradeMP)
-                            //{
-                            //    PlayerDataContainer.UpGradeStat_MP = ((int)data[i][key]);
-                            //}
-                            //else if (key == Define.PlayerUpGradeMPRecovery)
-                            //{
-                            //    PlayerDataContainer.UpGradeStat_MPRecovery = ((int)data[i][key]);
-                            //}
-                            //else if (key == Define.PlayerUpGradeCastingSpeed)
-                            //{
-                            //    PlayerDataContainer.UpGradeStat_CastingSpeed = ((int)data[i][key]);
-                            //}
-                            //else if (key == Define.PlayerUpGradeMoveSpeed)
-                            //{
-                            //    PlayerDataContainer.UpGradeStat_MoveSpeed = ((int)data[i][key]);
-                            //}
 
                             returnValue += string.Format("{0} : {1} / ", key, data[i][key].ToString());
                         }
@@ -300,6 +269,127 @@ namespace GameBerry.TheBackEnd
             param.Add(Define.PlayerUpGradeMoveSpeed, PlayerDataContainer.m_upGradeStatLevel[StatUpGradeType.MoveSpeed]);
 
             SendQueue.Enqueue(Backend.GameData.Update, Define.CharacterUpGradeStatTable, CharUpGradeStatInData, param, (callback) =>
+            {
+                Debug.Log(string.Format("TableUpdate : {0}", callback.IsSuccess()));
+            });
+        }
+        //------------------------------------------------------------------------------------
+        #endregion
+        //------------------------------------------------------------------------------------
+        #region TheBackEnd_EquipmentInfo
+        //------------------------------------------------------------------------------------
+        public static void GetCharacterEquipmentInfoTableData()
+        {
+            SendQueue.Enqueue(Backend.GameData.Get, Define.CharacterEquipmentInfoTable, new Where(), 10, (bro) =>
+            {
+                if (bro.IsSuccess() == false)
+                {
+                    Debug.Log(bro.GetStatusCode());
+                    Debug.Log(bro.GetErrorCode());
+                    Debug.Log(bro.GetMessage());
+                    return;
+                }
+
+                var data = bro.FlattenRows();
+
+                Debug.LogError(data.Count == 0 ? "CharacterEquipmentInfo테이블에 아무것도 없음" : "CharacterEquipmentInfo테이블에 정보 있음");
+
+                if (data.Count == 0)
+                {
+                    InsertCharacterEquipmentInfo();
+                }
+                else
+                {
+                    for (int i = 0; i < data.Count; ++i)
+                    {
+                        string returnValue = string.Empty;
+                        foreach (var key in data[i].Keys)
+                        {
+                            if (key == "inDate")
+                            {
+                                CharUpGradeStatInData = data[i][key].ToString();
+                            }
+                            else if (key == Define.CharacterEquipmentInfoTable)
+                            {
+                                string str = data[i][key].ToString();
+                                LitJson.JsonData chartJson = LitJson.JsonMapper.ToObject(str);
+
+                                for (int j = 0; j < (int)EquipmentType.Max; ++j)
+                                {
+                                    var raw = chartJson[((EquipmentType)i).ToString()];
+
+                                    Dictionary<int, PlayerEquipmentInfo> tempDic = new Dictionary<int, PlayerEquipmentInfo>();
+
+                                    for (int k = 0; k < raw.Count; ++k)
+                                    {
+                                        PlayerEquipmentInfo equipdata = null;
+
+                                        if (raw[k] != null)
+                                        {
+                                            equipdata = new PlayerEquipmentInfo
+                                            {
+                                                Index = raw[k]["Index"].ToString().FastStringToInt(),
+
+                                                Count = raw[k]["Count"].ToString().FastStringToInt(),
+
+                                                Level = raw[k]["Level"].ToString().FastStringToInt()
+                                            };
+                                        }
+
+                                        tempDic.Add(equipdata.Index, equipdata);
+                                    }
+
+                                    PlayerDataContainer.m_equipmentInfo.Add((EquipmentType)j, tempDic);
+                                }
+                            }
+
+                            returnValue += string.Format("{0} : {1} / ", key, data[i][key].ToString());
+                        }
+
+                        Debug.Log(returnValue);
+                    }
+
+                    Message.Send(new Event.CompleteCharacterEquipmentInfoLoadMsg());
+                }
+            });
+        }
+        //------------------------------------------------------------------------------------
+        private static void InsertCharacterEquipmentInfo()
+        {
+            Dictionary<EquipmentType, Dictionary<int, PlayerEquipmentInfo>> equipmentinfo = new Dictionary<EquipmentType, Dictionary<int, PlayerEquipmentInfo>>();
+            for (int i = 0; i < (int)EquipmentType.Max; ++i)
+            {
+                equipmentinfo.Add((EquipmentType)i, new Dictionary<int, PlayerEquipmentInfo>());
+            }
+
+            string str = LitJson.JsonMapper.ToJson(equipmentinfo);
+
+            Param param = new Param();
+            param.Add(Define.CharacterEquipmentInfoTable, str);
+
+            Debug.Log("InsertCharacterEquipmentInfo()");
+
+            SendQueue.Enqueue(Backend.GameData.Insert, Define.CharacterEquipmentInfoTable, param, (callback) =>
+            {
+                Debug.Log(string.Format("InsertCharacterEquipmentInfo Succcess : {0}, statusCode : {1}", callback.IsSuccess(), callback.GetStatusCode()));
+
+                if (callback.IsSuccess() == true)
+                {
+                    Debug.Log(callback.GetReturnValue());
+                    GetCharacterEquipmentInfoTableData();
+                }
+                else
+                {
+                }
+            });
+        }
+        //------------------------------------------------------------------------------------
+        public static void UpdateCharacterEquipmentInfoTable()
+        {
+            Param param = new Param();
+            param.Add(Define.CharacterEquipmentInfoTable, PlayerDataContainer.m_equipmentInfo);
+
+            SendQueue.Enqueue(Backend.GameData.Update, Define.CharacterEquipmentInfoTable, CharEquipmentInfoInData, param, (callback) =>
             {
                 Debug.Log(string.Format("TableUpdate : {0}", callback.IsSuccess()));
             });

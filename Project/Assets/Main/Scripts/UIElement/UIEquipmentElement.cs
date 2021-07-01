@@ -7,7 +7,7 @@ namespace GameBerry.UI
     public class UIEquipmentElement : MonoBehaviour
     {
 
-        public void SetEquipmentElement()
+        public void SetEquipmentElement(EquipmentData equipmentdata)
         { 
 
         }

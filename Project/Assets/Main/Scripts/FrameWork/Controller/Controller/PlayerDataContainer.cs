@@ -1,9 +1,18 @@
 using System.Collections.Generic;
 namespace GameBerry
 {
+    public class PlayerEquipmentInfo
+    {
+        public int Index;
+        public int Count;
+        public int Level;
+    }
+
     public static class PlayerDataContainer
     {
         public static Dictionary<StatUpGradeType, int> m_upGradeStatLevel = new Dictionary<StatUpGradeType, int>();
+
+        public static Dictionary<EquipmentType, Dictionary<int, PlayerEquipmentInfo>> m_equipmentInfo = new Dictionary<EquipmentType, Dictionary<int, PlayerEquipmentInfo>>();
 
         public static int Level;
         public static double Exp;

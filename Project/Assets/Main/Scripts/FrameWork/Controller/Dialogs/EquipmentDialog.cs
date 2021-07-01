@@ -25,8 +25,9 @@ namespace GameBerry.UI
         [SerializeField]
         private UIEquipmentElement m_equipmentElement;
 
-        private EquipmentLocalChart m_equipmentLocalChart = null;
+        private List<UIEquipmentElement> m_equipmentElement_List = new List<UIEquipmentElement>();
 
+        private EquipmentLocalChart m_equipmentLocalChart = null;
         private EquipmentType m_currentEquipmentType = EquipmentType.Weapon;
 
         //------------------------------------------------------------------------------------
@@ -34,12 +35,24 @@ namespace GameBerry.UI
         {
             m_equipmentLocalChart = Managers.TableManager.Instance.GetTableClass<EquipmentLocalChart>();
 
-
+            CreateEquipmentElement();
         }
         //------------------------------------------------------------------------------------
         private void ChangeEquipmentType(EquipmentType type)
         {
             m_currentEquipmentType = type;
+        }
+        //------------------------------------------------------------------------------------
+        private void CreateEquipmentElement()
+        {
+            //for (int i = 0; i < m_equipmentLocalChart.GetEquipmentList(m_currentEquipmentType).Count; ++i)
+            //{
+            //    GameObject clone = Instantiate(m_equipmentElement.gameObject, m_equipmentRoot.transform);
+            //    UIEquipmentElement element = clone.GetComponent<UIEquipmentElement>();
+
+            //    m_equipmentElement_List.Add(element);
+
+            //}
         }
         //------------------------------------------------------------------------------------
         private void SetElementUI()

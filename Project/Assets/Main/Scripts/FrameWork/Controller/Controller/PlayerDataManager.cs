@@ -35,6 +35,7 @@ namespace GameBerry.Managers
             {
                 TheBackEnd.TheBackEnd.Instance.UpdateCharacterInfoTable();
                 TheBackEnd.TheBackEnd.Instance.UpdateCharacterUpGradeStatTable();
+                TheBackEnd.TheBackEnd.Instance.UpdateCharacterEquipmentInfoTable();
                 m_playerInfoDataSaveTimer = Time.time + m_playerInfoDataSaveTime;
             }
         }

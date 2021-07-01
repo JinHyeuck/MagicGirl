@@ -10,13 +10,13 @@ public static class Define
     public static readonly string EquipSkillKey = "equipskillKey";
 
     //TheBackEndChartKey
-    public static readonly string EquipmentChartKey = "equipmentchart";
     public static readonly string SkillItemChartKey = "skillchart";
     public static readonly string MonsterChartKey = "monsterchart";
     public static readonly string DunjeonChartKey = "dunjeonchart";
     public static readonly string LevelchartKey = "levelchart";
     public static readonly string StatUpGradeChartKey = "upgradestatchart";
 
+    public static readonly string EquipmentChartKey = "equipmentchart";
     public static readonly string WeaponChartKey = "weaponchart";
     public static readonly string NecklaceChartKey = "necklacechart";
     public static readonly string RingChartKey = "ringchart";
@@ -25,6 +25,7 @@ public static class Define
     //CharacterInfoTableKey
     public static readonly string CharacterInfoTable = "charinfo";
     public static readonly string CharacterUpGradeStatTable = "charupgradestat";
+    public static readonly string CharacterEquipmentInfoTable = "charequipmentinfo";
 
     //CharacterInfoRowKey
     public static readonly string PlayerLevel = "level";

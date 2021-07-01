@@ -120,6 +120,16 @@ namespace GameBerry.TheBackEnd
             TheBackEnd_PlayerTable.UpdateCharacterUpGradeStatTable();
         }
         //------------------------------------------------------------------------------------
+        public void GetCharacterEquipmentInfoTableData()
+        {
+            TheBackEnd_PlayerTable.GetCharacterEquipmentInfoTableData();
+        }
+        //------------------------------------------------------------------------------------
+        public void UpdateCharacterEquipmentInfoTable()
+        {
+            TheBackEnd_PlayerTable.UpdateCharacterEquipmentInfoTable();
+        }
+        //------------------------------------------------------------------------------------
         #endregion
     }
 }
