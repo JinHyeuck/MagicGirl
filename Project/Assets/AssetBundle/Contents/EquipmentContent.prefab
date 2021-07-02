@@ -62,3 +62,20 @@ MonoBehaviour:
   ContentName: 
   _uiLoader: {fileID: 4170054505238069707}
   dontDestroy: 0
+  m_gradleColorList:
+  - GradeType: 1
+    GradeColor: {r: 0.5372549, g: 0.5372549, b: 0.5372549, a: 1}
+  - GradeType: 2
+    GradeColor: {r: 0.84313726, g: 1, b: 0.90588236, a: 1}
+  - GradeType: 3
+    GradeColor: {r: 1, g: 0.79607844, b: 0.9529412, a: 1}
+  - GradeType: 4
+    GradeColor: {r: 1, g: 0.9647059, b: 0.3529412, a: 1}
+  - GradeType: 5
+    GradeColor: {r: 0.46666667, g: 0.76862746, b: 1, a: 1}
+  - GradeType: 6
+    GradeColor: {r: 1, g: 0.49411765, b: 0.46666667, a: 1}
+  - GradeType: 7
+    GradeColor: {r: 1, g: 0.7921569, b: 0.46666667, a: 1}
+  - GradeType: 8
+    GradeColor: {r: 0.5254902, g: 1, b: 0.46666667, a: 1}

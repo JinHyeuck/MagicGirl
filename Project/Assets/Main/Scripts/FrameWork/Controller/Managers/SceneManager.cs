@@ -43,179 +43,179 @@ namespace GameBerry.Managers
         }
         //------------------------------------------------------------------------------------
 
-        [Serializable]
-        public class asdf
-        {
-            public int a;
-            public string b;
-            public double c;
-        }
+        //[Serializable]
+        //public class asdf
+        //{
+        //    public int a;
+        //    public string b;
+        //    public double c;
+        //}
 
-        [Serializable]
-        public class asdfconta
-        {
-            public List<asdf> viewList = new List<asdf>();
-            public List<asdf> viewList1 = new List<asdf>();
-            public List<asdf> viewList2 = new List<asdf>();
-        }
+        //[Serializable]
+        //public class asdfconta
+        //{
+        //    public List<asdf> viewList = new List<asdf>();
+        //    public List<asdf> viewList1 = new List<asdf>();
+        //    public List<asdf> viewList2 = new List<asdf>();
+        //}
 
-        public asdfconta container = new asdfconta();
+        //public asdfconta container = new asdfconta();
 
-        [ContextMenu("testsa")]
-        private void testsa()
-        {
-            asdfconta asdflist = new asdfconta();
+        //[ContextMenu("testsa")]
+        //private void testsa()
+        //{
+        //    asdfconta asdflist = new asdfconta();
 
-            for (int i = 0; i < 10; ++i)
-            {
-                asdflist.viewList.Add(new asdf { a = i, b = i.ToString(), c = i });
-            }
+        //    for (int i = 0; i < 10; ++i)
+        //    {
+        //        asdflist.viewList.Add(new asdf { a = i, b = i.ToString(), c = i });
+        //    }
 
-            for (int i = 0; i < 10; ++i)
-            {
-                asdflist.viewList1.Add(new asdf { a = i, b = i.ToString(), c = i });
-            }
+        //    for (int i = 0; i < 10; ++i)
+        //    {
+        //        asdflist.viewList1.Add(new asdf { a = i, b = i.ToString(), c = i });
+        //    }
 
-            for (int i = 0; i < 10; ++i)
-            {
-                asdflist.viewList2.Add(new asdf { a = i, b = i.ToString(), c = i });
-            }
+        //    for (int i = 0; i < 10; ++i)
+        //    {
+        //        asdflist.viewList2.Add(new asdf { a = i, b = i.ToString(), c = i });
+        //    }
 
-            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
-            sw.Start();
+        //    System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+        //    sw.Start();
 
-            string s = LitJson.JsonMapper.ToJson(asdflist);
-            sw.Stop();
-            Debug.Log(s);
-            Debug.Log(sw.ElapsedMilliseconds.ToString());
-
-
-
-            LitJson.JsonData chartJson = LitJson.JsonMapper.ToObject(s);
-
-            var raw = chartJson["viewList"];
-
-            for (int i = 0; i < raw.Count; ++i)
-            {
-                asdf data = null;
-
-                if (raw[i] != null)
-                {
-                    data = new asdf
-                    {
-                        a = raw[i]["a"].ToString().FastStringToInt(),
-
-                        b = raw[i]["b"].ToString(),
-
-                        c = System.Convert.ToDouble(raw[i]["c"].ToString()),
-                    };
-                }
-
-                container.viewList.Add(data);
-            }
-
-            raw = chartJson["viewList1"];
-
-            for (int i = 0; i < raw.Count; ++i)
-            {
-                asdf data = null;
-
-                if (raw[i] != null)
-                {
-                    data = new asdf
-                    {
-                        a = raw[i]["a"].ToString().FastStringToInt(),
-
-                        b = raw[i]["b"].ToString(),
-
-                        c = System.Convert.ToDouble(raw[i]["c"].ToString()),
-                    };
-                }
-
-                container.viewList1.Add(data);
-            }
-
-            raw = chartJson["viewList2"];
-
-            for (int i = 0; i < raw.Count; ++i)
-            {
-                asdf data = null;
-
-                if (raw[i] != null)
-                {
-                    data = new asdf
-                    {
-                        a = raw[i]["a"].ToString().FastStringToInt(),
-
-                        b = raw[i]["b"].ToString(),
-
-                        c = System.Convert.ToDouble(raw[i]["c"].ToString()),
-                    };
-                }
-
-                container.viewList2.Add(data);
-            }
+        //    string s = LitJson.JsonMapper.ToJson(asdflist);
+        //    sw.Stop();
+        //    Debug.Log(s);
+        //    Debug.Log(sw.ElapsedMilliseconds.ToString());
 
 
+
+        //    LitJson.JsonData chartJson = LitJson.JsonMapper.ToObject(s);
+
+        //    var raw = chartJson["viewList"];
+
+        //    for (int i = 0; i < raw.Count; ++i)
+        //    {
+        //        asdf data = null;
+
+        //        if (raw[i] != null)
+        //        {
+        //            data = new asdf
+        //            {
+        //                a = raw[i]["a"].ToString().FastStringToInt(),
+
+        //                b = raw[i]["b"].ToString(),
+
+        //                c = System.Convert.ToDouble(raw[i]["c"].ToString()),
+        //            };
+        //        }
+
+        //        container.viewList.Add(data);
+        //    }
+
+        //    raw = chartJson["viewList1"];
+
+        //    for (int i = 0; i < raw.Count; ++i)
+        //    {
+        //        asdf data = null;
+
+        //        if (raw[i] != null)
+        //        {
+        //            data = new asdf
+        //            {
+        //                a = raw[i]["a"].ToString().FastStringToInt(),
+
+        //                b = raw[i]["b"].ToString(),
+
+        //                c = System.Convert.ToDouble(raw[i]["c"].ToString()),
+        //            };
+        //        }
+
+        //        container.viewList1.Add(data);
+        //    }
+
+        //    raw = chartJson["viewList2"];
+
+        //    for (int i = 0; i < raw.Count; ++i)
+        //    {
+        //        asdf data = null;
+
+        //        if (raw[i] != null)
+        //        {
+        //            data = new asdf
+        //            {
+        //                a = raw[i]["a"].ToString().FastStringToInt(),
+
+        //                b = raw[i]["b"].ToString(),
+
+        //                c = System.Convert.ToDouble(raw[i]["c"].ToString()),
+        //            };
+        //        }
+
+        //        container.viewList2.Add(data);
+        //    }
 
 
 
 
 
 
-            Dictionary<EquipmentType, Dictionary<int, asdf>> asdfdic = new Dictionary<EquipmentType, Dictionary<int, asdf>>();
 
-            asdfdic.Add(EquipmentType.Weapon, new Dictionary<int, asdf>());
-            asdfdic.Add(EquipmentType.Necklace, new Dictionary<int, asdf>());
-            asdfdic.Add(EquipmentType.Ring, new Dictionary<int, asdf>());
 
-            foreach (KeyValuePair<EquipmentType, Dictionary<int, asdf>> pair in asdfdic)
-            {
-                for (int i = 0; i < 10; ++i)
-                {
-                    asdf asd = new asdf { a = i, b = i.ToString(), c = i };
-                    pair.Value.Add(asd.a, asd);
-                }
-            }
-            sw.Start();
+        //    Dictionary<EquipmentType, Dictionary<int, asdf>> asdfdic = new Dictionary<EquipmentType, Dictionary<int, asdf>>();
 
-            string d = LitJson.JsonMapper.ToJson(asdfdic);
-            sw.Stop();
-            Debug.Log(d);
-            Debug.Log(sw.ElapsedMilliseconds.ToString());
+        //    asdfdic.Add(EquipmentType.Weapon, new Dictionary<int, asdf>());
+        //    asdfdic.Add(EquipmentType.Necklace, new Dictionary<int, asdf>());
+        //    asdfdic.Add(EquipmentType.Ring, new Dictionary<int, asdf>());
 
-            chartJson = LitJson.JsonMapper.ToObject(d);
+        //    foreach (KeyValuePair<EquipmentType, Dictionary<int, asdf>> pair in asdfdic)
+        //    {
+        //        for (int i = 0; i < 10; ++i)
+        //        {
+        //            asdf asd = new asdf { a = i, b = i.ToString(), c = i };
+        //            pair.Value.Add(asd.a, asd);
+        //        }
+        //    }
+        //    sw.Start();
 
-            Dictionary<EquipmentType, Dictionary<int, asdf>> viewdic = new Dictionary<EquipmentType, Dictionary<int, asdf>>();
+        //    string d = LitJson.JsonMapper.ToJson(asdfdic);
+        //    sw.Stop();
+        //    Debug.Log(d);
+        //    Debug.Log(sw.ElapsedMilliseconds.ToString());
 
-            for (int i = 0; i < (int)EquipmentType.Max; ++i)
-            {
-                raw = chartJson[((EquipmentType)i).ToString()];
+        //    chartJson = LitJson.JsonMapper.ToObject(d);
 
-                Dictionary<int, asdf> templist = new Dictionary<int, asdf>();
+        //    Dictionary<EquipmentType, Dictionary<int, asdf>> viewdic = new Dictionary<EquipmentType, Dictionary<int, asdf>>();
 
-                for (int j = 0; j < raw.Count; ++j)
-                {
-                    asdf data = null;
+        //    for (int i = 0; i < (int)EquipmentType.Max; ++i)
+        //    {
+        //        raw = chartJson[((EquipmentType)i).ToString()];
 
-                    if (raw[j] != null)
-                    {
-                        data = new asdf
-                        {
-                            a = raw[j]["a"].ToString().FastStringToInt(),
+        //        Dictionary<int, asdf> templist = new Dictionary<int, asdf>();
 
-                            b = raw[j]["b"].ToString(),
+        //        for (int j = 0; j < raw.Count; ++j)
+        //        {
+        //            asdf data = null;
 
-                            c = System.Convert.ToDouble(raw[j]["c"].ToString()),
-                        };
-                    }
+        //            if (raw[j] != null)
+        //            {
+        //                data = new asdf
+        //                {
+        //                    a = raw[j]["a"].ToString().FastStringToInt(),
 
-                    templist.Add(data.a, data);
-                }
+        //                    b = raw[j]["b"].ToString(),
 
-                viewdic.Add((EquipmentType)i, templist);
-            }
-        }
+        //                    c = System.Convert.ToDouble(raw[j]["c"].ToString()),
+        //                };
+        //            }
+
+        //            templist.Add(data.a, data);
+        //        }
+
+        //        viewdic.Add((EquipmentType)i, templist);
+        //    }
+        //}
 
         void LoadStartScene()
         {

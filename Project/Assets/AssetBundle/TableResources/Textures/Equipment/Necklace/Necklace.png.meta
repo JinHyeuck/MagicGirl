@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ecaf791f9a14c714487fd71bc63b24b1
+guid: ca25212ba34182348a04945f4b30d2e2
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -92,5 +92,5 @@ TextureImporter:
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
   userData: 
-  assetBundleName: contentresources/equipmentcontent
+  assetBundleName: tableresources/textures/equipment/necklace
   assetBundleVariant: 

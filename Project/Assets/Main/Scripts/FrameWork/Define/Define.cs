@@ -56,4 +56,7 @@ public static class Define
     public static readonly string AniTrigger_Attack = "Attack";
     public static readonly string AniTrigger_Hit = "Hit";
     public static readonly string AniTrigger_Dead = "Dead";
+
+    //Equipment
+    public static readonly byte EquipmentComposeAmount = 5;
 }

@@ -5,11 +5,34 @@ using LitJson;
 
 namespace GameBerry
 {
+    public enum EquipmentGradeType
+    { 
+        None = 0,
+        Common,
+        UnCommon,
+        Rare,
+        Unique,
+        Relic,
+        Legendary,
+        Eqic,
+        Transcendence,
+    }
+
+    public enum EquipmentQualityType
+    { 
+        None = 0,
+        Row,
+        Middle,
+        High,
+        Highest,
+    }
+
     public enum EquipmentType
     { 
         Weapon = 0,
         Necklace,
         Ring,
+
         Max,
     }
 
@@ -17,10 +40,14 @@ namespace GameBerry
     {
         public int Id = 0;
 
+        public string EquipmentName;
+
         public EquipmentType Type;
 
-        public int Grade = 0;
-        public int Quality = 0;
+        public EquipmentGradeType Grade = 0;
+        public EquipmentQualityType Quality = 0;
+
+        public Sprite EquipmentSprite;
 
         public double DamageInt = 0.0;
         public double CriticalDamage = 0.0;
@@ -44,6 +71,8 @@ namespace GameBerry
         private Dictionary<int, EquipmentData> m_equipmentData_Dic = new Dictionary<int, EquipmentData>();
         private Dictionary<EquipmentType, List<EquipmentData>> m_equipmentDataList_Dic = new Dictionary<EquipmentType, List<EquipmentData>>();
 
+        private string m_resourcePath = "TableResources/Textures/Equipment";
+
         //------------------------------------------------------------------------------------
         public void InitData()
         {
@@ -59,21 +88,25 @@ namespace GameBerry
                 {
                     Id = rows[i]["equipment_id"]["S"].ToString().FastStringToInt(),
 
+                    EquipmentName = rows[i]["equipment_name"]["S"].ToString(),
+
                     Type = eqtype,
 
-                    Grade = rows[i]["grade"]["S"].ToString().FastStringToInt(),
+                    Grade = (EquipmentGradeType)rows[i]["grade"]["S"].ToString().FastStringToInt(),
 
-                    Quality = rows[i]["quality"]["S"].ToString().FastStringToInt(),
+                    Quality = (EquipmentQualityType)rows[i]["quality"]["S"].ToString().FastStringToInt(),
+
+                    EquipmentSprite = Util.GetSpriteOnAssetBundle(string.Format("{0}/{1}", m_resourcePath, eqtype), eqtype.ToString()),
 
                     DamageInt = rows[i]["damageint"]["S"].ToString().ToDouble(),
 
                     CriticalDamage = rows[i]["criticaldamage"]["S"].ToString().ToDouble(),
 
-                    DamagePer = rows[i]["damageint"]["S"].ToString().ToDouble(),
+                    DamagePer = rows[i]["damageper"]["S"].ToString().ToDouble(),
 
-                    EndDamage = rows[i]["damageint"]["S"].ToString().ToDouble(),
+                    EndDamage = rows[i]["enddamage"]["S"].ToString().ToDouble(),
 
-                    SkillDamage = rows[i]["damageint"]["S"].ToString().ToDouble(),
+                    SkillDamage = rows[i]["skilldamage"]["S"].ToString().ToDouble(),
 
                     MPInt = rows[i]["mp"]["S"].ToString().ToDouble(),
 
@@ -110,7 +143,11 @@ namespace GameBerry
         //------------------------------------------------------------------------------------
         public List<EquipmentData> GetEquipmentDataList(EquipmentType type)
         {
-            return m_equipmentDataList_Dic[type];
+            List<EquipmentData> datalist = null;
+
+            m_equipmentDataList_Dic.TryGetValue(type, out datalist);
+
+            return datalist;
         }
         //------------------------------------------------------------------------------------
     }

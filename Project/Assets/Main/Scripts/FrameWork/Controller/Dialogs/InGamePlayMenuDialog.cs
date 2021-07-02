@@ -140,6 +140,7 @@ namespace GameBerry.UI
                     }
                 case BottomMenuID.Equipment:
                     {
+                        RequestDialogEnter<EquipmentDialog>();
                         break;
                     }
                 case BottomMenuID.Colleague:
@@ -177,6 +178,7 @@ namespace GameBerry.UI
                     }
                 case BottomMenuID.Equipment:
                     {
+                        RequestDialogExit<EquipmentDialog>();
                         break;
                     }
                 case BottomMenuID.Colleague:

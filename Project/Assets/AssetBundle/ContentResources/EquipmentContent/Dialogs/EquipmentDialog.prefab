@@ -291,7 +291,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 170, y: 200}
+  m_CellSize: {x: 170, y: 170}
   m_Spacing: {x: 70, y: 90}
   m_Constraint: 0
   m_ConstraintCount: 2
@@ -1116,8 +1116,16 @@ MonoBehaviour:
   m_changeTab_Weapon: {fileID: 1704500298567234527}
   m_changeTab_Ring: {fileID: 1100323095062341675}
   m_changeTab_Necklace: {fileID: 2614605770682649012}
+  m_changeBtnList:
+  - ChangeTabBtn: {fileID: 1704500298567234527}
+    ButtonType: 0
+  - ChangeTabBtn: {fileID: 1100323095062341675}
+    ButtonType: 2
+  - ChangeTabBtn: {fileID: 2614605770682649012}
+    ButtonType: 1
   m_equipmentRoot: {fileID: 1596963225095834031}
   m_equipmentElement: {fileID: 2913278457839102384, guid: 540e8f872cc1f414299603dccfbea8e0, type: 3}
+  m_uIEquipmentPopup: {fileID: 1633298315453075873, guid: 9508c91b68570a146b7ffdaaeca82871, type: 3}
 --- !u!1 &8892999340273101098
 GameObject:
   m_ObjectHideFlags: 0
