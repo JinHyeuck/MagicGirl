@@ -139,7 +139,7 @@ namespace GameBerry.UI
             if (m_uIEquipmentPopupInstance != null)
             {
                 m_uIEquipmentPopupInstance.SetEquipment(equipmentData, playerEquipmentInfo);
-
+                m_uIEquipmentPopupInstance.gameObject.SetActive(true);
             }
         }
         //------------------------------------------------------------------------------------

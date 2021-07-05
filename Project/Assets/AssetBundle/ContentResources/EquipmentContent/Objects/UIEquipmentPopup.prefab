@@ -1571,8 +1571,8 @@ MonoBehaviour:
   m_levelUpEquipmentElement: {fileID: 6872715547989349852}
   m_levelUPBtn: {fileID: 5715753916193790412}
   m_levelUPBtnText: {fileID: 5949756151157630940}
-  m_equipBtn: {fileID: 0}
-  m_equipBtnText: {fileID: 0}
+  m_equipBtn: {fileID: 38488088739957973}
+  m_equipBtnText: {fileID: 2483032117282195041}
   m_combineGroup: {fileID: 526425991669299945}
   m_combine_CurrentEquipmentName: {fileID: 4675037670738694686}
   m_combine_CurrentEquipmentElement: {fileID: 4047006282200193990}
@@ -3931,6 +3931,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 540e8f872cc1f414299603dccfbea8e0, type: 3}
+--- !u!224 &5822358544502300721 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2865394429294582877, guid: 540e8f872cc1f414299603dccfbea8e0, type: 3}
+  m_PrefabInstance: {fileID: 8579006764093652076}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &6872715547989349852 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2913278457839102384, guid: 540e8f872cc1f414299603dccfbea8e0, type: 3}
@@ -3942,8 +3947,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e71316a26dcb664f980d862691cbd1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &5822358544502300721 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 2865394429294582877, guid: 540e8f872cc1f414299603dccfbea8e0, type: 3}
-  m_PrefabInstance: {fileID: 8579006764093652076}
-  m_PrefabAsset: {fileID: 0}
