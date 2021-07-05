@@ -3,9 +3,9 @@ namespace GameBerry
 {
     public class PlayerEquipmentInfo
     {
-        public int Index;
-        public int Count;
-        public int Level;
+        public int Id;
+        public int Count = 0;
+        public int Level = 0;
     }
 
     public static class PlayerDataContainer
@@ -13,6 +13,8 @@ namespace GameBerry
         public static Dictionary<StatUpGradeType, int> m_upGradeStatLevel = new Dictionary<StatUpGradeType, int>();
 
         public static Dictionary<EquipmentType, Dictionary<int, PlayerEquipmentInfo>> m_equipmentInfo = new Dictionary<EquipmentType, Dictionary<int, PlayerEquipmentInfo>>();
+
+        public static Dictionary<EquipmentType, int> m_equipId = new Dictionary<EquipmentType, int>();
 
         public static int Level;
         public static double Exp;
@@ -22,6 +24,10 @@ namespace GameBerry
 
         public static int EquipmentSton;
         public static int SkillSton;
+
+        public static int WeaponEquipID = -1;
+        public static int NecklaceEquipID = -1;
+        public static int RingEquipID = -1;
     }
 
     public static class PlayerDataOperator
@@ -76,6 +82,28 @@ namespace GameBerry
                 return true;
 
             return false;
+        }
+        //------------------------------------------------------------------------------------
+        public static int GetOperationQualityValue(EquipmentQualityType qualityType)
+        {
+            int orivalue = (int)qualityType;
+
+            if (orivalue > 0)
+            {
+                return orivalue + ((orivalue - 1) * Define.EquipmentQualityOperationValue);
+            }
+
+            return orivalue;
+        }
+        //------------------------------------------------------------------------------------
+        public static int GetNeedLevelUPEquipmentSton(EquipmentData equipmentdata, PlayerEquipmentInfo equipmentinfo)
+        {
+            int defaultcount = GetOperationQualityValue(equipmentdata.Quality) + ((int)equipmentdata.Grade * 20);
+
+            if (equipmentinfo == null)
+                return defaultcount;
+
+            return defaultcount + (defaultcount * (int)((float)equipmentinfo.Level * 0.5f));
         }
         //------------------------------------------------------------------------------------
     }

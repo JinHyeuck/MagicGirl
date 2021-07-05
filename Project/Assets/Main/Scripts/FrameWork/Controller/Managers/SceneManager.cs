@@ -42,180 +42,80 @@ namespace GameBerry.Managers
                 LoadStartScene();
         }
         //------------------------------------------------------------------------------------
+        [Serializable]
+        public class Testdatata
+        { 
+            public int index = 0;
+            public int subindex = 0;
 
-        //[Serializable]
-        //public class asdf
-        //{
-        //    public int a;
-        //    public string b;
-        //    public double c;
-        //}
+            public string prev = "-1";
+            public string next = "-1";
+        }
 
-        //[Serializable]
-        //public class asdfconta
-        //{
-        //    public List<asdf> viewList = new List<asdf>();
-        //    public List<asdf> viewList1 = new List<asdf>();
-        //    public List<asdf> viewList2 = new List<asdf>();
-        //}
+        public List<Testdatata> datata = new List<Testdatata>();
 
-        //public asdfconta container = new asdfconta();
+        [ContextMenu("rest")]
+        private void TestResetData()
+        {
+            datata.Clear();
+            datata.Add(new Testdatata { index = 8, subindex = 1 });
+            datata.Add(new Testdatata { index = 4, subindex = 2 });
+            datata.Add(new Testdatata { index = 2, subindex = 7 });
+            datata.Add(new Testdatata { index = 3, subindex = 1 });
+            datata.Add(new Testdatata { index = 8, subindex = 3 });
+            datata.Add(new Testdatata { index = 3, subindex = 2 });
+            datata.Add(new Testdatata { index = 4, subindex = 6 });
+            datata.Add(new Testdatata { index = 2, subindex = 2 });
+            datata.Add(new Testdatata { index = 8, subindex = 2 });
+            datata.Add(new Testdatata { index = 6, subindex = 1 });
 
-        //[ContextMenu("testsa")]
-        //private void testsa()
-        //{
-        //    asdfconta asdflist = new asdfconta();
+        }
 
-        //    for (int i = 0; i < 10; ++i)
-        //    {
-        //        asdflist.viewList.Add(new asdf { a = i, b = i.ToString(), c = i });
-        //    }
+        [ContextMenu("gfdsgdfs")]
+        private void TestSetData()
+        {
+            datata.Sort(TestSort);
+            datata.Sort(TestSort);
 
-        //    for (int i = 0; i < 10; ++i)
-        //    {
-        //        asdflist.viewList1.Add(new asdf { a = i, b = i.ToString(), c = i });
-        //    }
+            if (datata.Count > 1)
+            {
+                datata[0].prev = string.Format("{0}_{1}", datata[datata.Count - 1].index, datata[datata.Count - 1].subindex);
+                datata[datata.Count - 1].next = string.Format("{0}_{1}", datata[0].index, datata[0].subindex);
+            }
+        }
 
-        //    for (int i = 0; i < 10; ++i)
-        //    {
-        //        asdflist.viewList2.Add(new asdf { a = i, b = i.ToString(), c = i });
-        //    }
+        private int TestSort(Testdatata x, Testdatata y)
+        {
+            if (x.index < y.index)
+            {
+                x.next = string.Format("{0}_{1}", y.index, y.subindex);
+                y.prev = string.Format("{0}_{1}", x.index, x.subindex);
+                return -1;
+            }
+            else if (x.index > y.index)
+            {
+                y.next = string.Format("{0}_{1}", x.index, x.subindex);
+                x.prev = string.Format("{0}_{1}", y.index, y.subindex);
+                return 1;
+            }
+            else
+            {
+                if (x.subindex < y.subindex)
+                {
+                    x.next = string.Format("{0}_{1}", y.index, y.subindex);
+                    y.prev = string.Format("{0}_{1}", x.index, x.subindex);
+                    return -1;
+                }
+                else if (x.subindex > y.subindex)
+                {
+                    y.next = string.Format("{0}_{1}", x.index, x.subindex);
+                    x.prev = string.Format("{0}_{1}", y.index, y.subindex);
+                    return 1;
+                }
+            }
 
-        //    System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
-        //    sw.Start();
-
-        //    string s = LitJson.JsonMapper.ToJson(asdflist);
-        //    sw.Stop();
-        //    Debug.Log(s);
-        //    Debug.Log(sw.ElapsedMilliseconds.ToString());
-
-
-
-        //    LitJson.JsonData chartJson = LitJson.JsonMapper.ToObject(s);
-
-        //    var raw = chartJson["viewList"];
-
-        //    for (int i = 0; i < raw.Count; ++i)
-        //    {
-        //        asdf data = null;
-
-        //        if (raw[i] != null)
-        //        {
-        //            data = new asdf
-        //            {
-        //                a = raw[i]["a"].ToString().FastStringToInt(),
-
-        //                b = raw[i]["b"].ToString(),
-
-        //                c = System.Convert.ToDouble(raw[i]["c"].ToString()),
-        //            };
-        //        }
-
-        //        container.viewList.Add(data);
-        //    }
-
-        //    raw = chartJson["viewList1"];
-
-        //    for (int i = 0; i < raw.Count; ++i)
-        //    {
-        //        asdf data = null;
-
-        //        if (raw[i] != null)
-        //        {
-        //            data = new asdf
-        //            {
-        //                a = raw[i]["a"].ToString().FastStringToInt(),
-
-        //                b = raw[i]["b"].ToString(),
-
-        //                c = System.Convert.ToDouble(raw[i]["c"].ToString()),
-        //            };
-        //        }
-
-        //        container.viewList1.Add(data);
-        //    }
-
-        //    raw = chartJson["viewList2"];
-
-        //    for (int i = 0; i < raw.Count; ++i)
-        //    {
-        //        asdf data = null;
-
-        //        if (raw[i] != null)
-        //        {
-        //            data = new asdf
-        //            {
-        //                a = raw[i]["a"].ToString().FastStringToInt(),
-
-        //                b = raw[i]["b"].ToString(),
-
-        //                c = System.Convert.ToDouble(raw[i]["c"].ToString()),
-        //            };
-        //        }
-
-        //        container.viewList2.Add(data);
-        //    }
-
-
-
-
-
-
-
-
-        //    Dictionary<EquipmentType, Dictionary<int, asdf>> asdfdic = new Dictionary<EquipmentType, Dictionary<int, asdf>>();
-
-        //    asdfdic.Add(EquipmentType.Weapon, new Dictionary<int, asdf>());
-        //    asdfdic.Add(EquipmentType.Necklace, new Dictionary<int, asdf>());
-        //    asdfdic.Add(EquipmentType.Ring, new Dictionary<int, asdf>());
-
-        //    foreach (KeyValuePair<EquipmentType, Dictionary<int, asdf>> pair in asdfdic)
-        //    {
-        //        for (int i = 0; i < 10; ++i)
-        //        {
-        //            asdf asd = new asdf { a = i, b = i.ToString(), c = i };
-        //            pair.Value.Add(asd.a, asd);
-        //        }
-        //    }
-        //    sw.Start();
-
-        //    string d = LitJson.JsonMapper.ToJson(asdfdic);
-        //    sw.Stop();
-        //    Debug.Log(d);
-        //    Debug.Log(sw.ElapsedMilliseconds.ToString());
-
-        //    chartJson = LitJson.JsonMapper.ToObject(d);
-
-        //    Dictionary<EquipmentType, Dictionary<int, asdf>> viewdic = new Dictionary<EquipmentType, Dictionary<int, asdf>>();
-
-        //    for (int i = 0; i < (int)EquipmentType.Max; ++i)
-        //    {
-        //        raw = chartJson[((EquipmentType)i).ToString()];
-
-        //        Dictionary<int, asdf> templist = new Dictionary<int, asdf>();
-
-        //        for (int j = 0; j < raw.Count; ++j)
-        //        {
-        //            asdf data = null;
-
-        //            if (raw[j] != null)
-        //            {
-        //                data = new asdf
-        //                {
-        //                    a = raw[j]["a"].ToString().FastStringToInt(),
-
-        //                    b = raw[j]["b"].ToString(),
-
-        //                    c = System.Convert.ToDouble(raw[j]["c"].ToString()),
-        //                };
-        //            }
-
-        //            templist.Add(data.a, data);
-        //        }
-
-        //        viewdic.Add((EquipmentType)i, templist);
-        //    }
-        //}
+            return 0;
+        }
 
         void LoadStartScene()
         {

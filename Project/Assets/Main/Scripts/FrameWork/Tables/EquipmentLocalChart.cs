@@ -64,6 +64,9 @@ namespace GameBerry
         public double Castingspeed = 0.0;
         public double Cooltime = 0.0;
         public double Addexp = 0.0;
+
+        public EquipmentData PrevData = null;
+        public EquipmentData NextData = null;
     }
 
     public class EquipmentLocalChart : MonoBehaviour
@@ -131,9 +134,58 @@ namespace GameBerry
 
                 m_equipmentDataList_Dic[eqtype].Add(data);
             }
+
+            foreach (KeyValuePair<EquipmentType, List<EquipmentData>> pair in m_equipmentDataList_Dic)
+            {
+                pair.Value.Sort(SortEquipmentData);
+                pair.Value.Sort(SortEquipmentData);
+
+                if (pair.Value.Count > 1)
+                {
+                    pair.Value[0].PrevData = pair.Value[pair.Value.Count - 1];
+                    pair.Value[pair.Value.Count - 1].NextData = pair.Value[0];
+                }
+            }
         }
         //------------------------------------------------------------------------------------
-        public EquipmentData GetWeaponData(int id)
+        private int SortEquipmentData(EquipmentData x, EquipmentData y)
+        {
+            if ((int)x.Grade < (int)y.Grade)
+            {
+                x.NextData = y;
+                y.PrevData = x;
+
+                return -1;
+            }
+            else if ((int)x.Grade > (int)y.Grade)
+            {
+                y.NextData = x;
+                x.PrevData = y;
+
+                return 1;
+            }
+            else
+            {
+                if ((int)x.Quality < (int)y.Quality)
+                {
+                    x.NextData = y;
+                    y.PrevData = x;
+
+                    return -1;
+                }
+                else if ((int)x.Quality > (int)y.Quality)
+                {
+                    y.NextData = x;
+                    x.PrevData = y;
+
+                    return 1;
+                }
+            }
+
+            return 0;
+        }
+        //------------------------------------------------------------------------------------
+        public EquipmentData GetEquipmentData(int id)
         {
             EquipmentData data = null;
             m_equipmentData_Dic.TryGetValue(id, out data);
@@ -148,6 +200,24 @@ namespace GameBerry
             m_equipmentDataList_Dic.TryGetValue(type, out datalist);
 
             return datalist;
+        }
+        //------------------------------------------------------------------------------------
+        public EquipmentData GetNextEquipmentData(int id)
+        {
+            EquipmentData data = GetEquipmentData(id);
+
+            if (data != null)
+            {
+                List<EquipmentData> datalist = GetEquipmentDataList(data.Type);
+
+                if (datalist != null && datalist.Count > 1)
+                {
+                    if (data.NextData != datalist[0])
+                        return data.NextData;
+                }
+            }
+
+            return null;
         }
         //------------------------------------------------------------------------------------
     }

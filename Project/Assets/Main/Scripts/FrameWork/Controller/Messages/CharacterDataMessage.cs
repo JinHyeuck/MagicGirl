@@ -24,6 +24,12 @@ namespace GameBerry.Event
     {
     }
 
+    public class ChangeEquipElementMsg : Message
+    {
+        public EquipmentType EquipementType;
+        public int EquipmentID;
+    }
+
     public class DunjeonPharmingRewardMsg : Message
     {
         public DunjeonRewardType RewardType = DunjeonRewardType.None;

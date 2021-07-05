@@ -93,6 +93,18 @@ namespace GameBerry.TheBackEnd
                             {
                                 PlayerDataContainer.SkillSton = ((int)data[i][key]);
                             }
+                            else if (key == Define.PlayerWeaponEquipID)
+                            {
+                                PlayerDataContainer.WeaponEquipID = ((int)data[i][key]);
+                            }
+                            else if (key == Define.PlayerNecklaceEquipID)
+                            {
+                                PlayerDataContainer.NecklaceEquipID = ((int)data[i][key]);
+                            }
+                            else if (key == Define.PlayerRingEquipID)
+                            {
+                                PlayerDataContainer.RingEquipID = ((int)data[i][key]);
+                            }
 
                             returnValue += string.Format("{0} : {1} / ", key, data[i][key].ToString());
                         }
@@ -114,6 +126,10 @@ namespace GameBerry.TheBackEnd
             param.Add(Define.PlayerDia, 0);
             param.Add(Define.PlayerEquipmentSton, 0);
             param.Add(Define.PlayerSkillSton, 0);
+            param.Add(Define.PlayerWeaponEquipID, -1);
+            param.Add(Define.PlayerNecklaceEquipID, -1);
+            param.Add(Define.PlayerRingEquipID, -1);
+
 
             Debug.Log("InsertCharacterInfoTable()");
 
@@ -328,7 +344,7 @@ namespace GameBerry.TheBackEnd
                                         {
                                             equipdata = new PlayerEquipmentInfo
                                             {
-                                                Index = raw[k]["Index"].ToString().FastStringToInt(),
+                                                Id = raw[k]["Index"].ToString().FastStringToInt(),
 
                                                 Count = raw[k]["Count"].ToString().FastStringToInt(),
 
@@ -336,7 +352,7 @@ namespace GameBerry.TheBackEnd
                                             };
                                         }
 
-                                        tempDic.Add(equipdata.Index, equipdata);
+                                        tempDic.Add(equipdata.Id, equipdata);
                                     }
 
                                     PlayerDataContainer.m_equipmentInfo.Add((EquipmentType)j, tempDic);

@@ -14,6 +14,7 @@ namespace GameBerry.Managers
         private Event.RefrashDiaMsg m_refrashDiaMsg = new Event.RefrashDiaMsg();
         private Event.RefrashEquipmentStonMsg m_refrashEquipmentStonMsg = new Event.RefrashEquipmentStonMsg();
         private Event.RefrashSkillStonMsg m_refrashSkillStonMsg = new Event.RefrashSkillStonMsg();
+        private Event.ChangeEquipElementMsg m_changeEquipElementMsg = new Event.ChangeEquipElementMsg();
 
         private LevelLocalChart m_levelLocalChart = null;
         //------------------------------------------------------------------------------------
@@ -194,5 +195,52 @@ namespace GameBerry.Managers
             return PlayerDataContainer.m_equipmentInfo[type][id];
         }
         //------------------------------------------------------------------------------------
+        public int GetNeedLevelUPEquipmentSton(EquipmentData equipmentdata, PlayerEquipmentInfo equipmentinfo)
+        {
+            return PlayerDataOperator.GetNeedLevelUPEquipmentSton(equipmentdata, equipmentinfo);
+        }
+        //------------------------------------------------------------------------------------
+        public bool IsEquipElement(EquipmentData equipmentdata)
+        {
+            if (equipmentdata.Type == EquipmentType.Weapon)
+            {
+                return PlayerDataContainer.WeaponEquipID == equipmentdata.Id;
+            }
+            else if (equipmentdata.Type == EquipmentType.Necklace)
+            {
+                return PlayerDataContainer.NecklaceEquipID == equipmentdata.Id;
+            }
+            else if (equipmentdata.Type == EquipmentType.Ring)
+            {
+                return PlayerDataContainer.RingEquipID == equipmentdata.Id;
+            }
+
+            return false;
+        }
+        //------------------------------------------------------------------------------------
+        public bool SetEquipElement(EquipmentData equipmentdata)
+        {
+            Dictionary<int, PlayerEquipmentInfo> datadic = null;
+
+            if (PlayerDataContainer.m_equipmentInfo.TryGetValue(equipmentdata.Type, out datadic) == true)
+            {
+                PlayerEquipmentInfo info = null;
+
+                if (datadic.TryGetValue(equipmentdata.Id, out info) == true)
+                {
+                    m_changeEquipElementMsg.EquipementType = equipmentdata.Type;
+                    m_changeEquipElementMsg.EquipmentID = equipmentdata.Id;
+
+                    Message.Send(m_changeEquipElementMsg);
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else
+                return false;
+
+            return false;
+        }
     }
 }

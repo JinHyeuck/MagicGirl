@@ -37,6 +37,10 @@ public static class Define
     public static readonly string PlayerEquipmentSton = "equipmentston";
     public static readonly string PlayerSkillSton = "skillston";
 
+    public static readonly string PlayerWeaponEquipID = "playerweaponequipid";
+    public static readonly string PlayerNecklaceEquipID = "playernecklaceequipid";
+    public static readonly string PlayerRingEquipID = "playerringequipid";
+
     //CharacterInfoRowKey-UpGrade
     public static readonly string PlayerUpGradeAddDamage = "playerupgradeadddamage";
     public static readonly string PlayerUpGradeCriticalDamage = "playerupgradecriticaldamage";
@@ -59,4 +63,5 @@ public static class Define
 
     //Equipment
     public static readonly byte EquipmentComposeAmount = 5;
+    public static readonly int EquipmentQualityOperationValue = 2;
 }

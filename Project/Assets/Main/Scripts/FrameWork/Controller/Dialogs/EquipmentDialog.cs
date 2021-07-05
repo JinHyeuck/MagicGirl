@@ -17,6 +17,7 @@ namespace GameBerry.UI
         {
             CallBack = callback;
         }
+
         public void OnClick()
         {
             if (CallBack != null)
@@ -71,6 +72,16 @@ namespace GameBerry.UI
                 }
             }
 
+            GameObject clone = Instantiate(m_uIEquipmentPopup.gameObject, dialogView.transform);
+            if (clone != null)
+            {
+                m_uIEquipmentPopupInstance = clone.GetComponent<UIEquipmentPopup>();
+                if (m_uIEquipmentPopupInstance != null)
+                    m_uIEquipmentPopupInstance.Init();
+
+                clone.SetActive(false);
+            }
+            
             SetElements(m_currentEquipmentType);
         }
         //------------------------------------------------------------------------------------
@@ -124,8 +135,12 @@ namespace GameBerry.UI
         }
         //------------------------------------------------------------------------------------
         private void OnElementCallBack(EquipmentData equipmentData, PlayerEquipmentInfo playerEquipmentInfo)
-        { 
+        {
+            if (m_uIEquipmentPopupInstance != null)
+            {
+                m_uIEquipmentPopupInstance.SetEquipment(equipmentData, playerEquipmentInfo);
 
+            }
         }
         //------------------------------------------------------------------------------------
     }
