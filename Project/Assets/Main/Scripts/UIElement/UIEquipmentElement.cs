@@ -20,6 +20,9 @@ namespace GameBerry.UI
         private Text m_equipmentLevelText;
 
         [SerializeField]
+        private Transform m_equipMark;
+
+        [SerializeField]
         private Text m_equipmentQuailtyText;
 
         [SerializeField]
@@ -91,6 +94,12 @@ namespace GameBerry.UI
 
             if (m_amountCountText != null)
                 m_amountCountText.text = string.Format("{0}/{1}", CurrentAmount, Define.EquipmentComposeAmount);
+        }
+        //------------------------------------------------------------------------------------
+        public void SetEquipElement(bool isequip)
+        {
+            if (m_equipMark != null)
+                m_equipMark.gameObject.SetActive(isequip);
         }
         //------------------------------------------------------------------------------------
         private void OnClick_ElementBtn()

@@ -37,9 +37,7 @@ public static class Define
     public static readonly string PlayerEquipmentSton = "equipmentston";
     public static readonly string PlayerSkillSton = "skillston";
 
-    public static readonly string PlayerWeaponEquipID = "playerweaponequipid";
-    public static readonly string PlayerNecklaceEquipID = "playernecklaceequipid";
-    public static readonly string PlayerRingEquipID = "playerringequipid";
+    public static readonly string PlayerEquipID = "playerequipid";
 
     //CharacterInfoRowKey-UpGrade
     public static readonly string PlayerUpGradeAddDamage = "playerupgradeadddamage";

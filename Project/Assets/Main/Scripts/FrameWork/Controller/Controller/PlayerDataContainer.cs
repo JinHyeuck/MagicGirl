@@ -24,10 +24,6 @@ namespace GameBerry
 
         public static int EquipmentSton;
         public static int SkillSton;
-
-        public static int WeaponEquipID = -1;
-        public static int NecklaceEquipID = -1;
-        public static int RingEquipID = -1;
     }
 
     public static class PlayerDataOperator

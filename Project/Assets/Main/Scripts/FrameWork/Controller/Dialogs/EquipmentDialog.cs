@@ -49,6 +49,8 @@ namespace GameBerry.UI
         private UIEquipmentElement m_equipmentElement;
 
         private List<UIEquipmentElement> m_equipmentElement_List = new List<UIEquipmentElement>();
+        private Dictionary<int, UIEquipmentElement> m_equipmentElement_Dic = new Dictionary<int, UIEquipmentElement>();
+
 
         [SerializeField]
         private UIEquipmentPopup m_uIEquipmentPopup;
@@ -81,8 +83,17 @@ namespace GameBerry.UI
 
                 clone.SetActive(false);
             }
-            
+
+            Message.AddListener<GameBerry.Event.ChangeEquipElementMsg>(ChangeEquipElement);
+            Message.AddListener<GameBerry.Event.RefrashEquipmentInfoListMsg>(RefrashEquipmentInfoList);
+
             SetElements(m_currentEquipmentType);
+        }
+        //------------------------------------------------------------------------------------
+        protected override void OnUnload()
+        {
+            Message.RemoveListener<GameBerry.Event.ChangeEquipElementMsg>(ChangeEquipElement);
+            Message.RemoveListener<GameBerry.Event.RefrashEquipmentInfoListMsg>(RefrashEquipmentInfoList);
         }
         //------------------------------------------------------------------------------------
         private void OnClick_ChangeBtn(EquipmentType type)
@@ -115,6 +126,8 @@ namespace GameBerry.UI
             if (datalist == null)
                 return;
 
+            m_equipmentElement_Dic.Clear();
+
             int selectindex = 0;
 
             for (int i = 0; i < datalist.Count; ++i)
@@ -122,8 +135,11 @@ namespace GameBerry.UI
                 if (m_equipmentElement_List.Count <= i)
                     CreateEquipmentElement();
 
-                m_equipmentElement_List[i].SetEquipmentElement(datalist[i], Managers.PlayerDataManager.Instance.GetPlayerEquipmentInfo(type, datalist[i].Id));
+                SetElement(m_equipmentElement_List[i], datalist[i]);
+                m_equipmentElement_List[i].SetEquipElement(Managers.PlayerDataManager.Instance.IsEquipElement(datalist[i]));
                 m_equipmentElement_List[i].gameObject.SetActive(true);
+
+                m_equipmentElement_Dic.Add(datalist[i].Id, m_equipmentElement_List[i]);
 
                 selectindex = i;
             }
@@ -131,6 +147,36 @@ namespace GameBerry.UI
             for (int i = selectindex + 1; i < m_equipmentElement_List.Count; ++i)
             {
                 m_equipmentElement_List[i].gameObject.SetActive(false);
+            }
+        }
+        //------------------------------------------------------------------------------------
+        private void SetElement(UIEquipmentElement element, EquipmentData data)
+        {
+            if (element == null || data == null)
+                return;
+
+            element.SetEquipmentElement(data, Managers.PlayerDataManager.Instance.GetPlayerEquipmentInfo(data.Type, data.Id));
+        }
+        //------------------------------------------------------------------------------------
+        private void ChangeEquipElement(GameBerry.Event.ChangeEquipElementMsg msg)
+        {
+            UIEquipmentElement element = null;
+
+            if (m_equipmentElement_Dic.TryGetValue(msg.BeforeEquipmentID, out element) == true)
+                element.SetEquipElement(false);
+
+            if (m_equipmentElement_Dic.TryGetValue(msg.AfterEquipmentID, out element) == true)
+                element.SetEquipElement(true);
+        }
+        //------------------------------------------------------------------------------------
+        private void RefrashEquipmentInfoList(GameBerry.Event.RefrashEquipmentInfoListMsg msg)
+        {
+            for (int i = 0; i < msg.infos.Count; ++i)
+            {
+                if (m_currentEquipmentType == msg.infos[i].Type)
+                {
+                    SetElement(m_equipmentElement_Dic[msg.infos[i].Id], msg.infos[i]);
+                }
             }
         }
         //------------------------------------------------------------------------------------

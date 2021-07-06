@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace GameBerry.Event
 {
     public class RefrashLevelMsg : Message
@@ -27,7 +29,13 @@ namespace GameBerry.Event
     public class ChangeEquipElementMsg : Message
     {
         public EquipmentType EquipementType;
-        public int EquipmentID;
+        public int BeforeEquipmentID;
+        public int AfterEquipmentID;
+    }
+
+    public class RefrashEquipmentInfoListMsg : Message
+    {
+        public List<EquipmentData> infos = new List<EquipmentData>();
     }
 
     public class DunjeonPharmingRewardMsg : Message

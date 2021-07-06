@@ -15,6 +15,8 @@ namespace GameBerry.Managers
         private Event.RefrashEquipmentStonMsg m_refrashEquipmentStonMsg = new Event.RefrashEquipmentStonMsg();
         private Event.RefrashSkillStonMsg m_refrashSkillStonMsg = new Event.RefrashSkillStonMsg();
         private Event.ChangeEquipElementMsg m_changeEquipElementMsg = new Event.ChangeEquipElementMsg();
+        private Event.RefrashEquipmentInfoListMsg m_refrashEquipmentInfoListResponseMsg = new Event.RefrashEquipmentInfoListMsg();
+        
 
         private LevelLocalChart m_levelLocalChart = null;
         //------------------------------------------------------------------------------------
@@ -195,6 +197,29 @@ namespace GameBerry.Managers
             return PlayerDataContainer.m_equipmentInfo[type][id];
         }
         //------------------------------------------------------------------------------------
+        public PlayerEquipmentInfo GetPlayerEquipmentInfo(EquipmentData data)
+        {
+            Dictionary<int, PlayerEquipmentInfo> dic = null;
+
+            if (PlayerDataContainer.m_equipmentInfo.TryGetValue(data.Type, out dic) == true)
+            {
+                if (dic != null)
+                {
+                    PlayerEquipmentInfo equipmentinfo = null;
+                    if (dic.TryGetValue(data.Id, out equipmentinfo) == true)
+                        return equipmentinfo;
+                    else
+                        return null;
+                }
+                else
+                    return null;
+            }
+            else
+                return null;
+
+            return PlayerDataContainer.m_equipmentInfo[data.Type][data.Id];
+        }
+        //------------------------------------------------------------------------------------
         public int GetNeedLevelUPEquipmentSton(EquipmentData equipmentdata, PlayerEquipmentInfo equipmentinfo)
         {
             return PlayerDataOperator.GetNeedLevelUPEquipmentSton(equipmentdata, equipmentinfo);
@@ -202,20 +227,15 @@ namespace GameBerry.Managers
         //------------------------------------------------------------------------------------
         public bool IsEquipElement(EquipmentData equipmentdata)
         {
-            if (equipmentdata.Type == EquipmentType.Weapon)
-            {
-                return PlayerDataContainer.WeaponEquipID == equipmentdata.Id;
-            }
-            else if (equipmentdata.Type == EquipmentType.Necklace)
-            {
-                return PlayerDataContainer.NecklaceEquipID == equipmentdata.Id;
-            }
-            else if (equipmentdata.Type == EquipmentType.Ring)
-            {
-                return PlayerDataContainer.RingEquipID == equipmentdata.Id;
-            }
+            return GetCurrentEquip(equipmentdata.Type) == equipmentdata.Id;
+        }
+        //------------------------------------------------------------------------------------
+        public int GetCurrentEquip(EquipmentType type)
+        {
+            if (PlayerDataContainer.m_equipId.ContainsKey(type) == false)
+                return -1;
 
-            return false;
+            return PlayerDataContainer.m_equipId[type];
         }
         //------------------------------------------------------------------------------------
         public bool SetEquipElement(EquipmentData equipmentdata)
@@ -228,8 +248,21 @@ namespace GameBerry.Managers
 
                 if (datadic.TryGetValue(equipmentdata.Id, out info) == true)
                 {
+                    int beforeid = -1;
+
+                    if (PlayerDataContainer.m_equipId.ContainsKey(equipmentdata.Type) == false)
+                    {
+                        PlayerDataContainer.m_equipId.Add(equipmentdata.Type, equipmentdata.Id);
+                    }
+                    else
+                    {
+                        beforeid = PlayerDataContainer.m_equipId[equipmentdata.Type];
+                        PlayerDataContainer.m_equipId[equipmentdata.Type] = equipmentdata.Id;
+                    }
+
                     m_changeEquipElementMsg.EquipementType = equipmentdata.Type;
-                    m_changeEquipElementMsg.EquipmentID = equipmentdata.Id;
+                    m_changeEquipElementMsg.BeforeEquipmentID = beforeid;
+                    m_changeEquipElementMsg.AfterEquipmentID = equipmentdata.Id;
 
                     Message.Send(m_changeEquipElementMsg);
                     return true;
@@ -242,5 +275,88 @@ namespace GameBerry.Managers
 
             return false;
         }
+        //------------------------------------------------------------------------------------
+        public void AddEquipElement(EquipmentData equipmentdata, int amount = 1)
+        {
+            Dictionary<int, PlayerEquipmentInfo> dic = null;
+            PlayerEquipmentInfo info = null;
+
+            m_refrashEquipmentInfoListResponseMsg.infos.Clear();
+
+            if (PlayerDataContainer.m_equipmentInfo.ContainsKey(equipmentdata.Type) == false)
+                PlayerDataContainer.m_equipmentInfo.Add(equipmentdata.Type, new Dictionary<int, PlayerEquipmentInfo>());
+
+            PlayerDataContainer.m_equipmentInfo.TryGetValue(equipmentdata.Type, out dic);
+
+            if (dic.TryGetValue(equipmentdata.Id, out info) == true)
+                info.Count += amount;
+            else
+            {
+                info = new PlayerEquipmentInfo();
+                info.Id = equipmentdata.Id;
+                info.Count += amount;
+                dic.Add(info.Id, info);
+            }
+
+            m_refrashEquipmentInfoListResponseMsg.infos.Add(equipmentdata);
+
+            Message.Send(m_refrashEquipmentInfoListResponseMsg);
+        }
+        //------------------------------------------------------------------------------------
+        public void AddEquipElementList(List<EquipmentData> equipmentdata)
+        {
+            Dictionary<int, PlayerEquipmentInfo> dic = null;
+            PlayerEquipmentInfo info = null;
+
+            m_refrashEquipmentInfoListResponseMsg.infos.Clear();
+
+            for (int i = 0; i < equipmentdata.Count; ++i)
+            {
+                if (PlayerDataContainer.m_equipmentInfo.ContainsKey(equipmentdata[i].Type) == false)
+                    PlayerDataContainer.m_equipmentInfo.Add(equipmentdata[i].Type, new Dictionary<int, PlayerEquipmentInfo>());
+
+                PlayerDataContainer.m_equipmentInfo.TryGetValue(equipmentdata[i].Type, out dic);
+
+                if (dic.TryGetValue(equipmentdata[i].Id, out info) == true)
+                    info.Count += 1;
+                else
+                {
+                    info = new PlayerEquipmentInfo();
+                    info.Id = equipmentdata[i].Id;
+                    info.Count += 1;
+                    dic.Add(info.Id, info);
+                }
+
+                if (m_refrashEquipmentInfoListResponseMsg.infos.Contains(equipmentdata[i]) == false)
+                    m_refrashEquipmentInfoListResponseMsg.infos.Add(equipmentdata[i]);
+            }
+
+            Message.Send(m_refrashEquipmentInfoListResponseMsg);
+        }
+        //------------------------------------------------------------------------------------
+        public bool CombineEquipment(EquipmentData from, EquipmentData to, int amount)
+        {
+            if (from == null || to == null || amount <= 0)
+                return false;
+
+            PlayerEquipmentInfo info = GetPlayerEquipmentInfo(from);
+
+            int decreasecount = amount * Define.EquipmentComposeAmount;
+
+            if (decreasecount > info.Count)
+                return false;
+
+            AddEquipElement(to, amount);
+
+            m_refrashEquipmentInfoListResponseMsg.infos.Clear();
+
+            info.Count -= decreasecount;
+
+            m_refrashEquipmentInfoListResponseMsg.infos.Add(from);
+            Message.Send(m_refrashEquipmentInfoListResponseMsg);
+
+            return true;
+        }
+        //------------------------------------------------------------------------------------
     }
 }
