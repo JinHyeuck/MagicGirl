@@ -141,7 +141,7 @@ namespace GameBerry.Managers
         //------------------------------------------------------------------------------------
         public double GetUpGradeStatPrice(StatUpGradeType type)
         {
-            return PlayerDataOperator.GetUpGradePrice(type, GetCurrentUpGradeStatLevel(type));
+            return PlayerDataOperator.GetUpGradeStatPrice(type, GetCurrentUpGradeStatLevel(type));
         }
         //------------------------------------------------------------------------------------
         public double GetCurrentUpGradeStatValue(StatUpGradeType type)
@@ -244,9 +244,7 @@ namespace GameBerry.Managers
 
             if (PlayerDataContainer.m_equipmentInfo.TryGetValue(equipmentdata.Type, out datadic) == true)
             {
-                PlayerEquipmentInfo info = null;
-
-                if (datadic.TryGetValue(equipmentdata.Id, out info) == true)
+                if (datadic.ContainsKey(equipmentdata.Id) == true)
                 {
                     int beforeid = -1;
 

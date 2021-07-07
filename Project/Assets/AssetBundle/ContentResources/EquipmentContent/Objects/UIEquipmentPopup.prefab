@@ -1246,7 +1246,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6497753489765015903
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1570,6 +1570,7 @@ MonoBehaviour:
   m_equipmentGrade: {fileID: 416837137553901816}
   m_equipmentName: {fileID: 3236220153374702590}
   m_levelUpEquipmentElement: {fileID: 6872715547989349852}
+  m_equipmentOptionText: {fileID: 7772921325927353474}
   m_levelUPBtn: {fileID: 5715753916193790412}
   m_levelUPBtnText: {fileID: 5949756151157630940}
   m_equipBtn: {fileID: 38488088739957973}
@@ -1602,7 +1603,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &526425991669299945
 RectTransform:
   m_ObjectHideFlags: 0

@@ -36,6 +36,27 @@ namespace GameBerry
         Max,
     }
 
+    public enum EquipmentOption
+    {
+        DamageInt = 0,
+        CriticalDamage,
+        DamagePer,
+        EndDamage,
+        SkillDamage,
+
+        MPInt,
+        MPPer,
+
+        MPRecoveryInt,
+        MPRecoveryPer,
+
+        Castingspeed,
+        Cooltime,
+        Addexp,
+
+        Max,
+    }
+
     public class EquipmentData
     {
         public int Id = 0;
@@ -48,6 +69,8 @@ namespace GameBerry
         public EquipmentQualityType Quality = 0;
 
         public Sprite EquipmentSprite;
+
+        public Dictionary<EquipmentOption, double> Option = new Dictionary<EquipmentOption, double>();
 
         public double DamageInt = 0.0;
         public double CriticalDamage = 0.0;
@@ -86,7 +109,7 @@ namespace GameBerry
             for (int i = 0; i < rows.Count; ++i)
             {
                 EquipmentType eqtype = EnumExtensions.Parse<EquipmentType>(rows[i]["type"]["S"].ToString());
-
+                
                 EquipmentData data = new EquipmentData
                 {
                     Id = rows[i]["equipment_id"]["S"].ToString().FastStringToInt(),
@@ -111,7 +134,7 @@ namespace GameBerry
 
                     SkillDamage = rows[i]["skilldamage"]["S"].ToString().ToDouble(),
 
-                    MPInt = rows[i]["mp"]["S"].ToString().ToDouble(),
+                    MPInt = rows[i]["mpint"]["S"].ToString().ToDouble(),
 
                     MPPer = rows[i]["mpper"]["S"].ToString().ToDouble(),
 
@@ -146,6 +169,11 @@ namespace GameBerry
                     pair.Value[pair.Value.Count - 1].NextData = pair.Value[0];
                 }
             }
+        }
+        //------------------------------------------------------------------------------------
+        private void SetEquipmentOption()
+        { 
+
         }
         //------------------------------------------------------------------------------------
         private int SortEquipmentData(EquipmentData x, EquipmentData y)

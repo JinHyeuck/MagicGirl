@@ -36,7 +36,7 @@ namespace GameBerry
             m_statUpGradeLocalChart = Managers.TableManager.Instance.GetTableClass<StatUpGradeLocalChart>();
         }
         //------------------------------------------------------------------------------------
-        public static double GetUpGradePrice(StatUpGradeType type, int upgradestate)
+        public static double GetUpGradeStatPrice(StatUpGradeType type, int upgradestate)
         {
             if (m_statUpGradeLocalChart == null)
                 return double.MaxValue;

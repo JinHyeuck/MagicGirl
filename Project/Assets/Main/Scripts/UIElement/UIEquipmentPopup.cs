@@ -62,6 +62,9 @@ namespace GameBerry.UI
         private UIEquipmentElement m_levelUpEquipmentElement;
 
         [SerializeField]
+        private Text m_equipmentOptionText;
+
+        [SerializeField]
         private Button m_levelUPBtn;
 
         [SerializeField]
@@ -210,6 +213,16 @@ namespace GameBerry.UI
 
             if (m_levelUpEquipmentElement != null)
                 m_levelUpEquipmentElement.SetEquipmentElement(equipmentdata, equipmentinfo);
+
+            if (m_equipmentOptionText != null)
+            {
+                string contenttext = string.Empty;
+
+
+                //string contenttext = string.Format()
+
+                //m_equipmentOptionText.text
+            }
 
             if (m_levelUPBtn != null)
                 m_levelUPBtn.gameObject.SetActive(equipmentinfo != null);
