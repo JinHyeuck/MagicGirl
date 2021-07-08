@@ -124,30 +124,44 @@ namespace GameBerry
 
                     EquipmentSprite = Util.GetSpriteOnAssetBundle(string.Format("{0}/{1}", m_resourcePath, eqtype), eqtype.ToString()),
 
-                    DamageInt = rows[i]["damageint"]["S"].ToString().ToDouble(),
+                    //DamageInt = rows[i]["damageint"]["S"].ToString().ToDouble(),
 
-                    CriticalDamage = rows[i]["criticaldamage"]["S"].ToString().ToDouble(),
+                    //CriticalDamage = rows[i]["criticaldamage"]["S"].ToString().ToDouble(),
 
-                    DamagePer = rows[i]["damageper"]["S"].ToString().ToDouble(),
+                    //DamagePer = rows[i]["damageper"]["S"].ToString().ToDouble(),
 
-                    EndDamage = rows[i]["enddamage"]["S"].ToString().ToDouble(),
+                    //EndDamage = rows[i]["enddamage"]["S"].ToString().ToDouble(),
 
-                    SkillDamage = rows[i]["skilldamage"]["S"].ToString().ToDouble(),
+                    //SkillDamage = rows[i]["skilldamage"]["S"].ToString().ToDouble(),
 
-                    MPInt = rows[i]["mpint"]["S"].ToString().ToDouble(),
+                    //MPInt = rows[i]["mpint"]["S"].ToString().ToDouble(),
 
-                    MPPer = rows[i]["mpper"]["S"].ToString().ToDouble(),
+                    //MPPer = rows[i]["mpper"]["S"].ToString().ToDouble(),
 
-                    MPRecoveryInt = rows[i]["mprecovery"]["S"].ToString().ToDouble(),
+                    //MPRecoveryInt = rows[i]["mprecovery"]["S"].ToString().ToDouble(),
 
-                    MPRecoveryPer = rows[i]["mprecoveryper"]["S"].ToString().ToDouble(),
+                    //MPRecoveryPer = rows[i]["mprecoveryper"]["S"].ToString().ToDouble(),
 
-                    Castingspeed = rows[i]["castingspeed"]["S"].ToString().ToDouble(),
+                    //Castingspeed = rows[i]["castingspeed"]["S"].ToString().ToDouble(),
 
-                    Cooltime = rows[i]["cooltime"]["S"].ToString().ToDouble(),
+                    //Cooltime = rows[i]["cooltime"]["S"].ToString().ToDouble(),
 
-                    Addexp = rows[i]["addexp"]["S"].ToString().ToDouble(),
+                    //Addexp = rows[i]["addexp"]["S"].ToString().ToDouble(),
                 };
+
+                for (int j = 0; j < (int)EquipmentOption.Max; ++j)
+                {
+                    EquipmentOption option = (EquipmentOption)j;
+                    try
+                    {
+                        string id = option.ToString().ToLower();
+                        SetEquipmentOption(data ,option, rows[i][id]);
+                    }
+                    catch (System.Exception ex)
+                    {
+                        Debug.LogError(ex.ToString());
+                    }
+                }
 
                 m_equipmentData_Dic.Add(data.Id, data);
                 if (m_equipmentDataList_Dic.ContainsKey(eqtype) == false)
@@ -161,7 +175,22 @@ namespace GameBerry
             foreach (KeyValuePair<EquipmentType, List<EquipmentData>> pair in m_equipmentDataList_Dic)
             {
                 pair.Value.Sort(SortEquipmentData);
-                pair.Value.Sort(SortEquipmentData);
+                //pair.Value.Sort(SortEquipmentData);
+
+                //EquipmentData prevdata = null;
+
+                for (int i = 0; i < pair.Value.Count; ++i)
+                {
+                    if (i == 0)
+                        pair.Value[i].PrevData = pair.Value[pair.Value.Count - 1];
+                    else
+                        pair.Value[i].PrevData = pair.Value[i - 1];
+
+                    if (i >= pair.Value.Count - 1)
+                        pair.Value[i].NextData = pair.Value[0];
+                    else
+                        pair.Value[i].NextData = pair.Value[i + 1];
+                }
 
                 if (pair.Value.Count > 1)
                 {
@@ -171,9 +200,17 @@ namespace GameBerry
             }
         }
         //------------------------------------------------------------------------------------
-        private void SetEquipmentOption()
-        { 
+        private void SetEquipmentOption(EquipmentData equipdata, EquipmentOption option, JsonData jsondata)
+        {
+            if (equipdata == null || jsondata == null)
+                return;
 
+            double optionvalue = jsondata["S"].ToString().ToDouble();
+
+            if (optionvalue > 0.0)
+            {
+                equipdata.Option.Add(option, optionvalue);
+            }
         }
         //------------------------------------------------------------------------------------
         private int SortEquipmentData(EquipmentData x, EquipmentData y)
