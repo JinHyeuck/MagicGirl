@@ -368,12 +368,6 @@ namespace GameBerry.TheBackEnd
 
                                                 Level = rawelement["Level"].ToString().FastStringToInt()
                                             };
-
-                                            //string a = rawelement["Index"].ToString();
-
-                                            //string b = rawelement["Count"].ToString();
-
-                                            //string c = rawelement["Level"].ToString();
                                         }
 
                                         tempDic.Add(equipdata.Id, equipdata);

@@ -123,6 +123,20 @@ namespace GameBerry.Managers
             return PlayerDataContainer.EquipmentSton;
         }
         //------------------------------------------------------------------------------------
+        public bool UseEquipmentSton(int ston)
+        {
+            bool isSuccess = false;
+
+            if (PlayerDataContainer.EquipmentSton > ston)
+            {
+                PlayerDataContainer.EquipmentSton -= ston;
+                Message.Send(m_refrashEquipmentStonMsg);
+                isSuccess = true;
+            }
+
+            return isSuccess;
+        }
+        //------------------------------------------------------------------------------------
         public void AddSkillSton(int ston)
         {
             PlayerDataContainer.SkillSton += ston;
@@ -351,6 +365,42 @@ namespace GameBerry.Managers
             info.Count -= decreasecount;
 
             m_refrashEquipmentInfoListResponseMsg.infos.Add(from);
+            Message.Send(m_refrashEquipmentInfoListResponseMsg);
+
+            return true;
+        }
+        //------------------------------------------------------------------------------------
+        public double GetEquipmentOptionValue(EquipmentData equipmentdata, EquipmentOption option)
+        {
+            PlayerEquipmentInfo info = GetPlayerEquipmentInfo(equipmentdata);
+
+            return PlayerDataOperator.GetEquipmentOptionValue(equipmentdata, info == null ? 0 : info.Level, option);
+        }
+        //------------------------------------------------------------------------------------
+        public double GetEquipmentNextLevelOptionValue(EquipmentData equipmentdata, EquipmentOption option)
+        {
+            PlayerEquipmentInfo info = GetPlayerEquipmentInfo(equipmentdata);
+            int level = info == null ? 0 : info.Level;
+            return PlayerDataOperator.GetEquipmentOptionValue(equipmentdata, level + 1, option);
+        }
+        //------------------------------------------------------------------------------------
+        public bool SetLevelUpEquipment(EquipmentData equipmentdata)
+        {
+            PlayerEquipmentInfo info = GetPlayerEquipmentInfo(equipmentdata);
+
+            if (info == null)
+                return false;
+
+            int needSton = GetNeedLevelUPEquipmentSton(equipmentdata, info);
+
+            if (UseEquipmentSton(needSton) == false)
+                return false;
+
+            info.Level += 1;
+
+            m_refrashEquipmentInfoListResponseMsg.infos.Clear();
+            m_refrashEquipmentInfoListResponseMsg.infos.Add(equipmentdata);
+
             Message.Send(m_refrashEquipmentInfoListResponseMsg);
 
             return true;

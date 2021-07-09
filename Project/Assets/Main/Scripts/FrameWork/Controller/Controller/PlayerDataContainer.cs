@@ -10,10 +10,13 @@ namespace GameBerry
 
     public static class PlayerDataContainer
     {
+        // 플레이어 스텟 강화 현황
         public static Dictionary<StatUpGradeType, int> m_upGradeStatLevel = new Dictionary<StatUpGradeType, int>();
 
+        // 플레이어가 가지고있는 장비
         public static Dictionary<EquipmentType, Dictionary<int, PlayerEquipmentInfo>> m_equipmentInfo = new Dictionary<EquipmentType, Dictionary<int, PlayerEquipmentInfo>>();
 
+        // 플레이어가 장착한 장비
         public static Dictionary<EquipmentType, int> m_equipId = new Dictionary<EquipmentType, int>();
 
         public static int Level;
@@ -24,6 +27,16 @@ namespace GameBerry
 
         public static int EquipmentSton;
         public static int SkillSton;
+
+        public static double Damage;
+        public static double CriticalDamage;
+        public static double CriticalDamagePer;
+
+        public static double DamagePer;
+        public static double EndDamage;
+        public static double SkillDamage;
+
+
     }
 
     public static class PlayerDataOperator
@@ -100,6 +113,18 @@ namespace GameBerry
                 return defaultcount;
 
             return defaultcount + (defaultcount * (int)((float)equipmentinfo.Level * 0.5f));
+        }
+        //------------------------------------------------------------------------------------
+        public static double GetEquipmentOptionValue(EquipmentData equipmentdata, int equiplevel, EquipmentOption option)
+        {
+            if (equipmentdata == null)
+                return 0.0;
+
+            double basevalue = 0.0;
+
+            equipmentdata.Option.TryGetValue(option, out basevalue);
+
+            return basevalue + (equiplevel * basevalue);
         }
         //------------------------------------------------------------------------------------
     }

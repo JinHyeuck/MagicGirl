@@ -57,6 +57,12 @@ namespace GameBerry
         Max,
     }
 
+    public enum EquipmentApplyOption
+    { 
+        EquipmentOption = 0,
+        EnableOption,
+    }
+
     public class EquipmentData
     {
         public int Id = 0;
@@ -70,6 +76,7 @@ namespace GameBerry
 
         public Sprite EquipmentSprite;
 
+        public Dictionary<EquipmentApplyOption, List<EquipmentOption>> ApplyOption = new Dictionary<EquipmentApplyOption, List<EquipmentOption>>();
         public Dictionary<EquipmentOption, double> Option = new Dictionary<EquipmentOption, double>();
 
         public double DamageInt = 0.0;
@@ -123,30 +130,6 @@ namespace GameBerry
                     Quality = (EquipmentQualityType)rows[i]["quality"]["S"].ToString().FastStringToInt(),
 
                     EquipmentSprite = Util.GetSpriteOnAssetBundle(string.Format("{0}/{1}", m_resourcePath, eqtype), eqtype.ToString()),
-
-                    //DamageInt = rows[i]["damageint"]["S"].ToString().ToDouble(),
-
-                    //CriticalDamage = rows[i]["criticaldamage"]["S"].ToString().ToDouble(),
-
-                    //DamagePer = rows[i]["damageper"]["S"].ToString().ToDouble(),
-
-                    //EndDamage = rows[i]["enddamage"]["S"].ToString().ToDouble(),
-
-                    //SkillDamage = rows[i]["skilldamage"]["S"].ToString().ToDouble(),
-
-                    //MPInt = rows[i]["mpint"]["S"].ToString().ToDouble(),
-
-                    //MPPer = rows[i]["mpper"]["S"].ToString().ToDouble(),
-
-                    //MPRecoveryInt = rows[i]["mprecovery"]["S"].ToString().ToDouble(),
-
-                    //MPRecoveryPer = rows[i]["mprecoveryper"]["S"].ToString().ToDouble(),
-
-                    //Castingspeed = rows[i]["castingspeed"]["S"].ToString().ToDouble(),
-
-                    //Cooltime = rows[i]["cooltime"]["S"].ToString().ToDouble(),
-
-                    //Addexp = rows[i]["addexp"]["S"].ToString().ToDouble(),
                 };
 
                 for (int j = 0; j < (int)EquipmentOption.Max; ++j)
@@ -163,7 +146,35 @@ namespace GameBerry
                     }
                 }
 
+                string applyoptions = rows[i]["equipment_option"]["S"].ToString();
+                string[] applyoption = applyoptions.Split(',');
+
+                List<EquipmentOption> optionlist = new List<EquipmentOption>();
+
+                for (int j = 0; j < applyoption.Length; ++j)
+                {
+                    optionlist.Add(EnumExtensions.Parse<EquipmentOption>(applyoption[j]));
+                }
+
+                data.ApplyOption.Add(EquipmentApplyOption.EquipmentOption, optionlist);
+
+
+                applyoptions = rows[i]["enable_option"]["S"].ToString();
+                applyoption = applyoptions.Split(',');
+
+                optionlist = new List<EquipmentOption>();
+
+                for (int j = 0; j < applyoption.Length; ++j)
+                {
+                    optionlist.Add(EnumExtensions.Parse<EquipmentOption>(applyoption[j]));
+                }
+
+                data.ApplyOption.Add(EquipmentApplyOption.EnableOption, optionlist);
+
+
+
                 m_equipmentData_Dic.Add(data.Id, data);
+
                 if (m_equipmentDataList_Dic.ContainsKey(eqtype) == false)
                 {
                     m_equipmentDataList_Dic.Add(eqtype, new List<EquipmentData>());

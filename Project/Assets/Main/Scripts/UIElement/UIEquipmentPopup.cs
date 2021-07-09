@@ -65,6 +65,9 @@ namespace GameBerry.UI
         private Text m_equipmentOptionText;
 
         [SerializeField]
+        private Text m_enableOptionText;
+
+        [SerializeField]
         private Button m_levelUPBtn;
 
         [SerializeField]
@@ -216,12 +219,48 @@ namespace GameBerry.UI
 
             if (m_equipmentOptionText != null)
             {
+                List<EquipmentOption> options = equipmentdata.ApplyOption[EquipmentApplyOption.EquipmentOption];
+
                 string contenttext = string.Empty;
 
+                for (int i = 0; i < options.Count; ++i)
+                {
+                    if (equipmentdata.Option.ContainsKey(options[i]) == false)
+                        continue;
 
-                //string contenttext = string.Format()
+                    double curr = Managers.PlayerDataManager.Instance.GetEquipmentOptionValue(equipmentdata, options[i]);
+                    double next = Managers.PlayerDataManager.Instance.GetEquipmentNextLevelOptionValue(equipmentdata, options[i]);
 
-                //m_equipmentOptionText.text
+                    contenttext += string.Format("{0} {1}->{2}", options[i].ToString(), curr, next);
+
+                    if (i <= options.Count - 2)
+                        contenttext += "\n";
+                }
+
+                m_equipmentOptionText.text = contenttext;
+            }
+
+            if (m_enableOptionText != null)
+            {
+                List<EquipmentOption> options = equipmentdata.ApplyOption[EquipmentApplyOption.EnableOption];
+
+                string contenttext = string.Empty;
+
+                for (int i = 0; i < options.Count; ++i)
+                {
+                    if (equipmentdata.Option.ContainsKey(options[i]) == false)
+                        continue;
+
+                    double curr = 0.0;
+                    equipmentdata.Option.TryGetValue(options[i], out curr);
+
+                    contenttext += string.Format("{0} {1}", options[i].ToString(), curr);
+
+                    if (i <= options.Count - 2)
+                        contenttext += "\n";
+                }
+
+                m_enableOptionText.text = contenttext;
             }
 
             if (m_levelUPBtn != null)
@@ -340,7 +379,8 @@ namespace GameBerry.UI
         //------------------------------------------------------------------------------------
         private void OnClick_LevelUPBtn()
         {
-
+            if (Managers.PlayerDataManager.Instance.SetLevelUpEquipment(m_currentEquipmentData) == true)
+                SetEquipment(m_currentEquipmentData, m_currentEquipmentInfo);
         }
         //------------------------------------------------------------------------------------
         private void OnClick_equipBtn()
