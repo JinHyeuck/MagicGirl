@@ -93,17 +93,17 @@ namespace GameBerry.TheBackEnd
                             {
                                 PlayerDataContainer.SkillSton = ((int)data[i][key]);
                             }
-                            else if (key == Define.PlayerWeaponEquipID)
+                            else if (key == Define.PlayerEquipID)
                             {
-                                PlayerDataContainer.WeaponEquipID = ((int)data[i][key]);
-                            }
-                            else if (key == Define.PlayerNecklaceEquipID)
-                            {
-                                PlayerDataContainer.NecklaceEquipID = ((int)data[i][key]);
-                            }
-                            else if (key == Define.PlayerRingEquipID)
-                            {
-                                PlayerDataContainer.RingEquipID = ((int)data[i][key]);
+                                string str = data[i][key].ToString();
+                                LitJson.JsonData chartJson = LitJson.JsonMapper.ToObject(str);
+
+                                for (int j = 0; j < (int)EquipmentType.Max; ++j)
+                                {
+                                    EquipmentType type = (EquipmentType)j;
+                                    int equipID = (int)chartJson[type.ToString()];
+                                    PlayerDataContainer.m_equipId.Add(type, equipID);
+                                }
                             }
 
                             returnValue += string.Format("{0} : {1} / ", key, data[i][key].ToString());
@@ -119,6 +119,14 @@ namespace GameBerry.TheBackEnd
         //------------------------------------------------------------------------------------
         private static void InsertCharacterInfoTable()
         {
+            Dictionary<EquipmentType, int> equipInsertData = new Dictionary<EquipmentType, int>();
+            for (int i = 0; i < (int)EquipmentType.Max; ++i)
+            {
+                equipInsertData.Add((EquipmentType)i, -1);
+            }
+
+            string equipstr = LitJson.JsonMapper.ToJson(equipInsertData);
+
             Param param = new Param();
             param.Add(Define.PlayerLevel, 1);
             param.Add(Define.PlayerExp, 0);
@@ -126,10 +134,7 @@ namespace GameBerry.TheBackEnd
             param.Add(Define.PlayerDia, 0);
             param.Add(Define.PlayerEquipmentSton, 0);
             param.Add(Define.PlayerSkillSton, 0);
-            param.Add(Define.PlayerWeaponEquipID, -1);
-            param.Add(Define.PlayerNecklaceEquipID, -1);
-            param.Add(Define.PlayerRingEquipID, -1);
-
+            param.Add(Define.PlayerEquipID, equipstr);
 
             Debug.Log("InsertCharacterInfoTable()");
 
@@ -157,10 +162,16 @@ namespace GameBerry.TheBackEnd
             param.Add(Define.PlayerDia, PlayerDataContainer.Dia);
             param.Add(Define.PlayerEquipmentSton, PlayerDataContainer.EquipmentSton);
             param.Add(Define.PlayerSkillSton, PlayerDataContainer.SkillSton);
+            param.Add(Define.PlayerEquipID, LitJson.JsonMapper.ToJson(PlayerDataContainer.m_equipId));
 
             SendQueue.Enqueue(Backend.GameData.Update, Define.CharacterInfoTable, CharInfoInData, param, (callback) =>
             {
                 Debug.Log(string.Format("TableUpdate : {0}", callback.IsSuccess()));
+
+                if (callback.IsSuccess() == false)
+                {
+                    Debug.LogError(string.Format("{0}\n{1}", callback.GetErrorCode(), callback.GetMessage()));
+                }
             });
         }
         //------------------------------------------------------------------------------------
@@ -287,6 +298,11 @@ namespace GameBerry.TheBackEnd
             SendQueue.Enqueue(Backend.GameData.Update, Define.CharacterUpGradeStatTable, CharUpGradeStatInData, param, (callback) =>
             {
                 Debug.Log(string.Format("TableUpdate : {0}", callback.IsSuccess()));
+
+                if (callback.IsSuccess() == false)
+                {
+                    Debug.LogError(string.Format("{0}\n{1}", callback.GetErrorCode(), callback.GetMessage()));
+                }
             });
         }
         //------------------------------------------------------------------------------------
@@ -323,7 +339,7 @@ namespace GameBerry.TheBackEnd
                         {
                             if (key == "inDate")
                             {
-                                CharUpGradeStatInData = data[i][key].ToString();
+                                CharEquipmentInfoInData = data[i][key].ToString();
                             }
                             else if (key == Define.CharacterEquipmentInfoTable)
                             {
@@ -332,7 +348,7 @@ namespace GameBerry.TheBackEnd
 
                                 for (int j = 0; j < (int)EquipmentType.Max; ++j)
                                 {
-                                    var raw = chartJson[((EquipmentType)i).ToString()];
+                                    var raw = chartJson[((EquipmentType)j).ToString()];
 
                                     Dictionary<int, PlayerEquipmentInfo> tempDic = new Dictionary<int, PlayerEquipmentInfo>();
 
@@ -342,13 +358,15 @@ namespace GameBerry.TheBackEnd
 
                                         if (raw[k] != null)
                                         {
+                                            var rawelement = raw[k];
+
                                             equipdata = new PlayerEquipmentInfo
                                             {
-                                                Id = raw[k]["Index"].ToString().FastStringToInt(),
+                                                Id = rawelement["Id"].ToString().FastStringToInt(),
 
-                                                Count = raw[k]["Count"].ToString().FastStringToInt(),
+                                                Count = rawelement["Count"].ToString().FastStringToInt(),
 
-                                                Level = raw[k]["Level"].ToString().FastStringToInt()
+                                                Level = rawelement["Level"].ToString().FastStringToInt()
                                             };
                                         }
 
@@ -403,11 +421,16 @@ namespace GameBerry.TheBackEnd
         public static void UpdateCharacterEquipmentInfoTable()
         {
             Param param = new Param();
-            param.Add(Define.CharacterEquipmentInfoTable, PlayerDataContainer.m_equipmentInfo);
+            param.Add(Define.CharacterEquipmentInfoTable, LitJson.JsonMapper.ToJson(PlayerDataContainer.m_equipmentInfo));
 
             SendQueue.Enqueue(Backend.GameData.Update, Define.CharacterEquipmentInfoTable, CharEquipmentInfoInData, param, (callback) =>
             {
                 Debug.Log(string.Format("TableUpdate : {0}", callback.IsSuccess()));
+
+                if (callback.IsSuccess() == false)
+                {
+                    Debug.LogError(string.Format("{0}\n{1}", callback.GetErrorCode(), callback.GetMessage()));
+                }
             });
         }
         //------------------------------------------------------------------------------------

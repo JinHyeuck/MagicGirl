@@ -42,79 +42,42 @@ namespace GameBerry.Managers
                 LoadStartScene();
         }
         //------------------------------------------------------------------------------------
-        [Serializable]
-        public class Testdatata
-        { 
-            public int index = 0;
-            public int subindex = 0;
-
-            public string prev = "-1";
-            public string next = "-1";
-        }
-
-        public List<Testdatata> datata = new List<Testdatata>();
-
-        [ContextMenu("rest")]
-        private void TestResetData()
+        [ContextMenu("dicview")]
+        private void testviewdic()
         {
-            datata.Clear();
-            datata.Add(new Testdatata { index = 8, subindex = 1 });
-            datata.Add(new Testdatata { index = 4, subindex = 2 });
-            datata.Add(new Testdatata { index = 2, subindex = 7 });
-            datata.Add(new Testdatata { index = 3, subindex = 1 });
-            datata.Add(new Testdatata { index = 8, subindex = 3 });
-            datata.Add(new Testdatata { index = 3, subindex = 2 });
-            datata.Add(new Testdatata { index = 4, subindex = 6 });
-            datata.Add(new Testdatata { index = 2, subindex = 2 });
-            datata.Add(new Testdatata { index = 8, subindex = 2 });
-            datata.Add(new Testdatata { index = 6, subindex = 1 });
+            Dictionary<EquipmentType, int> m_equipId = new Dictionary<EquipmentType, int>();
+            m_equipId.Add(EquipmentType.Weapon, -1);
+            m_equipId.Add(EquipmentType.Necklace, -1);
+            m_equipId.Add(EquipmentType.Ring, -1);
+            string str = LitJson.JsonMapper.ToJson(m_equipId);
 
-        }
+            Debug.Log(str);
 
-        [ContextMenu("gfdsgdfs")]
-        private void TestSetData()
-        {
-            datata.Sort(TestSort);
-            datata.Sort(TestSort);
+            Dictionary<EquipmentType, int> setdata = new Dictionary<EquipmentType, int>();
 
-            if (datata.Count > 1)
+            var chartJson = LitJson.JsonMapper.ToObject(str);
+
+            for (int j = 0; j < (int)EquipmentType.Max; ++j)
             {
-                datata[0].prev = string.Format("{0}_{1}", datata[datata.Count - 1].index, datata[datata.Count - 1].subindex);
-                datata[datata.Count - 1].next = string.Format("{0}_{1}", datata[0].index, datata[0].subindex);
+                EquipmentType type = (EquipmentType)j;
+                int a = (int)chartJson[type.ToString()];
+                setdata.Add(type, a);
             }
         }
 
-        private int TestSort(Testdatata x, Testdatata y)
+        [ContextMenu("aaaa")]
+        private void aaaa()
         {
-            if (x.index < y.index)
+            Dictionary<int, PlayerEquipmentInfo> infodic = new Dictionary<int, PlayerEquipmentInfo>();
+            PlayerEquipmentInfo info = null;
+            if (infodic.TryGetValue(111, out info) == true)
             {
-                x.next = string.Format("{0}_{1}", y.index, y.subindex);
-                y.prev = string.Format("{0}_{1}", x.index, x.subindex);
-                return -1;
-            }
-            else if (x.index > y.index)
-            {
-                y.next = string.Format("{0}_{1}", x.index, x.subindex);
-                x.prev = string.Format("{0}_{1}", y.index, y.subindex);
-                return 1;
+                Debug.Log("있");
             }
             else
             {
-                if (x.subindex < y.subindex)
-                {
-                    x.next = string.Format("{0}_{1}", y.index, y.subindex);
-                    y.prev = string.Format("{0}_{1}", x.index, x.subindex);
-                    return -1;
-                }
-                else if (x.subindex > y.subindex)
-                {
-                    y.next = string.Format("{0}_{1}", x.index, x.subindex);
-                    x.prev = string.Format("{0}_{1}", y.index, y.subindex);
-                    return 1;
-                }
+                Debug.Log("없");
             }
-
-            return 0;
         }
 
         void LoadStartScene()

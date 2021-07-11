@@ -36,6 +36,33 @@ namespace GameBerry
         Max,
     }
 
+    public enum EquipmentOption
+    {
+        DamageInt = 0,
+        CriticalDamage,
+        DamagePer,
+        EndDamage,
+        SkillDamage,
+
+        MPInt,
+        MPPer,
+
+        MPRecoveryInt,
+        MPRecoveryPer,
+
+        Castingspeed,
+        Cooltime,
+        Addexp,
+
+        Max,
+    }
+
+    public enum EquipmentApplyOption
+    { 
+        EquipmentOption = 0,
+        EnableOption,
+    }
+
     public class EquipmentData
     {
         public int Id = 0;
@@ -48,6 +75,9 @@ namespace GameBerry
         public EquipmentQualityType Quality = 0;
 
         public Sprite EquipmentSprite;
+
+        public Dictionary<EquipmentApplyOption, List<EquipmentOption>> ApplyOption = new Dictionary<EquipmentApplyOption, List<EquipmentOption>>();
+        public Dictionary<EquipmentOption, double> Option = new Dictionary<EquipmentOption, double>();
 
         public double DamageInt = 0.0;
         public double CriticalDamage = 0.0;
@@ -86,7 +116,7 @@ namespace GameBerry
             for (int i = 0; i < rows.Count; ++i)
             {
                 EquipmentType eqtype = EnumExtensions.Parse<EquipmentType>(rows[i]["type"]["S"].ToString());
-
+                
                 EquipmentData data = new EquipmentData
                 {
                     Id = rows[i]["equipment_id"]["S"].ToString().FastStringToInt(),
@@ -100,33 +130,51 @@ namespace GameBerry
                     Quality = (EquipmentQualityType)rows[i]["quality"]["S"].ToString().FastStringToInt(),
 
                     EquipmentSprite = Util.GetSpriteOnAssetBundle(string.Format("{0}/{1}", m_resourcePath, eqtype), eqtype.ToString()),
-
-                    DamageInt = rows[i]["damageint"]["S"].ToString().ToDouble(),
-
-                    CriticalDamage = rows[i]["criticaldamage"]["S"].ToString().ToDouble(),
-
-                    DamagePer = rows[i]["damageper"]["S"].ToString().ToDouble(),
-
-                    EndDamage = rows[i]["enddamage"]["S"].ToString().ToDouble(),
-
-                    SkillDamage = rows[i]["skilldamage"]["S"].ToString().ToDouble(),
-
-                    MPInt = rows[i]["mp"]["S"].ToString().ToDouble(),
-
-                    MPPer = rows[i]["mpper"]["S"].ToString().ToDouble(),
-
-                    MPRecoveryInt = rows[i]["mprecovery"]["S"].ToString().ToDouble(),
-
-                    MPRecoveryPer = rows[i]["mprecoveryper"]["S"].ToString().ToDouble(),
-
-                    Castingspeed = rows[i]["castingspeed"]["S"].ToString().ToDouble(),
-
-                    Cooltime = rows[i]["cooltime"]["S"].ToString().ToDouble(),
-
-                    Addexp = rows[i]["addexp"]["S"].ToString().ToDouble(),
                 };
 
+                for (int j = 0; j < (int)EquipmentOption.Max; ++j)
+                {
+                    EquipmentOption option = (EquipmentOption)j;
+                    try
+                    {
+                        string id = option.ToString().ToLower();
+                        SetEquipmentOption(data ,option, rows[i][id]);
+                    }
+                    catch (System.Exception ex)
+                    {
+                        Debug.LogError(ex.ToString());
+                    }
+                }
+
+                string applyoptions = rows[i]["equipment_option"]["S"].ToString();
+                string[] applyoption = applyoptions.Split(',');
+
+                List<EquipmentOption> optionlist = new List<EquipmentOption>();
+
+                for (int j = 0; j < applyoption.Length; ++j)
+                {
+                    optionlist.Add(EnumExtensions.Parse<EquipmentOption>(applyoption[j]));
+                }
+
+                data.ApplyOption.Add(EquipmentApplyOption.EquipmentOption, optionlist);
+
+
+                applyoptions = rows[i]["enable_option"]["S"].ToString();
+                applyoption = applyoptions.Split(',');
+
+                optionlist = new List<EquipmentOption>();
+
+                for (int j = 0; j < applyoption.Length; ++j)
+                {
+                    optionlist.Add(EnumExtensions.Parse<EquipmentOption>(applyoption[j]));
+                }
+
+                data.ApplyOption.Add(EquipmentApplyOption.EnableOption, optionlist);
+
+
+
                 m_equipmentData_Dic.Add(data.Id, data);
+
                 if (m_equipmentDataList_Dic.ContainsKey(eqtype) == false)
                 {
                     m_equipmentDataList_Dic.Add(eqtype, new List<EquipmentData>());
@@ -138,13 +186,41 @@ namespace GameBerry
             foreach (KeyValuePair<EquipmentType, List<EquipmentData>> pair in m_equipmentDataList_Dic)
             {
                 pair.Value.Sort(SortEquipmentData);
-                pair.Value.Sort(SortEquipmentData);
+                //pair.Value.Sort(SortEquipmentData);
+
+                //EquipmentData prevdata = null;
+
+                for (int i = 0; i < pair.Value.Count; ++i)
+                {
+                    if (i == 0)
+                        pair.Value[i].PrevData = pair.Value[pair.Value.Count - 1];
+                    else
+                        pair.Value[i].PrevData = pair.Value[i - 1];
+
+                    if (i >= pair.Value.Count - 1)
+                        pair.Value[i].NextData = pair.Value[0];
+                    else
+                        pair.Value[i].NextData = pair.Value[i + 1];
+                }
 
                 if (pair.Value.Count > 1)
                 {
                     pair.Value[0].PrevData = pair.Value[pair.Value.Count - 1];
                     pair.Value[pair.Value.Count - 1].NextData = pair.Value[0];
                 }
+            }
+        }
+        //------------------------------------------------------------------------------------
+        private void SetEquipmentOption(EquipmentData equipdata, EquipmentOption option, JsonData jsondata)
+        {
+            if (equipdata == null || jsondata == null)
+                return;
+
+            double optionvalue = jsondata["S"].ToString().ToDouble();
+
+            if (optionvalue > 0.0)
+            {
+                equipdata.Option.Add(option, optionvalue);
             }
         }
         //------------------------------------------------------------------------------------

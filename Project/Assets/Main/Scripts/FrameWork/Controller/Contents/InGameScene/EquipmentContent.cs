@@ -43,6 +43,19 @@ namespace GameBerry.Contents
             {
                 IDialog.RequestDialogExit<EquipmentDialog>();
             }
+            else if (Input.GetKeyUp(KeyCode.G))
+            {
+                EquipmentLocalChart chart = Managers.TableManager.Instance.GetTableClass<EquipmentLocalChart>();
+
+                List<EquipmentData> data = new List<EquipmentData>();
+                for (int i = 0; i < 20; ++i)
+                {
+                    List<EquipmentData> listdata = chart.GetEquipmentDataList((EquipmentType)Random.Range(0, 3));
+                    data.Add(listdata[Random.Range(0, listdata.Count)]);
+                }
+
+                Managers.PlayerDataManager.Instance.AddEquipElementList(data);
+            }
         }
         //------------------------------------------------------------------------------------
         public static Color GetGradeColor(EquipmentGradeType gradetype)

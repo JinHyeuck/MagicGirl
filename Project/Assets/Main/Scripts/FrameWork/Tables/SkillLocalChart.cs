@@ -27,15 +27,17 @@ namespace GameBerry
     {
         public string SkillID = string.Empty;
         public string SkillName = string.Empty;
-        public Sprite SkillImage = null;
-        public Sprite SKillEffect = null;
+        public SkillTriggerType SkillType = SkillTriggerType.None;
         public SkillOptionType OptionType = SkillOptionType.None;
         public float OptionValue = 0.0f;
+        public int MaxTarget;
         public float CoolTime;
         public float Range;
-        public SkillTriggerType SkillType = SkillTriggerType.None;
         public int Damage;
         public int NeedMP;
+
+        public Sprite SkillImage = null;
+        public Sprite SKillEffect = null;
     }
 
     public class SkillLocalChart
