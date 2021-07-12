@@ -1,12 +1,39 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using GameBerry.UI;
 
 namespace GameBerry.Contents
 {
+    [System.Serializable]
+    public class GradeColorData
+    {
+        public GradeType GradeType;
+        public Color GradeColor;
+    }
+
     public class GlobalContent : IContent
     {
+        [SerializeField]
+        private List<GradeColorData> m_gradleColorList = new List<GradeColorData>();
+
+        private static Dictionary<GradeType, Color> m_gradleColor_Dic = new Dictionary<GradeType, Color>();
+
+
         private static GameBerry.Event.DoFadeMsg m_fadeMsg = new GameBerry.Event.DoFadeMsg();
 
+        //------------------------------------------------------------------------------------
+        protected override void OnLoadStart()
+        {
+            for (int i = 0; i < m_gradleColorList.Count; ++i)
+            {
+                if (m_gradleColor_Dic.ContainsKey(m_gradleColorList[i].GradeType) == false)
+                {
+                    m_gradleColor_Dic.Add(m_gradleColorList[i].GradeType, m_gradleColorList[i].GradeColor);
+                }
+            }
+
+            SetLoadComplete();
+        }
         //------------------------------------------------------------------------------------
         protected override void OnEnter()
         {
@@ -20,6 +47,14 @@ namespace GameBerry.Contents
             IDialog.RequestDialogExit<GlobalBufferingDialog>();
             IDialog.RequestDialogExit<GlobalButtonLockDialog>();
             IDialog.RequestDialogExit<GlobalFadeDialog>();
+        }
+        //------------------------------------------------------------------------------------
+        public static Color GetGradeColor(GradeType gradetype)
+        {
+            Color color = Color.white;
+            m_gradleColor_Dic.TryGetValue(gradetype, out color);
+
+            return color;
         }
         //------------------------------------------------------------------------------------
         public static void DoFade(bool visible, float duration = 1.0f)

@@ -130,6 +130,16 @@ namespace GameBerry.TheBackEnd
             TheBackEnd_PlayerTable.UpdateCharacterEquipmentInfoTable();
         }
         //------------------------------------------------------------------------------------
+        public void GetCharacterSkillinfoTableData()
+        {
+            TheBackEnd_PlayerTable.GetCharacterSkillinfoTableData();
+        }
+        //------------------------------------------------------------------------------------
+        public void UpdateCharacterSkillInfoTable()
+        {
+            TheBackEnd_PlayerTable.UpdateCharacterSkillInfoTable();
+        }
+        //------------------------------------------------------------------------------------
         #endregion
     }
 }

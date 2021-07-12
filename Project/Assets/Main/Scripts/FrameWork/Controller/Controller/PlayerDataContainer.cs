@@ -8,6 +8,13 @@ namespace GameBerry
         public int Level = 0;
     }
 
+    public class PlayerSkillInfo
+    {
+        public int Id;
+        public int Count = 0;
+        public int Level = 0;
+    }
+
     public static class PlayerDataContainer
     {
         // 플레이어 스텟 강화 현황
@@ -18,6 +25,9 @@ namespace GameBerry
 
         // 플레이어가 장착한 장비
         public static Dictionary<EquipmentType, int> m_equipId = new Dictionary<EquipmentType, int>();
+
+        // 플레이어가 소유한 스킬
+        public static Dictionary<string, PlayerSkillInfo> m_hadSkill = new Dictionary<string, PlayerSkillInfo>();
 
         public static int Level;
         public static double Exp;
@@ -93,7 +103,7 @@ namespace GameBerry
             return false;
         }
         //------------------------------------------------------------------------------------
-        public static int GetOperationQualityValue(EquipmentQualityType qualityType)
+        public static int GetOperationQualityValue(QualityType qualityType)
         {
             int orivalue = (int)qualityType;
 
@@ -125,6 +135,26 @@ namespace GameBerry
             equipmentdata.Option.TryGetValue(option, out basevalue);
 
             return basevalue + (equiplevel * basevalue);
+        }
+        //------------------------------------------------------------------------------------
+        public static int GetNeedLevelUPSkillSton(SkillData skilldata, PlayerSkillInfo skillinfo)
+        {
+            int defaultcount = (int)skilldata.SkillGradeType * 5;
+
+            if (skillinfo == null)
+                return defaultcount;
+
+            return defaultcount + (defaultcount * (int)((float)skillinfo.Level * 0.5f));
+        }
+        //------------------------------------------------------------------------------------
+        public static double GetSkillOptionValue(SkillData skildata, int skilllevel)
+        {
+            if (skildata == null)
+                return 0.0;
+
+            double basevalue = skildata.OptionValue;
+
+            return basevalue + ((skilllevel * basevalue) * 0.2);
         }
         //------------------------------------------------------------------------------------
     }

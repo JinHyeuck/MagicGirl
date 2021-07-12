@@ -24,4 +24,9 @@ namespace GameBerry.Event
     {
         public bool IsSuccess = false;
     }
+
+    public class CompleteCharacterSkillInfoLoadMsg : Message
+    {
+        public bool IsSuccess = false;
+    }
 }

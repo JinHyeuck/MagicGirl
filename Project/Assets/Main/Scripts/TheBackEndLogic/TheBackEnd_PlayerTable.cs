@@ -10,6 +10,7 @@ namespace GameBerry.TheBackEnd
         public static string CharInfoInData = string.Empty;
         public static string CharUpGradeStatInData = string.Empty;
         public static string CharEquipmentInfoInData = string.Empty;
+        public static string CharSkillInfoInData = string.Empty;
 
         //------------------------------------------------------------------------------------
         public static void GetTableList()
@@ -424,6 +425,128 @@ namespace GameBerry.TheBackEnd
             param.Add(Define.CharacterEquipmentInfoTable, LitJson.JsonMapper.ToJson(PlayerDataContainer.m_equipmentInfo));
 
             SendQueue.Enqueue(Backend.GameData.Update, Define.CharacterEquipmentInfoTable, CharEquipmentInfoInData, param, (callback) =>
+            {
+                Debug.Log(string.Format("TableUpdate : {0}", callback.IsSuccess()));
+
+                if (callback.IsSuccess() == false)
+                {
+                    Debug.LogError(string.Format("{0}\n{1}", callback.GetErrorCode(), callback.GetMessage()));
+                }
+            });
+        }
+        //------------------------------------------------------------------------------------
+        #endregion
+        //------------------------------------------------------------------------------------
+        #region TheBackEnd_CharacterSkillInfo
+        //------------------------------------------------------------------------------------
+        public static void GetCharacterSkillinfoTableData()
+        {
+            SendQueue.Enqueue(Backend.GameData.Get, Define.CharacterSkillInfoTable, new Where(), 10, (bro) =>
+            {
+                if (bro.IsSuccess() == false)
+                {
+                    Debug.Log(bro.GetStatusCode());
+                    Debug.Log(bro.GetErrorCode());
+                    Debug.Log(bro.GetMessage());
+                    return;
+                }
+
+                var data = bro.FlattenRows();
+
+                Debug.LogError(data.Count == 0 ? "CharacterSkillInfo테이블에 아무것도 없음" : "CharacterSkillInfo테이블에 정보 있음");
+
+                if (data.Count == 0)
+                {
+                    InsertCharacterSkillInfoTable();
+                }
+                else
+                {
+                    for (int i = 0; i < data.Count; ++i)
+                    {
+                        string returnValue = string.Empty;
+                        foreach (var key in data[i].Keys)
+                        {
+                            if (key == "inDate")
+                            {
+                                CharSkillInfoInData = data[i][key].ToString();
+                            }
+                            else if (key == Define.CharacterSkillInfoTable)
+                            {
+                                string str = data[i][key].ToString();
+                                LitJson.JsonData chartJson = LitJson.JsonMapper.ToObject(str);
+                                Debug.Log(str);
+
+                                for (int j = 0; j < chartJson.Count; ++j)
+                                {
+                                    PlayerSkillInfo info = new PlayerSkillInfo();
+
+                                    if (chartJson[j] != null)
+                                    {
+                                        var rawelement = chartJson[j];
+
+                                        info.Id = rawelement["Id"].ToString().FastStringToInt();
+
+                                        info.Count = rawelement["Count"].ToString().FastStringToInt();
+
+                                        info.Level = rawelement["Level"].ToString().FastStringToInt();
+                                    }
+                                }
+                            }
+
+                            returnValue += string.Format("{0} : {1} / ", key, data[i][key].ToString());
+                        }
+
+                        Debug.Log(returnValue);
+                    }
+
+                    Message.Send(new Event.CompleteCharacterSkillInfoLoadMsg());
+                }
+            });
+        }
+        //------------------------------------------------------------------------------------
+        private static void InsertCharacterSkillInfoTable()
+        {
+            Dictionary<string, PlayerSkillInfo> skillInsertData = new Dictionary<string, PlayerSkillInfo>();
+
+            //for (int i = 0; i < 10; ++i)
+            //{
+            //    skillInsertData.Add(i.ToString(), new PlayerSkillInfo
+            //    {
+            //        Id = i,
+            //        Count = i,
+            //        Level = i,
+            //    });
+            //}
+
+            string equipstr = LitJson.JsonMapper.ToJson(skillInsertData);
+
+            Param param = new Param();
+            param.Add(Define.CharacterSkillInfoTable, equipstr);
+
+            Debug.Log("InsertCharacterSkillInfoTable()");
+
+            SendQueue.Enqueue(Backend.GameData.Insert, Define.CharacterSkillInfoTable, param, (callback) =>
+            {
+                Debug.Log(string.Format("InsertCharacterSkillInfoTable Succcess : {0}, statusCode : {1}", callback.IsSuccess(), callback.GetStatusCode()));
+
+                if (callback.IsSuccess() == true)
+                {
+                    Debug.Log(callback.GetReturnValue());
+                    GetCharacterSkillinfoTableData();
+                }
+                else
+                {
+                }
+            });
+        }
+        //------------------------------------------------------------------------------------
+        public static void UpdateCharacterSkillInfoTable()
+        {
+            Param param = new Param();
+            param.Add(Define.CharacterSkillInfoTable, PlayerDataContainer.m_hadSkill);
+
+
+            SendQueue.Enqueue(Backend.GameData.Update, Define.CharacterSkillInfoTable, CharSkillInfoInData, param, (callback) =>
             {
                 Debug.Log(string.Format("TableUpdate : {0}", callback.IsSuccess()));
 

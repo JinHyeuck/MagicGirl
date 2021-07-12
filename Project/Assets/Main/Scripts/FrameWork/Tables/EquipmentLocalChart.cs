@@ -5,7 +5,7 @@ using LitJson;
 
 namespace GameBerry
 {
-    public enum EquipmentGradeType
+    public enum GradeType
     { 
         None = 0,
         Common,
@@ -18,7 +18,7 @@ namespace GameBerry
         Transcendence,
     }
 
-    public enum EquipmentQualityType
+    public enum QualityType
     { 
         None = 0,
         Row,
@@ -71,8 +71,8 @@ namespace GameBerry
 
         public EquipmentType Type;
 
-        public EquipmentGradeType Grade = 0;
-        public EquipmentQualityType Quality = 0;
+        public GradeType Grade = 0;
+        public QualityType Quality = 0;
 
         public Sprite EquipmentSprite;
 
@@ -125,9 +125,9 @@ namespace GameBerry
 
                     Type = eqtype,
 
-                    Grade = (EquipmentGradeType)rows[i]["grade"]["S"].ToString().FastStringToInt(),
+                    Grade = (GradeType)rows[i]["grade"]["S"].ToString().FastStringToInt(),
 
-                    Quality = (EquipmentQualityType)rows[i]["quality"]["S"].ToString().FastStringToInt(),
+                    Quality = (QualityType)rows[i]["quality"]["S"].ToString().FastStringToInt(),
 
                     EquipmentSprite = Util.GetSpriteOnAssetBundle(string.Format("{0}/{1}", m_resourcePath, eqtype), eqtype.ToString()),
                 };
@@ -228,32 +228,20 @@ namespace GameBerry
         {
             if ((int)x.Grade < (int)y.Grade)
             {
-                x.NextData = y;
-                y.PrevData = x;
-
                 return -1;
             }
             else if ((int)x.Grade > (int)y.Grade)
             {
-                y.NextData = x;
-                x.PrevData = y;
-
                 return 1;
             }
             else
             {
                 if ((int)x.Quality < (int)y.Quality)
                 {
-                    x.NextData = y;
-                    y.PrevData = x;
-
                     return -1;
                 }
                 else if ((int)x.Quality > (int)y.Quality)
                 {
-                    y.NextData = x;
-                    x.PrevData = y;
-
                     return 1;
                 }
             }

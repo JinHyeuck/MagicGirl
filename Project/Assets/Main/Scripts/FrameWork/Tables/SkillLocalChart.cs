@@ -17,26 +17,30 @@ namespace GameBerry
 
     public enum SkillTriggerType
     {
-        None = 0,
-        Passive,
+        Passive = 0,
         Active,
+        Buff,
+
+        Max,
     }
 
     [System.Serializable]
     public class SkillData
     {
+        public int Index = 0;
         public string SkillID = string.Empty;
         public string SkillName = string.Empty;
-        public SkillTriggerType SkillType = SkillTriggerType.None;
+        public GradeType SkillGradeType = GradeType.None;
+        public SkillTriggerType SkillTriggerType = SkillTriggerType.Max;
         public SkillOptionType OptionType = SkillOptionType.None;
-        public float OptionValue = 0.0f;
+        public double OptionValue = 0.0f;
         public int MaxTarget;
-        public float CoolTime;
-        public float Range;
-        public int Damage;
+        public double ApplyTime;
+        public double CoolTime;
+        public double Range;
         public int NeedMP;
 
-        public Sprite SkillImage = null;
+        public Sprite SkillSprite = null;
         public Sprite SKillEffect = null;
     }
 
@@ -55,28 +59,50 @@ namespace GameBerry
 
             for (int i = 0; i < rows.Count; ++i)
             {
-                float tempopervalue = (float)rows[i]["num"]["S"].ToString().FastStringToInt();
-
-                float temprange = 1.0f + (tempopervalue * 0.1f);
-
                 SkillData data = new SkillData
                 {
-                    SkillID = rows[i]["itemID"]["S"].ToString(),
+                    Index = rows[i]["index"]["S"].ToString().FastStringToInt(),
 
-                    SkillName = rows[i]["itemName"]["S"].ToString(),
+                    SkillID = rows[i]["skill_id"]["S"].ToString(),
 
-                    CoolTime = tempopervalue * 0.5f,
+                    SkillName = rows[i]["skill_name"]["S"].ToString(),
 
-                    Range = temprange,
+                    SkillGradeType = (GradeType)rows[i]["skill_grade"]["S"].ToString().FastStringToInt(),
 
-                    Damage = rows[i]["hpPower"]["S"].ToString().FastStringToInt(),
+                    SkillTriggerType = EnumExtensions.Parse<SkillTriggerType>(rows[i]["skill_trigger_type"]["S"].ToString()),
 
-                    NeedMP = i != 0 ? rows[i]["num"]["S"].ToString().FastStringToInt() : 0
+                    OptionType = EnumExtensions.Parse<SkillOptionType>(rows[i]["skill_option_type"]["S"].ToString()),
+
+                    OptionValue = rows[i]["skill_value"]["S"].ToString().ToDouble(),
+
+                    MaxTarget = rows[i]["skill_maxtarget"]["S"].ToString().FastStringToInt(),
+
+                    ApplyTime = rows[i]["skill_applytime"]["S"].ToString().ToDouble(),
+
+                    CoolTime = rows[i]["skill_cooltime"]["S"].ToString().ToDouble(),
+
+                    Range = rows[i]["skill_range"]["S"].ToString().ToDouble(),
+
+                    NeedMP = i != 0 ? rows[i]["skill_needmp"]["S"].ToString().FastStringToInt() : 0
                 };
 
                 m_SkillDatas.Add(data);
                 m_SkillDatas_Dic.Add(data.SkillID, data);
             }
+
+            m_SkillDatas.Sort((x, y) =>
+            {
+                if (x.Index < y.Index)
+                {
+                    return -1;
+                }
+                else if (x.Index > y.Index)
+                {
+                    return 1;
+                }
+
+                return 0;
+            });
         }
         //------------------------------------------------------------------------------------
         public SkillData GetSkillData(string id)

@@ -26,6 +26,7 @@ public static class Define
     public static readonly string CharacterInfoTable = "charinfo";
     public static readonly string CharacterUpGradeStatTable = "charupgradestat";
     public static readonly string CharacterEquipmentInfoTable = "charequipmentinfo";
+    public static readonly string CharacterSkillInfoTable = "charskillinfo";
 
     //CharacterInfoRowKey
     public static readonly string PlayerLevel = "level";
@@ -38,6 +39,7 @@ public static class Define
     public static readonly string PlayerSkillSton = "skillston";
 
     public static readonly string PlayerEquipID = "playerequipid";
+
 
     //CharacterInfoRowKey-UpGrade
     public static readonly string PlayerUpGradeAddDamage = "playerupgradeadddamage";

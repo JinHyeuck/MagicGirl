@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace GameBerry.UI
 {
-    public class UIEquipmentElement : MonoBehaviour
+    public class UISkillElement : MonoBehaviour
     {
         [SerializeField]
         private Button m_elementbtn;
@@ -14,16 +14,13 @@ namespace GameBerry.UI
         private Image m_gradeColorBG;
 
         [SerializeField]
-        private Image m_equipmentIcon;
+        private Image m_skillIcon;
 
         [SerializeField]
-        private Text m_equipmentLevelText;
+        private Text m_skillLevelText;
 
         [SerializeField]
         private Transform m_equipMark;
-
-        [SerializeField]
-        private Text m_equipmentQuailtyText;
 
         [SerializeField]
         private Image m_amountCountFilled;
@@ -37,13 +34,13 @@ namespace GameBerry.UI
         private Color m_disableColor;
 
         //------------------------------------------------------------------------------------
-        private EquipmentData m_currentEquipmentData = null;
-        private PlayerEquipmentInfo m_currentEquipmentInfo = null;
+        private SkillData m_currentSkillData = null;
+        private PlayerSkillInfo m_currentSkillInfo = null;
 
-        System.Action<EquipmentData, PlayerEquipmentInfo> m_callBack = null;
+        System.Action<SkillData, PlayerSkillInfo> m_callBack = null;
 
         //------------------------------------------------------------------------------------
-        public void Init(System.Action<EquipmentData, PlayerEquipmentInfo> callback)
+        public void Init(System.Action<SkillData, PlayerSkillInfo> callback)
         {
             if (m_elementbtn != null)
                 m_elementbtn.onClick.AddListener(OnClick_ElementBtn);
@@ -51,38 +48,35 @@ namespace GameBerry.UI
             m_callBack = callback;
         }
         //------------------------------------------------------------------------------------
-        public void SetEquipmentElement(EquipmentData equipmentdata, PlayerEquipmentInfo equipmentinfo)
+        public void SetSkillElement(SkillData SkillData, PlayerSkillInfo equipmentinfo)
         {
-            m_currentEquipmentData = equipmentdata;
-            m_currentEquipmentInfo = equipmentinfo;
+            m_currentSkillData = SkillData;
+            m_currentSkillInfo = equipmentinfo;
 
             if (m_gradeColorBG != null)
-                m_gradeColorBG.color = Contents.GlobalContent.GetGradeColor(m_currentEquipmentData.Grade);
+                m_gradeColorBG.color = Contents.GlobalContent.GetGradeColor(m_currentSkillData.SkillGradeType);
 
-            if (m_equipmentIcon != null)
-                m_equipmentIcon.color = equipmentinfo == null ? m_disableColor : Color.white;
+            if (m_skillIcon != null)
+                m_skillIcon.color = equipmentinfo == null ? m_disableColor : Color.white;
 
-            if (m_equipmentIcon != null)
-                m_equipmentIcon.sprite = equipmentdata.EquipmentSprite;
+            if (m_skillIcon != null)
+                m_skillIcon.sprite = SkillData.SkillSprite;
 
-            if (m_equipmentLevelText != null)
+            if (m_skillLevelText != null)
             {
                 if (equipmentinfo == null)
-                    m_equipmentLevelText.gameObject.SetActive(false);
+                    m_skillLevelText.gameObject.SetActive(false);
                 else
                 {
                     if (equipmentinfo.Level > 0)
                     {
-                        m_equipmentLevelText.gameObject.SetActive(true);
-                        m_equipmentLevelText.text = string.Format("+{0}", equipmentinfo.Level);
+                        m_skillLevelText.gameObject.SetActive(true);
+                        m_skillLevelText.text = string.Format("+{0}", equipmentinfo.Level);
                     }
                     else
-                        m_equipmentLevelText.gameObject.SetActive(false);
+                        m_skillLevelText.gameObject.SetActive(false);
                 }
             }
-
-            if (m_equipmentQuailtyText != null)
-                m_equipmentQuailtyText.text = equipmentdata.Quality.ToString();
 
             int CurrentAmount = equipmentinfo == null ? 0 : equipmentinfo.Count;
 
@@ -105,8 +99,9 @@ namespace GameBerry.UI
         private void OnClick_ElementBtn()
         {
             if (m_callBack != null)
-                m_callBack(m_currentEquipmentData, m_currentEquipmentInfo);
+                m_callBack(m_currentSkillData, m_currentSkillInfo);
         }
         //------------------------------------------------------------------------------------
     }
 }
+

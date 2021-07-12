@@ -57,11 +57,6 @@ namespace GameBerry.Managers
                 _tables.Add(Type.GetType("GameBerry.SoundTableAsset"), soundtable);
 
 
-            SkillLocalChart skillLocalTable = new SkillLocalChart();
-            skillLocalTable.InitData();
-            _tables.Add(Type.GetType("GameBerry.SkillLocalChart"), skillLocalTable);
-
-
             MonsterLocalChart monsterLocalTable = new MonsterLocalChart();
             monsterLocalTable.InitData();
             _tables.Add(Type.GetType("GameBerry.MonsterLocalChart"), monsterLocalTable);
@@ -76,13 +71,21 @@ namespace GameBerry.Managers
             levelLocalChart.InitData();
             _tables.Add(Type.GetType("GameBerry.LevelLocalChart"), levelLocalChart);
 
+
             StatUpGradeLocalChart statUpGradeLocalChart = new StatUpGradeLocalChart();
             statUpGradeLocalChart.InitData();
             _tables.Add(Type.GetType("GameBerry.StatUpGradeLocalChart"), statUpGradeLocalChart);
 
+
             EquipmentLocalChart equipmentLocalChart = new EquipmentLocalChart();
             equipmentLocalChart.InitData();
             _tables.Add(Type.GetType("GameBerry.EquipmentLocalChart"), equipmentLocalChart);
+
+
+            SkillLocalChart skillLocalTable = new SkillLocalChart();
+            skillLocalTable.InitData();
+            _tables.Add(Type.GetType("GameBerry.SkillLocalChart"), skillLocalTable);
+
 
             _alreadyLoading = false;
             _loadComplete = true;

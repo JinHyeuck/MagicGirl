@@ -20,6 +20,7 @@ namespace GameBerry.Contents
             Message.AddListener<GameBerry.Event.CompleteCharacterInfoTableLoadMsg>(CompletePlayerTableLoad);
             Message.AddListener<GameBerry.Event.CompleteCharacterUpGradeStatTableLoadMsg>(CompleteCharacterUpGradeStatTableLoad);
             Message.AddListener<GameBerry.Event.CompleteCharacterEquipmentInfoLoadMsg>(CompleteCharacterEquipmentInfoLoad);
+            Message.AddListener<GameBerry.Event.CompleteCharacterSkillInfoLoadMsg>(CompleteCharacterSkillInfoLoad);
 
             StartLoadData();
         }
@@ -31,6 +32,7 @@ namespace GameBerry.Contents
             Message.RemoveListener<GameBerry.Event.CompleteCharacterInfoTableLoadMsg>(CompletePlayerTableLoad);
             Message.RemoveListener<GameBerry.Event.CompleteCharacterUpGradeStatTableLoadMsg>(CompleteCharacterUpGradeStatTableLoad);
             Message.RemoveListener<GameBerry.Event.CompleteCharacterEquipmentInfoLoadMsg>(CompleteCharacterEquipmentInfoLoad);
+            Message.RemoveListener<GameBerry.Event.CompleteCharacterSkillInfoLoadMsg>(CompleteCharacterSkillInfoLoad);
         }
         //------------------------------------------------------------------------------------
         private void StartLoadData()
@@ -146,6 +148,12 @@ namespace GameBerry.Contents
         }
         //------------------------------------------------------------------------------------
         private void CompleteCharacterEquipmentInfoLoad(GameBerry.Event.CompleteCharacterEquipmentInfoLoadMsg msg)
+        {
+            //SetLoadComplete();
+            TheBackEnd.TheBackEnd.Instance.GetCharacterSkillinfoTableData();
+        }
+        //------------------------------------------------------------------------------------
+        private void CompleteCharacterSkillInfoLoad(GameBerry.Event.CompleteCharacterSkillInfoLoadMsg msg)
         {
             SetLoadComplete();
         }

@@ -59,7 +59,12 @@ namespace GameBerry.Managers
                 }
             }
 
-            m_defaultSkill = m_skillLocalTable.m_SkillDatas[0];
+            SkillData defa = new SkillData();
+            defa.OptionValue = 1.0;
+            defa.MaxTarget = 1;
+            defa.Range = 1.0;
+
+            m_defaultSkill = defa;
         }
         //------------------------------------------------------------------------------------
         private void Update()
@@ -168,7 +173,7 @@ namespace GameBerry.Managers
                 if (m_equipSkillList[i].NeedMP > currUserMp)
                     continue;
 
-                if (m_equipSkillList[i].SkillType != SkillTriggerType.Active)
+                if (m_equipSkillList[i].SkillTriggerType != SkillTriggerType.Active)
                     continue;
 
                 if (m_coolTimeSkill_Dic.ContainsKey(m_equipSkillList[i].SkillID) == true)

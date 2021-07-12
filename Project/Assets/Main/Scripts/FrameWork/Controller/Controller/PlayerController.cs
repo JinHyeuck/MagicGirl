@@ -174,7 +174,7 @@ namespace GameBerry
         //------------------------------------------------------------------------------------
         private void UseSkill(SkillData skillData)
         {
-            Managers.MonsterManager.Instance.OnDamage(skillData.Range, skillData.Damage, transform.position);
+            Managers.MonsterManager.Instance.OnDamage(skillData.Range, (int)skillData.OptionValue, transform.position);
         }
         //------------------------------------------------------------------------------------
         private void ChangeState(PlayerState characterState)
