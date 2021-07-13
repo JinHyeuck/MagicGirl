@@ -52,6 +52,7 @@ MonoBehaviour:
   - InGameContent
   - PlayerStatContent
   - EquipmentContent
+  - SkillContent
   defaultContentList:
   - PlayerContent
   - MonsterContent
@@ -59,3 +60,4 @@ MonoBehaviour:
   - InGameContent
   - PlayerStatContent
   - EquipmentContent
+  - SkillContent

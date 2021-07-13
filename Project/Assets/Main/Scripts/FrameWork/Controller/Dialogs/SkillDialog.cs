@@ -33,6 +33,9 @@ namespace GameBerry.UI
 
         [Header("---------------------------")]
         [SerializeField]
+        private UnityEngine.U2D.SpriteAtlas m_skillAtlas;
+
+        [SerializeField]
         private UISkillElement m_skillElement;
 
         private List<UISkillElement> m_skillElement_List = new List<UISkillElement>();
@@ -43,7 +46,77 @@ namespace GameBerry.UI
         //------------------------------------------------------------------------------------
         protected override void OnLoad()
         {
+            Message.AddListener<GameBerry.Event.RefrashSkillInfoListMsg>(RefrashSkillInfoList);
+
             m_skillLocalChart = Managers.TableManager.Instance.GetTableClass<SkillLocalChart>();
+
+            SetElements();
+        }
+        //------------------------------------------------------------------------------------
+        protected override void OnUnload()
+        {
+            Message.RemoveListener<GameBerry.Event.RefrashSkillInfoListMsg>(RefrashSkillInfoList);
+        }
+        //------------------------------------------------------------------------------------
+        private void SetElements()
+        {
+            List<SkillData> datalist = m_skillLocalChart.m_SkillDatas;
+            if (datalist == null)
+                return;
+
+            m_skillElement_Dic.Clear();
+
+            int selectindex = 0;
+
+            for (int i = 0; i < datalist.Count; ++i)
+            {
+                if (m_skillElement_List.Count <= i)
+                    CreateEquipmentElement();
+
+                SetElement(m_skillElement_List[i], datalist[i]);
+                m_skillElement_List[i].SetEquipElement(false);
+                m_skillElement_List[i].gameObject.SetActive(true);
+
+                m_skillElement_Dic.Add(datalist[i].SkillID, m_skillElement_List[i]);
+
+                selectindex = i;
+            }
+
+            for (int i = selectindex + 1; i < m_skillElement_List.Count; ++i)
+            {
+                m_skillElement_List[i].gameObject.SetActive(false);
+            }
+        }
+        //------------------------------------------------------------------------------------
+        private void CreateEquipmentElement()
+        {
+            GameObject clone = Instantiate(m_skillElement.gameObject, m_skillRoot.transform);
+            UISkillElement element = clone.GetComponent<UISkillElement>();
+            element.Init(OnElementCallBack);
+
+            m_skillElement_List.Add(element);
+        }
+        //------------------------------------------------------------------------------------
+        private void SetElement(UISkillElement element, SkillData data)
+        {
+            if (element == null || data == null)
+                return;
+
+            Sprite sp = m_skillAtlas.GetSprite(data.SkillSpriteName);
+
+            element.SetSkillElement(data, Managers.PlayerDataManager.Instance.GetPlayerSkillInfo(data), sp);
+        }
+        //------------------------------------------------------------------------------------
+        private void RefrashSkillInfoList(GameBerry.Event.RefrashSkillInfoListMsg msg)
+        {
+            for (int i = 0; i < msg.datas.Count; ++i)
+            {
+                SetElement(m_skillElement_Dic[msg.datas[i].SkillID], msg.datas[i]);
+            }
+        }
+        //------------------------------------------------------------------------------------
+        private void OnElementCallBack(SkillData skillData, PlayerSkillInfo playerSkillInfo)
+        {
 
         }
         //------------------------------------------------------------------------------------

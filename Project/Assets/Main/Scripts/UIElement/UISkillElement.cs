@@ -48,7 +48,7 @@ namespace GameBerry.UI
             m_callBack = callback;
         }
         //------------------------------------------------------------------------------------
-        public void SetSkillElement(SkillData SkillData, PlayerSkillInfo equipmentinfo)
+        public void SetSkillElement(SkillData SkillData, PlayerSkillInfo equipmentinfo, Sprite IconSprite)
         {
             m_currentSkillData = SkillData;
             m_currentSkillInfo = equipmentinfo;
@@ -60,7 +60,7 @@ namespace GameBerry.UI
                 m_skillIcon.color = equipmentinfo == null ? m_disableColor : Color.white;
 
             if (m_skillIcon != null)
-                m_skillIcon.sprite = SkillData.SkillSprite;
+                m_skillIcon.sprite = IconSprite;
 
             if (m_skillLevelText != null)
             {
@@ -80,14 +80,16 @@ namespace GameBerry.UI
 
             int CurrentAmount = equipmentinfo == null ? 0 : equipmentinfo.Count;
 
+            int LevelUpAmount = Managers.PlayerDataManager.Instance.GetNeedLevelUPSkillCount(SkillData);
+
             if (m_amountCountFilled != null)
             {
-                float ratio = (float)CurrentAmount / (float)Define.EquipmentComposeAmount;
+                float ratio = (float)CurrentAmount / (float)LevelUpAmount;
                 m_amountCountFilled.fillAmount = ratio;
             }
 
             if (m_amountCountText != null)
-                m_amountCountText.text = string.Format("{0}/{1}", CurrentAmount, Define.EquipmentComposeAmount);
+                m_amountCountText.text = string.Format("{0}/{1}", CurrentAmount, LevelUpAmount);
         }
         //------------------------------------------------------------------------------------
         public void SetEquipElement(bool isequip)

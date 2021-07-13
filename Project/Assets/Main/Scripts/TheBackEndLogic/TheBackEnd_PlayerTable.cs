@@ -543,7 +543,7 @@ namespace GameBerry.TheBackEnd
         public static void UpdateCharacterSkillInfoTable()
         {
             Param param = new Param();
-            param.Add(Define.CharacterSkillInfoTable, PlayerDataContainer.m_hadSkill);
+            param.Add(Define.CharacterSkillInfoTable, PlayerDataContainer.m_skillInfo);
 
 
             SendQueue.Enqueue(Backend.GameData.Update, Define.CharacterSkillInfoTable, CharSkillInfoInData, param, (callback) =>

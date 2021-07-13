@@ -51,14 +51,10 @@ namespace GameBerry.UI
         private List<UIEquipmentElement> m_equipmentElement_List = new List<UIEquipmentElement>();
         private Dictionary<int, UIEquipmentElement> m_equipmentElement_Dic = new Dictionary<int, UIEquipmentElement>();
 
-
-        [SerializeField]
-        private UIEquipmentPopup m_uIEquipmentPopup;
-
-        private UIEquipmentPopup m_uIEquipmentPopupInstance;
-
         private EquipmentLocalChart m_equipmentLocalChart = null;
         private EquipmentType m_currentEquipmentType = EquipmentType.Weapon;
+
+        GameBerry.Event.SetEquipmentPopupMsg m_setEquipmentPopupMsg = new GameBerry.Event.SetEquipmentPopupMsg();
 
         //------------------------------------------------------------------------------------
         protected override void OnLoad()
@@ -72,16 +68,6 @@ namespace GameBerry.UI
                     m_changeBtnList[i].SetCallBack(OnClick_ChangeBtn);
                     m_changeBtnList[i].ChangeTabBtn.onClick.AddListener(m_changeBtnList[i].OnClick);
                 }
-            }
-
-            GameObject clone = Instantiate(m_uIEquipmentPopup.gameObject, dialogView.transform);
-            if (clone != null)
-            {
-                m_uIEquipmentPopupInstance = clone.GetComponent<UIEquipmentPopup>();
-                if (m_uIEquipmentPopupInstance != null)
-                    m_uIEquipmentPopupInstance.Init();
-
-                clone.SetActive(false);
             }
 
             Message.AddListener<GameBerry.Event.ChangeEquipElementMsg>(ChangeEquipElement);
@@ -171,22 +157,23 @@ namespace GameBerry.UI
         //------------------------------------------------------------------------------------
         private void RefrashEquipmentInfoList(GameBerry.Event.RefrashEquipmentInfoListMsg msg)
         {
-            for (int i = 0; i < msg.infos.Count; ++i)
+            for (int i = 0; i < msg.datas.Count; ++i)
             {
-                if (m_currentEquipmentType == msg.infos[i].Type)
+                if (m_currentEquipmentType == msg.datas[i].Type)
                 {
-                    SetElement(m_equipmentElement_Dic[msg.infos[i].Id], msg.infos[i]);
+                    SetElement(m_equipmentElement_Dic[msg.datas[i].Id], msg.datas[i]);
                 }
             }
         }
         //------------------------------------------------------------------------------------
         private void OnElementCallBack(EquipmentData equipmentData, PlayerEquipmentInfo playerEquipmentInfo)
         {
-            if (m_uIEquipmentPopupInstance != null)
-            {
-                m_uIEquipmentPopupInstance.SetEquipment(equipmentData, playerEquipmentInfo);
-                m_uIEquipmentPopupInstance.gameObject.SetActive(true);
-            }
+            m_setEquipmentPopupMsg.equipmentdata = equipmentData;
+            m_setEquipmentPopupMsg.equipmentinfo = playerEquipmentInfo;
+
+            Message.Send(m_setEquipmentPopupMsg);
+
+            RequestDialogEnter<EquipmentPopupDialog>();
         }
         //------------------------------------------------------------------------------------
     }

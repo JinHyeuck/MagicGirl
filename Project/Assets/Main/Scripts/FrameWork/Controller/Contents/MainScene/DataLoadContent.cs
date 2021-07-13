@@ -38,6 +38,8 @@ namespace GameBerry.Contents
         private void StartLoadData()
         {
             TheBackEnd.TheBackEnd.Instance.GetAllChartList();
+            TheBackEnd.TheBackEnd.Instance.GetProbabilityCardList();
+            //TheBackEnd.TheBackEnd.Instance.GetProbabilitys();
         }
         //------------------------------------------------------------------------------------
         private void GetAllGameChartResponse(GameBerry.Event.GetAllGameChartResponseMsg msg)

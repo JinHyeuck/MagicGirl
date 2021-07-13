@@ -35,7 +35,18 @@ namespace GameBerry.Event
 
     public class RefrashEquipmentInfoListMsg : Message
     {
-        public List<EquipmentData> infos = new List<EquipmentData>();
+        public List<EquipmentData> datas = new List<EquipmentData>();
+    }
+
+    public class SetEquipmentPopupMsg : Message
+    {
+        public EquipmentData equipmentdata;
+        public PlayerEquipmentInfo equipmentinfo;
+    }
+
+    public class RefrashSkillInfoListMsg : Message
+    {
+        public List<SkillData> datas = new List<SkillData>();
     }
 
     public class DunjeonPharmingRewardMsg : Message

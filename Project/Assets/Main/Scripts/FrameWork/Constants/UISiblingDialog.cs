@@ -14,9 +14,13 @@
 
         PlayerStatDialog,
         EquipmentDialog,
+        SkillDialog,
 
         PlayerInfoDialog,
         InGamePlayMenuDialog,
+
+        EquipmentPopupDialog,
+
         // Global UI 501 ~ 999
         GlobalUI = 500,
 

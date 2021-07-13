@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3733190609807472597
+--- !u!1 &3000942884402546657
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,23 +8,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8763899575107661460}
-  - component: {fileID: 4170054505238069707}
-  - component: {fileID: 153543872171796488}
+  - component: {fileID: 4508311663424932371}
+  - component: {fileID: 7845382516236964730}
+  - component: {fileID: 5349672865552904079}
   m_Layer: 0
-  m_Name: EquipmentContent
+  m_Name: SkillContent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8763899575107661460
+--- !u!4 &4508311663424932371
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3733190609807472597}
+  m_GameObject: {fileID: 3000942884402546657}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -32,34 +32,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4170054505238069707
+--- !u!114 &7845382516236964730
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3733190609807472597}
+  m_GameObject: {fileID: 3000942884402546657}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b483e986e19c1ac4f91dffa13e5315c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _uiList:
-  - EquipmentDialog
-  - EquipmentPopupDialog
+  - SkillDialog
   dialogList: []
---- !u!114 &153543872171796488
+--- !u!114 &5349672865552904079
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3733190609807472597}
+  m_GameObject: {fileID: 3000942884402546657}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6574ccc5ad36d874c9868e14c9cf9203, type: 3}
+  m_Script: {fileID: 11500000, guid: d335a589552eddb49bdf86923a81444f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ContentName: 
-  _uiLoader: {fileID: 4170054505238069707}
+  _uiLoader: {fileID: 7845382516236964730}
   dontDestroy: 0

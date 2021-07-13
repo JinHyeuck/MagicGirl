@@ -16,7 +16,8 @@ namespace GameBerry.Managers
         private Event.RefrashSkillStonMsg m_refrashSkillStonMsg = new Event.RefrashSkillStonMsg();
         private Event.ChangeEquipElementMsg m_changeEquipElementMsg = new Event.ChangeEquipElementMsg();
         private Event.RefrashEquipmentInfoListMsg m_refrashEquipmentInfoListResponseMsg = new Event.RefrashEquipmentInfoListMsg();
-        
+        private Event.RefrashSkillInfoListMsg m_refrashSkillInfoListMsg = new Event.RefrashSkillInfoListMsg();
+
 
         private LevelLocalChart m_levelLocalChart = null;
         //------------------------------------------------------------------------------------
@@ -148,6 +149,8 @@ namespace GameBerry.Managers
             return PlayerDataContainer.SkillSton;
         }
         //------------------------------------------------------------------------------------
+        #region StatUpGrade
+        //------------------------------------------------------------------------------------
         public int GetCurrentUpGradeStatLevel(StatUpGradeType type)
         {
             return PlayerDataContainer.m_upGradeStatLevel[type];
@@ -187,6 +190,10 @@ namespace GameBerry.Managers
 
             return false;
         }
+        //------------------------------------------------------------------------------------
+        #endregion
+        //------------------------------------------------------------------------------------
+        #region Equipment
         //------------------------------------------------------------------------------------
         public PlayerEquipmentInfo GetPlayerEquipmentInfo(EquipmentType type, int id)
         {
@@ -293,7 +300,7 @@ namespace GameBerry.Managers
             Dictionary<int, PlayerEquipmentInfo> dic = null;
             PlayerEquipmentInfo info = null;
 
-            m_refrashEquipmentInfoListResponseMsg.infos.Clear();
+            m_refrashEquipmentInfoListResponseMsg.datas.Clear();
 
             if (PlayerDataContainer.m_equipmentInfo.ContainsKey(equipmentdata.Type) == false)
                 PlayerDataContainer.m_equipmentInfo.Add(equipmentdata.Type, new Dictionary<int, PlayerEquipmentInfo>());
@@ -310,7 +317,7 @@ namespace GameBerry.Managers
                 dic.Add(info.Id, info);
             }
 
-            m_refrashEquipmentInfoListResponseMsg.infos.Add(equipmentdata);
+            m_refrashEquipmentInfoListResponseMsg.datas.Add(equipmentdata);
 
             Message.Send(m_refrashEquipmentInfoListResponseMsg);
         }
@@ -320,7 +327,7 @@ namespace GameBerry.Managers
             Dictionary<int, PlayerEquipmentInfo> dic = null;
             PlayerEquipmentInfo info = null;
 
-            m_refrashEquipmentInfoListResponseMsg.infos.Clear();
+            m_refrashEquipmentInfoListResponseMsg.datas.Clear();
 
             for (int i = 0; i < equipmentdata.Count; ++i)
             {
@@ -339,8 +346,8 @@ namespace GameBerry.Managers
                     dic.Add(info.Id, info);
                 }
 
-                if (m_refrashEquipmentInfoListResponseMsg.infos.Contains(equipmentdata[i]) == false)
-                    m_refrashEquipmentInfoListResponseMsg.infos.Add(equipmentdata[i]);
+                if (m_refrashEquipmentInfoListResponseMsg.datas.Contains(equipmentdata[i]) == false)
+                    m_refrashEquipmentInfoListResponseMsg.datas.Add(equipmentdata[i]);
             }
 
             Message.Send(m_refrashEquipmentInfoListResponseMsg);
@@ -360,11 +367,11 @@ namespace GameBerry.Managers
 
             AddEquipElement(to, amount);
 
-            m_refrashEquipmentInfoListResponseMsg.infos.Clear();
+            m_refrashEquipmentInfoListResponseMsg.datas.Clear();
 
             info.Count -= decreasecount;
 
-            m_refrashEquipmentInfoListResponseMsg.infos.Add(from);
+            m_refrashEquipmentInfoListResponseMsg.datas.Add(from);
             Message.Send(m_refrashEquipmentInfoListResponseMsg);
 
             return true;
@@ -398,13 +405,63 @@ namespace GameBerry.Managers
 
             info.Level += 1;
 
-            m_refrashEquipmentInfoListResponseMsg.infos.Clear();
-            m_refrashEquipmentInfoListResponseMsg.infos.Add(equipmentdata);
+            m_refrashEquipmentInfoListResponseMsg.datas.Clear();
+            m_refrashEquipmentInfoListResponseMsg.datas.Add(equipmentdata);
 
             Message.Send(m_refrashEquipmentInfoListResponseMsg);
 
             return true;
         }
+        //------------------------------------------------------------------------------------
+        #endregion
+        //------------------------------------------------------------------------------------
+        #region Equipment
+        //------------------------------------------------------------------------------------
+        public PlayerSkillInfo GetPlayerSkillInfo(SkillData data)
+        {
+            PlayerSkillInfo skillinfo = null;
+            if (PlayerDataContainer.m_skillInfo.TryGetValue(data.SkillID, out skillinfo) == true)
+                return skillinfo;
+            else
+                return null;
+        }
+        //------------------------------------------------------------------------------------
+        public int GetNeedLevelUPSkillCount(SkillData data)
+        {
+            PlayerSkillInfo info = GetPlayerSkillInfo(data);
+            if (info == null)
+                return 1;
+
+            return info.Level + 1;
+        }
+        //------------------------------------------------------------------------------------
+        public void AddSkillList(List<SkillData> skilldata)
+        {
+            PlayerSkillInfo info = null;
+
+            m_refrashSkillInfoListMsg.datas.Clear();
+
+            for (int i = 0; i < skilldata.Count; ++i)
+            {
+                if (PlayerDataContainer.m_skillInfo.TryGetValue(skilldata[i].SkillID, out info) == true)
+                    info.Count += 1;
+                else
+                {
+                    info = new PlayerSkillInfo();
+                    info.Id = skilldata[i].SkillID;
+                    info.Count += 1;
+                    PlayerDataContainer.m_skillInfo.Add(info.Id, info);
+                }
+
+                if (m_refrashSkillInfoListMsg.datas.Contains(skilldata[i]) == false)
+                    m_refrashSkillInfoListMsg.datas.Add(skilldata[i]);
+            }
+
+            Message.Send(m_refrashSkillInfoListMsg);
+        }
+        //------------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------------
+        #endregion
         //------------------------------------------------------------------------------------
     }
 }

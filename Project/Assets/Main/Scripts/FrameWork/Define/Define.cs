@@ -21,6 +21,11 @@ public static class Define
     public static readonly string NecklaceChartKey = "necklacechart";
     public static readonly string RingChartKey = "ringchart";
 
+    //TheBackEndGaChaChartKey
+    public static readonly string WeaponGachaKey = "weapongacha";
+    public static readonly string NecklaceGachaKey = "necklacegacha";
+    public static readonly string RingGachaKey = "ringgacha";
+    public static readonly string SkillGachaKey = "skillgacha";
 
     //CharacterInfoTableKey
     public static readonly string CharacterInfoTable = "charinfo";
@@ -28,7 +33,7 @@ public static class Define
     public static readonly string CharacterEquipmentInfoTable = "charequipmentinfo";
     public static readonly string CharacterSkillInfoTable = "charskillinfo";
 
-    //CharacterInfoRowKey
+    //CharacterInfoKey
     public static readonly string PlayerLevel = "level";
     public static readonly string PlayerExp = "exp";
 
@@ -41,7 +46,7 @@ public static class Define
     public static readonly string PlayerEquipID = "playerequipid";
 
 
-    //CharacterInfoRowKey-UpGrade
+    //CharacterInfoKey-UpGrade
     public static readonly string PlayerUpGradeAddDamage = "playerupgradeadddamage";
     public static readonly string PlayerUpGradeCriticalDamage = "playerupgradecriticaldamage";
     public static readonly string PlayerUpGradeCriticalPer = "playerupgradecriticalper";

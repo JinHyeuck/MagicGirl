@@ -484,6 +484,7 @@ MonoBehaviour:
   _uiInAnimations: []
   _uiOutAnimations: []
   m_skillRoot: {fileID: 6099608461078085828}
+  m_skillAtlas: {fileID: 4343727234628468602, guid: bc25fcfaed25b66469e6d2cbabdf156d, type: 2}
   m_skillElement: {fileID: 7180825467035083209, guid: 1f87a89a4e2b96b43abf3e4dfac6462d, type: 3}
 --- !u!1 &4171991095015055425
 GameObject:

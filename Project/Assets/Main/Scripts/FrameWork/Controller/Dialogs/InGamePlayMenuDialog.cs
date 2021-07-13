@@ -136,6 +136,7 @@ namespace GameBerry.UI
                     }
                 case BottomMenuID.Skill:
                     {
+                        RequestDialogEnter<SkillDialog>();
                         break;
                     }
                 case BottomMenuID.Equipment:
@@ -174,6 +175,7 @@ namespace GameBerry.UI
                     }
                 case BottomMenuID.Skill:
                     {
+                        RequestDialogExit<SkillDialog>();
                         break;
                     }
                 case BottomMenuID.Equipment:

@@ -28,7 +28,7 @@ namespace GameBerry
     public class SkillData
     {
         public int Index = 0;
-        public string SkillID = string.Empty;
+        public int SkillID = -1;
         public string SkillName = string.Empty;
         public GradeType SkillGradeType = GradeType.None;
         public SkillTriggerType SkillTriggerType = SkillTriggerType.Max;
@@ -40,15 +40,14 @@ namespace GameBerry
         public double Range;
         public int NeedMP;
 
-        public Sprite SkillSprite = null;
+        public string SkillSpriteName = null;
         public Sprite SKillEffect = null;
     }
 
     public class SkillLocalChart
     {
-        [SerializeField]
         public List<SkillData> m_SkillDatas = new List<SkillData>();
-        private Dictionary<string, SkillData> m_SkillDatas_Dic = new Dictionary<string, SkillData>();
+        private Dictionary<int, SkillData> m_SkillDatas_Dic = new Dictionary<int, SkillData>();
 
         //------------------------------------------------------------------------------------
         public void InitData()
@@ -63,7 +62,7 @@ namespace GameBerry
                 {
                     Index = rows[i]["index"]["S"].ToString().FastStringToInt(),
 
-                    SkillID = rows[i]["skill_id"]["S"].ToString(),
+                    SkillID = rows[i]["skill_id"]["S"].ToString().FastStringToInt(),
 
                     SkillName = rows[i]["skill_name"]["S"].ToString(),
 
@@ -86,6 +85,8 @@ namespace GameBerry
                     NeedMP = i != 0 ? rows[i]["skill_needmp"]["S"].ToString().FastStringToInt() : 0
                 };
 
+                data.SkillSpriteName = string.Format("skill_{0}", data.Index);
+
                 m_SkillDatas.Add(data);
                 m_SkillDatas_Dic.Add(data.SkillID, data);
             }
@@ -105,7 +106,7 @@ namespace GameBerry
             });
         }
         //------------------------------------------------------------------------------------
-        public SkillData GetSkillData(string id)
+        public SkillData GetSkillData(int id)
         {
             SkillData data = null;
             m_SkillDatas_Dic.TryGetValue(id, out data);

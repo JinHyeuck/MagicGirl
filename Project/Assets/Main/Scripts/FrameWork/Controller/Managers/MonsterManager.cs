@@ -81,6 +81,7 @@ namespace GameBerry.Managers
 
                     sprite = spriteAtlas.GetSprite(spritename);
 
+                    m_catchingMonsterSprite.Add(spritename, sprite);
                 });
             }
 

@@ -10,7 +10,7 @@ namespace GameBerry.Contents
         //------------------------------------------------------------------------------------
         private void Update()
         {
-            if (Input.GetKeyUp(KeyCode.G))
+            if (Input.GetKeyUp(KeyCode.E))
             {
                 EquipmentLocalChart chart = Managers.TableManager.Instance.GetTableClass<EquipmentLocalChart>();
 

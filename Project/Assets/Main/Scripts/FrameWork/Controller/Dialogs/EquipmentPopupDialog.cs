@@ -5,9 +5,33 @@ using UnityEngine.UI;
 
 namespace GameBerry.UI
 {
-    
+    public enum EquipmentPopupPageType
+    {
+        LevelUP = 0,
+        Combine,
+    }
 
-    public class UIEquipmentPopup : MonoBehaviour
+    [System.Serializable]
+    public class EquipmentPopupChangeTab
+    {
+        public Button ChangeTabBtn;
+        public EquipmentPopupPageType ButtonType;
+
+        private System.Action<EquipmentPopupPageType> CallBack;
+
+        public void SetCallBack(System.Action<EquipmentPopupPageType> callback)
+        {
+            CallBack = callback;
+        }
+
+        public void OnClick()
+        {
+            if (CallBack != null)
+                CallBack(ButtonType);
+        }
+    }
+
+    public class EquipmentPopupDialog : IDialog
     {
         [SerializeField]
         private Text m_equipmentStonCountText;
@@ -107,9 +131,10 @@ namespace GameBerry.UI
         private int m_combineCount = 0;
 
         //------------------------------------------------------------------------------------
-        public void Init()
+        protected override void OnLoad()
         {
             Message.AddListener<GameBerry.Event.RefrashEquipmentStonMsg>(RefrashEquipmentSton);
+            Message.AddListener<GameBerry.Event.SetEquipmentPopupMsg>(SetEquipmentPopup);
 
             m_equipmentLocalChart = Managers.TableManager.Instance.GetTableClass<EquipmentLocalChart>();
 
@@ -131,7 +156,7 @@ namespace GameBerry.UI
             if (m_exitBtn != null)
                 m_exitBtn.onClick.AddListener(() =>
                 {
-                    gameObject.SetActive(false);
+                    RequestDialogExit<EquipmentPopupDialog>();
                 });
 
             if (m_levelUPBtn != null)
@@ -150,9 +175,10 @@ namespace GameBerry.UI
                 m_doCombineBtn.onClick.AddListener(OnClick_DoCombine);
         }
         //------------------------------------------------------------------------------------
-        private void OnDestroy()
+        protected override void OnUnload()
         {
             Message.RemoveListener<GameBerry.Event.RefrashEquipmentStonMsg>(RefrashEquipmentSton);
+            Message.RemoveListener<GameBerry.Event.SetEquipmentPopupMsg>(SetEquipmentPopup);
         }
         //------------------------------------------------------------------------------------
         private void RefrashEquipmentSton(GameBerry.Event.RefrashEquipmentStonMsg msg)
@@ -161,7 +187,12 @@ namespace GameBerry.UI
                 m_equipmentStonCountText.text = string.Format("{0:#,0}", Managers.PlayerDataManager.Instance.GetEquipmentSton());
         }
         //------------------------------------------------------------------------------------
-        public void SetEquipment(EquipmentData equipmentdata, PlayerEquipmentInfo equipmentinfo)
+        private void SetEquipmentPopup(GameBerry.Event.SetEquipmentPopupMsg msg)
+        {
+            SetEquipment(msg.equipmentdata, msg.equipmentinfo);
+        }
+        //------------------------------------------------------------------------------------
+        private void SetEquipment(EquipmentData equipmentdata, PlayerEquipmentInfo equipmentinfo)
         {
             if (m_levelUpGroup != null)
                 m_levelUpGroup.gameObject.SetActive(m_equipmentPopupPageType == EquipmentPopupPageType.LevelUP);
@@ -277,7 +308,7 @@ namespace GameBerry.UI
             EquipmentData NextEquipmentData = m_equipmentLocalChart.GetNextEquipmentData(equipmentdata.Id);
             PlayerEquipmentInfo NextEquipmentInfo = null;
 
-            if(NextEquipmentData != null)
+            if (NextEquipmentData != null)
                 NextEquipmentInfo = Managers.PlayerDataManager.Instance.GetPlayerEquipmentInfo(NextEquipmentData.Type, NextEquipmentData.Id);
 
             if (m_combine_CurrentEquipmentName != null)
@@ -288,7 +319,7 @@ namespace GameBerry.UI
 
             int currentequipcount = 0;
 
-            if(equipmentinfo != null)
+            if (equipmentinfo != null)
                 currentequipcount = equipmentinfo.Count;
 
             int maxcombinecount = currentequipcount / Define.EquipmentComposeAmount;

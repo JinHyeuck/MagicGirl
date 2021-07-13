@@ -27,7 +27,7 @@ namespace GameBerry
         public static Dictionary<EquipmentType, int> m_equipId = new Dictionary<EquipmentType, int>();
 
         // 플레이어가 소유한 스킬
-        public static Dictionary<string, PlayerSkillInfo> m_hadSkill = new Dictionary<string, PlayerSkillInfo>();
+        public static Dictionary<int, PlayerSkillInfo> m_skillInfo = new Dictionary<int, PlayerSkillInfo>();
 
         public static int Level;
         public static double Exp;

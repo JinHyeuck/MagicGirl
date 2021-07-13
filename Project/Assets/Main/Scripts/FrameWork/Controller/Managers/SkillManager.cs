@@ -7,7 +7,7 @@ namespace GameBerry.Managers
     public class SkillCoolTimeData
     {
         public float StartTime = 0.0f;
-        public string SkillID = string.Empty;
+        public int SkillID = -1;
     }
 
     public class SkillManager : MonoSingleton<SkillManager>
@@ -16,10 +16,10 @@ namespace GameBerry.Managers
 
         private List<SkillData> m_equipSkillList = new List<SkillData>(); // 슬롯에 등록한 스킬
 
-        private Dictionary<string, SkillData> m_usableSkillList = new Dictionary<string, SkillData>(); // 열려있는 스킬
+        private Dictionary<int, SkillData> m_usableSkillList = new Dictionary<int, SkillData>(); // 열려있는 스킬
 
         private LinkedList<SkillCoolTimeData> m_coolTimeSkill_Linked = new LinkedList<SkillCoolTimeData>();
-        private Dictionary<string, SkillData> m_coolTimeSkill_Dic = new Dictionary<string, SkillData>();
+        private Dictionary<int, SkillData> m_coolTimeSkill_Dic = new Dictionary<int, SkillData>();
 
         private SkillData m_defaultSkill = null;
 
@@ -40,7 +40,7 @@ namespace GameBerry.Managers
 
             for (int i = 0; i < openskillarr.Length; ++i)
             {
-                m_usableSkillList.Add(openskillarr[i], m_skillLocalTable.GetSkillData(openskillarr[i]));
+                m_usableSkillList.Add(openskillarr[i].FastStringToInt(), m_skillLocalTable.GetSkillData(openskillarr[i].FastStringToInt()));
             }
 
             m_equipSkillData = PlayerPrefs.GetString(Define.EquipSkillKey, string.Empty);
@@ -52,7 +52,7 @@ namespace GameBerry.Managers
                 {
                     string key = equipskillarr[i];
                     SkillData data = null;
-                    if (m_usableSkillList.TryGetValue(key, out data) == true)
+                    if (m_usableSkillList.TryGetValue(key.FastStringToInt(), out data) == true)
                         m_equipSkillList.Add(data);
                     else
                         m_equipSkillList.Add(null);
@@ -93,7 +93,7 @@ namespace GameBerry.Managers
             }
         }
         //------------------------------------------------------------------------------------
-        private void AddOpenSkillData(string key)
+        private void AddOpenSkillData(int key)
         {
             // 새로운 스킬이 추가되었을 때는 여기서 한다.
             if (string.IsNullOrEmpty(m_openSkillData) != false)
@@ -102,7 +102,7 @@ namespace GameBerry.Managers
             }
             else
             {
-                m_openSkillData = key;
+                m_openSkillData = key.ToString();
             }
 
             PlayerPrefs.SetString(Define.OpenSkillListKey, m_openSkillData);
@@ -110,7 +110,7 @@ namespace GameBerry.Managers
             m_usableSkillList.Add(key, m_skillLocalTable.GetSkillData(key));
         }
         //------------------------------------------------------------------------------------
-        private void ChangeEquipSkillData(string key, int index)
+        private void ChangeEquipSkillData(int key, int index)
         {
             // 슬롯에 장착한 스킬이 달라지면 여기서 한다.
             if (m_equipSkillList.Count <= index)
@@ -140,7 +140,7 @@ namespace GameBerry.Managers
             {
                 string keystr = string.Empty;
                 if (m_equipSkillList[i] != null)
-                    keystr = m_equipSkillList[i].SkillID;
+                    keystr = m_equipSkillList[i].SkillID.ToString();
                 else
                     keystr = " ";
 
