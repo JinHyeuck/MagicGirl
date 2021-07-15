@@ -10,7 +10,9 @@ namespace GameBerry.TheBackEnd
         //------------------------------------------------------------------------------------
         public bool InitTheBackEnd()
         {
-            var bro = Backend.Initialize();
+            Debug.Log("InitTheBackEnd");
+
+            var bro = Backend.Initialize(true);
 
             if (bro.IsSuccess() == true)
             {
@@ -24,7 +26,13 @@ namespace GameBerry.TheBackEnd
 
             return false;
         }
+        //------------------------------------------------------------------------------------
+        public void GetGoogleHash()
+        {
+            string googlehash = Backend.Utils.GetGoogleHash();
 
+            Debug.Log("구글 해시 키 : " + googlehash);
+        }
         #region TheBackEnd_Login
         //------------------------------------------------------------------------------------
         public bool IsNeedSignUp()
@@ -149,9 +157,9 @@ namespace GameBerry.TheBackEnd
             TheBackEnd_Probability.GetProbabilityCardList();
         }
         //------------------------------------------------------------------------------------
-        public void GetProbabilitys()
+        public void GetProbabilitys(string chartid, int count, System.Action<LitJson.JsonData> onComplete)
         {
-            TheBackEnd_Probability.GetProbabilitys();
+            TheBackEnd_Probability.GetProbabilitys(chartid, count, onComplete);
         }
         //------------------------------------------------------------------------------------
         #endregion

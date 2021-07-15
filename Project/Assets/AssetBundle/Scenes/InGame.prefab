@@ -53,6 +53,7 @@ MonoBehaviour:
   - PlayerStatContent
   - EquipmentContent
   - SkillContent
+  - GachaContent
   defaultContentList:
   - PlayerContent
   - MonsterContent
@@ -61,3 +62,4 @@ MonoBehaviour:
   - PlayerStatContent
   - EquipmentContent
   - SkillContent
+  - GachaContent

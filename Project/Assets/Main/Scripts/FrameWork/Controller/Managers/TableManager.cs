@@ -87,6 +87,11 @@ namespace GameBerry.Managers
             _tables.Add(Type.GetType("GameBerry.SkillLocalChart"), skillLocalTable);
 
 
+            GachaLocalChart gachaLocalChart = new GachaLocalChart();
+            gachaLocalChart.InitData();
+            _tables.Add(Type.GetType("GameBerry.GachaLocalChart"), gachaLocalChart);
+
+
             _alreadyLoading = false;
             _loadComplete = true;
         }

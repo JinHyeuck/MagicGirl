@@ -99,7 +99,7 @@ namespace GameBerry
         public EquipmentData NextData = null;
     }
 
-    public class EquipmentLocalChart : MonoBehaviour
+    public class EquipmentLocalChart
     {
         private Dictionary<int, EquipmentData> m_equipmentData_Dic = new Dictionary<int, EquipmentData>();
         private Dictionary<EquipmentType, List<EquipmentData>> m_equipmentDataList_Dic = new Dictionary<EquipmentType, List<EquipmentData>>();
@@ -110,6 +110,13 @@ namespace GameBerry
         public void InitData()
         {
             JsonData chartJson = JsonMapper.ToObject(TheBackEnd.TheBackEnd.Instance.GetLocalChartData(Define.EquipmentChartKey));
+
+            UnityEngine.U2D.SpriteAtlas Atlas = null;
+
+            AssetBundleLoader.Instance.Load<UnityEngine.U2D.SpriteAtlas>(m_resourcePath, "EquipmentAtlas", o =>
+            {
+                Atlas = o as UnityEngine.U2D.SpriteAtlas;
+            });
 
             var rows = chartJson["rows"];
 
@@ -129,8 +136,11 @@ namespace GameBerry
 
                     Quality = (QualityType)rows[i]["quality"]["S"].ToString().FastStringToInt(),
 
-                    EquipmentSprite = Util.GetSpriteOnAssetBundle(string.Format("{0}/{1}", m_resourcePath, eqtype), eqtype.ToString()),
+                    //EquipmentSprite = Util.GetSpriteOnAssetBundle(string.Format("{0}/{1}", m_resourcePath, eqtype), eqtype.ToString()),
                 };
+
+                if (Atlas != null)
+                    data.EquipmentSprite = Atlas.GetSprite(eqtype.ToString());
 
                 for (int j = 0; j < (int)EquipmentOption.Max; ++j)
                 {

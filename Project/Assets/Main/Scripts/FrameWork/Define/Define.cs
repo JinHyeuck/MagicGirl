@@ -15,13 +15,10 @@ public static class Define
     public static readonly string DunjeonChartKey = "dunjeonchart";
     public static readonly string LevelchartKey = "levelchart";
     public static readonly string StatUpGradeChartKey = "upgradestatchart";
-
     public static readonly string EquipmentChartKey = "equipmentchart";
-    public static readonly string WeaponChartKey = "weaponchart";
-    public static readonly string NecklaceChartKey = "necklacechart";
-    public static readonly string RingChartKey = "ringchart";
+    public static readonly string GachaChartKey = "gachachart";
 
-    //TheBackEndGaChaChartKey
+    //TheBackEndProbabilityChartKey
     public static readonly string WeaponGachaKey = "weapongacha";
     public static readonly string NecklaceGachaKey = "necklacegacha";
     public static readonly string RingGachaKey = "ringgacha";
@@ -69,4 +66,7 @@ public static class Define
     //Equipment
     public static readonly byte EquipmentComposeAmount = 5;
     public static readonly int EquipmentQualityOperationValue = 2;
+
+    //CharacterSkillInfoKey
+    public static readonly string CharacterSkillInfo = "skillinfo";
 }

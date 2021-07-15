@@ -79,19 +79,11 @@ namespace GameBerry.UI
         //------------------------------------------------------------------------------------
         protected override void OnEnter()
         {
-            if (m_levelText != null)
-                m_levelText.text = Managers.PlayerDataManager.Instance.GetLevel().ToString();
-
-            if (m_goldText != null)
-                m_goldText.text = Managers.PlayerDataManager.Instance.GetGold().ToString();
-
-            if (m_diaCountText != null)
-                m_diaCountText.text = Managers.PlayerDataManager.Instance.GetDia().ToString();
-
-            if (m_equipmentStonCountText != null)
-                m_equipmentStonCountText.text = Managers.PlayerDataManager.Instance.GetEquipmentSton().ToString();
-
+            RefrashLevel(null);
             RefrashExp(null);
+            RefrashGold(null);
+            RefrashDia(null);
+            RefrashEquipmentSton(null);
         }
         //------------------------------------------------------------------------------------
         private void RefrashLevel(GameBerry.Event.RefrashLevelMsg msg)

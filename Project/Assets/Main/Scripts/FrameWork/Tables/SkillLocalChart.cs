@@ -41,6 +41,7 @@ namespace GameBerry
         public int NeedMP;
 
         public string SkillSpriteName = null;
+        public Sprite SkillSprite = null;
         public Sprite SKillEffect = null;
     }
 
@@ -49,10 +50,19 @@ namespace GameBerry
         public List<SkillData> m_SkillDatas = new List<SkillData>();
         private Dictionary<int, SkillData> m_SkillDatas_Dic = new Dictionary<int, SkillData>();
 
+        private string m_resourcePath = "TableResources/Textures/Skill";
+
         //------------------------------------------------------------------------------------
         public void InitData()
         {
             JsonData chartJson = JsonMapper.ToObject(TheBackEnd.TheBackEnd.Instance.GetLocalChartData(Define.SkillItemChartKey));
+
+            UnityEngine.U2D.SpriteAtlas Atlas = null;
+
+            AssetBundleLoader.Instance.Load<UnityEngine.U2D.SpriteAtlas>(m_resourcePath, "SkillAtlas", o =>
+            {
+                Atlas = o as UnityEngine.U2D.SpriteAtlas;
+            });
 
             var rows = chartJson["rows"];
 
@@ -84,6 +94,8 @@ namespace GameBerry
 
                     NeedMP = i != 0 ? rows[i]["skill_needmp"]["S"].ToString().FastStringToInt() : 0
                 };
+
+                data.SkillSprite = Atlas.GetSprite(string.Format("skill_{0}", data.Index));
 
                 data.SkillSpriteName = string.Format("skill_{0}", data.Index);
 

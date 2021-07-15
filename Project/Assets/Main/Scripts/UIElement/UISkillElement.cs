@@ -48,7 +48,7 @@ namespace GameBerry.UI
             m_callBack = callback;
         }
         //------------------------------------------------------------------------------------
-        public void SetSkillElement(SkillData SkillData, PlayerSkillInfo equipmentinfo, Sprite IconSprite)
+        public void SetSkillElement(SkillData SkillData, PlayerSkillInfo equipmentinfo)
         {
             m_currentSkillData = SkillData;
             m_currentSkillInfo = equipmentinfo;
@@ -60,7 +60,7 @@ namespace GameBerry.UI
                 m_skillIcon.color = equipmentinfo == null ? m_disableColor : Color.white;
 
             if (m_skillIcon != null)
-                m_skillIcon.sprite = IconSprite;
+                m_skillIcon.sprite = SkillData.SkillSprite;
 
             if (m_skillLevelText != null)
             {

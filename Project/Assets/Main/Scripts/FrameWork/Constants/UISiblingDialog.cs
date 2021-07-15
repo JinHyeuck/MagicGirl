@@ -15,11 +15,13 @@
         PlayerStatDialog,
         EquipmentDialog,
         SkillDialog,
+        GachaDialog,
 
         PlayerInfoDialog,
         InGamePlayMenuDialog,
 
         EquipmentPopupDialog,
+        GachaResultDialog,
 
         // Global UI 501 ~ 999
         GlobalUI = 500,

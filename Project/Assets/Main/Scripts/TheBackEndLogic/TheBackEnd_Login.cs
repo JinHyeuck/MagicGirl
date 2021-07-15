@@ -53,23 +53,30 @@ namespace GameBerry.TheBackEnd
 
                 m_setNoticeMsg.NoticeStr = callback.GetMessage();
 
-                Message.Send(m_setNoticeMsg.NoticeStr = callback.GetMessage());
+                Message.Send(m_setNoticeMsg);
             });
         }
         //------------------------------------------------------------------------------------
         public static void DoCustomLogin(string id, string pw)
         {
-            SendQueue.Enqueue(Backend.BMember.CustomLogin, id, pw, callback => {
+            Debug.Log("DoCustomLogin");
+            SendQueue.Enqueue(Backend.BMember.CustomLogin, id, pw, callback =>
+            {
                 if (callback.IsSuccess())
                 {
                     Debug.Log("로그인에 성공했습니다");
 
                     CompleteLogin();
                 }
+                else
+                {
+                    Debug.Log(string.Format("DoCustomLogin GetErrorCode {0}", callback.GetErrorCode()));
+                    Debug.Log(string.Format("DoCustomLogin GetMessage {0}", callback.GetMessage()));
+                }
 
                 m_setNoticeMsg.NoticeStr = callback.GetMessage();
 
-                Message.Send(m_setNoticeMsg.NoticeStr = callback.GetMessage());
+                Message.Send(m_setNoticeMsg);
             });
         }
         //------------------------------------------------------------------------------------
@@ -86,7 +93,7 @@ namespace GameBerry.TheBackEnd
 
                 m_setNoticeMsg.NoticeStr = callback.GetMessage();
 
-                Message.Send(m_setNoticeMsg.NoticeStr = callback.GetMessage());
+                Message.Send(m_setNoticeMsg);
             });
         }
         //------------------------------------------------------------------------------------
@@ -103,7 +110,7 @@ namespace GameBerry.TheBackEnd
 
                 m_setNoticeMsg.NoticeStr = callback.GetMessage();
 
-                Message.Send(m_setNoticeMsg.NoticeStr = callback.GetMessage());
+                Message.Send(m_setNoticeMsg);
             });
         }
         //------------------------------------------------------------------------------------
@@ -131,7 +138,7 @@ namespace GameBerry.TheBackEnd
                 Message.Send(m_createNickNameResultMsg);
                 m_setNoticeMsg.NoticeStr = callback.GetMessage();
 
-                Message.Send(m_setNoticeMsg.NoticeStr = callback.GetMessage());
+                Message.Send(m_setNoticeMsg);
             });
 
             //Backend.BMember.CreateNickname(nickname, callback =>
@@ -151,7 +158,7 @@ namespace GameBerry.TheBackEnd
             //    Message.Send(m_createNickNameResultMsg);
             //    m_setNoticeMsg.NoticeStr = callback.GetMessage();
 
-            //    Message.Send(m_setNoticeMsg.NoticeStr = callback.GetMessage());
+            //    Message.Send(m_setNoticeMsg);
             //});
         }
     }

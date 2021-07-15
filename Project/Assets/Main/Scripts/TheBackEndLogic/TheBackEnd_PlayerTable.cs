@@ -118,6 +118,50 @@ namespace GameBerry.TheBackEnd
             });
         }
         //------------------------------------------------------------------------------------
+        public static void GetCharacterInfoTableDataTest(System.Action OnComplete)
+        {
+            SendQueue.Enqueue(Backend.GameData.Get, Define.CharacterInfoTable, new Where(), 10, (bro) =>
+            {
+                if (bro.IsSuccess() == false)
+                {
+                    Debug.Log(bro.GetStatusCode());
+                    Debug.Log(bro.GetErrorCode());
+                    Debug.Log(bro.GetMessage());
+                    return;
+                }
+
+                var data = bro.FlattenRows();
+
+                Debug.LogError(data.Count == 0 ? "CharacterInfo테이블에 아무것도 없음" : "CharacterInfo테이블에 정보 있음");
+
+                if (data.Count == 0)
+                {
+                    InsertCharacterInfoTable();
+                }
+                else
+                {
+                    for (int i = 0; i < data.Count; ++i)
+                    {
+                        string returnValue = string.Empty;
+                        foreach (var key in data[i].Keys)
+                        {
+                            if (key == Define.PlayerDia)
+                            {
+                                Managers.PlayerDataManager.Instance.SetDia(((int)data[i][key]));
+                            }
+
+                            returnValue += string.Format("{0} : {1} / ", key, data[i][key].ToString());
+                        }
+
+                        Debug.Log(returnValue);
+                    }
+
+                    if (OnComplete != null)
+                        OnComplete();
+                }
+            });
+        }
+        //------------------------------------------------------------------------------------
         private static void InsertCharacterInfoTable()
         {
             Dictionary<EquipmentType, int> equipInsertData = new Dictionary<EquipmentType, int>();
@@ -464,13 +508,16 @@ namespace GameBerry.TheBackEnd
                     for (int i = 0; i < data.Count; ++i)
                     {
                         string returnValue = string.Empty;
+
+                        var safd = data[i];
+
                         foreach (var key in data[i].Keys)
                         {
                             if (key == "inDate")
                             {
                                 CharSkillInfoInData = data[i][key].ToString();
                             }
-                            else if (key == Define.CharacterSkillInfoTable)
+                            else if (key == Define.CharacterSkillInfo)
                             {
                                 string str = data[i][key].ToString();
                                 LitJson.JsonData chartJson = LitJson.JsonMapper.ToObject(str);
@@ -490,6 +537,8 @@ namespace GameBerry.TheBackEnd
 
                                         info.Level = rawelement["Level"].ToString().FastStringToInt();
                                     }
+
+                                    PlayerDataContainer.m_skillInfo.Add(info.Id, info);
                                 }
                             }
 
@@ -506,22 +555,12 @@ namespace GameBerry.TheBackEnd
         //------------------------------------------------------------------------------------
         private static void InsertCharacterSkillInfoTable()
         {
-            Dictionary<string, PlayerSkillInfo> skillInsertData = new Dictionary<string, PlayerSkillInfo>();
+            Dictionary<int, PlayerSkillInfo> skillInsertData = new Dictionary<int, PlayerSkillInfo>();
 
-            //for (int i = 0; i < 10; ++i)
-            //{
-            //    skillInsertData.Add(i.ToString(), new PlayerSkillInfo
-            //    {
-            //        Id = i,
-            //        Count = i,
-            //        Level = i,
-            //    });
-            //}
-
-            string equipstr = LitJson.JsonMapper.ToJson(skillInsertData);
+            string equipstr = LitJson.JsonMapper.ToJson(PlayerDataContainer.m_skillInfo);
 
             Param param = new Param();
-            param.Add(Define.CharacterSkillInfoTable, equipstr);
+            param.Add(Define.CharacterSkillInfo, equipstr);
 
             Debug.Log("InsertCharacterSkillInfoTable()");
 
@@ -543,7 +582,7 @@ namespace GameBerry.TheBackEnd
         public static void UpdateCharacterSkillInfoTable()
         {
             Param param = new Param();
-            param.Add(Define.CharacterSkillInfoTable, PlayerDataContainer.m_skillInfo);
+            param.Add(Define.CharacterSkillInfo, LitJson.JsonMapper.ToJson(PlayerDataContainer.m_skillInfo));
 
 
             SendQueue.Enqueue(Backend.GameData.Update, Define.CharacterSkillInfoTable, CharSkillInfoInData, param, (callback) =>

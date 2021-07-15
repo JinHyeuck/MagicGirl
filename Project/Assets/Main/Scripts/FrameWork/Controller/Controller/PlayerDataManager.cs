@@ -41,6 +41,7 @@ namespace GameBerry.Managers
                 TheBackEnd.TheBackEnd.Instance.UpdateCharacterInfoTable();
                 TheBackEnd.TheBackEnd.Instance.UpdateCharacterUpGradeStatTable();
                 TheBackEnd.TheBackEnd.Instance.UpdateCharacterEquipmentInfoTable();
+                TheBackEnd.TheBackEnd.Instance.UpdateCharacterSkillInfoTable();
                 m_playerInfoDataSaveTimer = Time.time + m_playerInfoDataSaveTime;
             }
         }
@@ -108,9 +109,21 @@ namespace GameBerry.Managers
             Message.Send(m_refrashDiaMsg);
         }
         //------------------------------------------------------------------------------------
+        public void UseDia(int dia)
+        {
+            PlayerDataContainer.Dia -= dia;
+            Message.Send(m_refrashDiaMsg);
+        }
+        //------------------------------------------------------------------------------------
         public int GetDia()
         {
             return PlayerDataContainer.Dia;
+        }
+        //------------------------------------------------------------------------------------
+        public void SetDia(int dia)
+        {
+            PlayerDataContainer.Dia = dia;
+            Message.Send(m_refrashDiaMsg);
         }
         //------------------------------------------------------------------------------------
         public void AddEquipmentSton(int ston)
@@ -415,7 +428,7 @@ namespace GameBerry.Managers
         //------------------------------------------------------------------------------------
         #endregion
         //------------------------------------------------------------------------------------
-        #region Equipment
+        #region Skill
         //------------------------------------------------------------------------------------
         public PlayerSkillInfo GetPlayerSkillInfo(SkillData data)
         {
@@ -435,7 +448,7 @@ namespace GameBerry.Managers
             return info.Level + 1;
         }
         //------------------------------------------------------------------------------------
-        public void AddSkillList(List<SkillData> skilldata)
+        public void AddSkillElementList(List<SkillData> skilldata)
         {
             PlayerSkillInfo info = null;
 

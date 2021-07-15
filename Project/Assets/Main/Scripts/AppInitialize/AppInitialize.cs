@@ -33,6 +33,9 @@ namespace GameBerry
             Message.RemoveListener<Event.LoginResultMsg>(LoginResult);
             Message.RemoveListener<Event.CreateNickNameResultMsg>(CreateNickNameResult);
 
+            if (m_appInitUI != null)
+                m_appInitUI.Release();
+
             Destroy(m_appInitUI.gameObject);
         }
         //------------------------------------------------------------------------------------
@@ -49,6 +52,11 @@ namespace GameBerry
                     m_appInitUI.VisibleNoticeGroup(true);
                     m_appInitUI.SetNoticeText("서버 초기화 실패\n다시 실행해주세요.");
                 }
+            }
+            else
+            { 
+                Debug.Log("서버 초기화 성공");
+                TheBackEnd.TheBackEnd.Instance.GetGoogleHash();
             }
 
             return initend;

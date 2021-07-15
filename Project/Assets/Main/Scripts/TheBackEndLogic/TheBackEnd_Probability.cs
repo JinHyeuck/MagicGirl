@@ -8,6 +8,7 @@ namespace GameBerry.TheBackEnd
     public static class TheBackEnd_Probability
     {
         private static Dictionary<string, string> m_probabilityChartFileld = new Dictionary<string, string>();
+
         //------------------------------------------------------------------------------------
         public static void GetProbabilityCardList()
         {
@@ -17,8 +18,6 @@ namespace GameBerry.TheBackEnd
                 // 이후 작업
                 var data = callback.FlattenRows();
 
-
-
                 for (int i = 0; i < data.Count; ++i)
                 {
                     m_probabilityChartFileld.Add(data[i]["probabilityName"].ToString(), data[i]["selectedProbabilityFileId"].ToString());
@@ -27,18 +26,9 @@ namespace GameBerry.TheBackEnd
 
                     foreach (var key in data[i].Keys)
                     {
-                        //if (key.ToString() == "chartName")
-                        //{
-                        //    TableChartFileld.Add(data[i][key].ToString().ToLower(), data[i]["selectedChartFileId"].ToString());
-                        //}
-
                         logtext += string.Format("{0} : {1} /", key, data[i][key]);
 
                         var dataa = data[i][key];
-                        //foreach (var keya in data[i][key].Keys)
-                        //{
-                        //    logtext += string.Format("- {0} : {1} -", key, data[i][key][keya]);
-                        //}
                     }
 
                     Debug.Log(logtext);
@@ -46,14 +36,17 @@ namespace GameBerry.TheBackEnd
 
                 foreach (KeyValuePair<string, string> pair in m_probabilityChartFileld)
                     Debug.Log(string.Format("probabilityChartFileld {0} - {1}", pair.Key, pair.Value));
-
-                GetProbabilitys();
             });
         }
         //------------------------------------------------------------------------------------
-        public static void GetProbabilitys()
+        public static void GetProbabilitys(string chartid, int count, System.Action<LitJson.JsonData> onComplete)
         {
-            SendQueue.Enqueue(Backend.Probability.GetProbabilitys, "2331", 10, (callback) =>
+            string fileid = string.Empty;
+
+            if (m_probabilityChartFileld.TryGetValue(chartid, out fileid) == false)
+                return;
+
+            SendQueue.Enqueue(Backend.Probability.GetProbabilitys, fileid, count, (callback) =>
             {
                 bool issuccess = callback.IsSuccess();
                 if (issuccess == false)
@@ -77,7 +70,11 @@ namespace GameBerry.TheBackEnd
                     }
                     Debug.Log(returnValue);
                 }
+
+                if (onComplete != null)
+                    onComplete(data);
             });
         }
+        //------------------------------------------------------------------------------------
     }
 }

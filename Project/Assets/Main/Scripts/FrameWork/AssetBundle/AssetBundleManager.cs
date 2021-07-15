@@ -309,7 +309,7 @@ namespace GameBerry
                 path = string.Format("{0}/AssetBundle/{1}", Application.persistentDataPath, assetBundleName);
 
 #else
-            if (Debug.isDebugBuild == true)
+            if (UnityEngine.Debug.isDebugBuild == true)
                 path = string.Format("{0}/AssetBundle/{1}", Application.streamingAssetsPath, assetBundleName);
             else
             {
@@ -351,7 +351,7 @@ namespace GameBerry
                 path = string.Format("{0}/AssetBundle/{1}", Application.persistentDataPath, assetBundleName);
 
 #else
-            if (Debug.isDebugBuild == true)
+            if (UnityEngine.Debug.isDebugBuild == true)
                 path = string.Format("{0}/AssetBundle/{1}", Application.streamingAssetsPath, assetBundleName);
             else
             {

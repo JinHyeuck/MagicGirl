@@ -154,6 +154,7 @@ namespace GameBerry.UI
                     }
                 case BottomMenuID.Store:
                     {
+                        RequestDialogEnter<GachaDialog>();
                         break;
                     }
             }
@@ -193,6 +194,7 @@ namespace GameBerry.UI
                     }
                 case BottomMenuID.Store:
                     {
+                        RequestDialogExit<GachaDialog>();
                         break;
                     }
             }

@@ -33,9 +33,6 @@ namespace GameBerry.UI
 
         [Header("---------------------------")]
         [SerializeField]
-        private UnityEngine.U2D.SpriteAtlas m_skillAtlas;
-
-        [SerializeField]
         private UISkillElement m_skillElement;
 
         private List<UISkillElement> m_skillElement_List = new List<UISkillElement>();
@@ -71,7 +68,7 @@ namespace GameBerry.UI
             for (int i = 0; i < datalist.Count; ++i)
             {
                 if (m_skillElement_List.Count <= i)
-                    CreateEquipmentElement();
+                    CreateSkillElement();
 
                 SetElement(m_skillElement_List[i], datalist[i]);
                 m_skillElement_List[i].SetEquipElement(false);
@@ -88,7 +85,7 @@ namespace GameBerry.UI
             }
         }
         //------------------------------------------------------------------------------------
-        private void CreateEquipmentElement()
+        private void CreateSkillElement()
         {
             GameObject clone = Instantiate(m_skillElement.gameObject, m_skillRoot.transform);
             UISkillElement element = clone.GetComponent<UISkillElement>();
@@ -102,9 +99,7 @@ namespace GameBerry.UI
             if (element == null || data == null)
                 return;
 
-            Sprite sp = m_skillAtlas.GetSprite(data.SkillSpriteName);
-
-            element.SetSkillElement(data, Managers.PlayerDataManager.Instance.GetPlayerSkillInfo(data), sp);
+            element.SetSkillElement(data, Managers.PlayerDataManager.Instance.GetPlayerSkillInfo(data));
         }
         //------------------------------------------------------------------------------------
         private void RefrashSkillInfoList(GameBerry.Event.RefrashSkillInfoListMsg msg)

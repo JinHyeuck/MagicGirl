@@ -19,7 +19,7 @@ namespace GameBerry.Contents
                     data.Add(chart.m_SkillDatas[Random.Range(0, chart.m_SkillDatas.Count)]);
                 }
 
-                Managers.PlayerDataManager.Instance.AddSkillList(data);
+                Managers.PlayerDataManager.Instance.AddSkillElementList(data);
             }
         }
         //------------------------------------------------------------------------------------

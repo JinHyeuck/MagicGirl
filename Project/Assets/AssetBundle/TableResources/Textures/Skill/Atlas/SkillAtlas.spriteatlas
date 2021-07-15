@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SkillAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: cc1c52f1a1ce7bf4bbe1a5a2c5b06c2b, type: 3}
+    totalSpriteSurfaceArea: 57600
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 5ccbe5315ba5e124d8dd5eb458b4e3b3, type: 3}
+  - {fileID: 21300000, guid: 31600d41722efc54da9d03ce0630c9b7, type: 3}
+  - {fileID: 21300000, guid: 1ccb8672327b588498b6ad37bddd6eb4, type: 3}
+  - {fileID: 21300000, guid: e7ed5ba295eb3c1469f8b6fce396a180, type: 3}
+  - {fileID: 21300000, guid: f6b0de54f7376ff4a975ae05de98e74d, type: 3}
+  - {fileID: 21300000, guid: 8d2cdd84debf0254db2357bc6e4ca804, type: 3}
+  - {fileID: 21300000, guid: 816756e66c322774aa6ccad9acf0b483, type: 3}
+  - {fileID: 21300000, guid: 1d64c517b1aabba44b683d0a6a84e4a3, type: 3}
+  - {fileID: 21300000, guid: 6bc135187b8d15e49ae7c3ea4efce280, type: 3}
+  - {fileID: 21300000, guid: b5ae42e8b116ace4b9c1c4da7d6e3316, type: 3}
+  - {fileID: 21300000, guid: 392b07e8829323945813bf5b2b6bc4d6, type: 3}
+  - {fileID: 21300000, guid: 93aa186b3b5ae744489f7417bc5c7c81, type: 3}
+  - {fileID: 21300000, guid: 0cfb09aca8c732d4593b65a874589ace, type: 3}
+  - {fileID: 21300000, guid: 5693004e63f785f469dd52a3a30d979b, type: 3}
+  - {fileID: 21300000, guid: 6512629ed8426604f9a0ed2f7dba4797, type: 3}
+  - {fileID: 21300000, guid: 567512ee4d794c74f866286f580f23e6, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - skill_6
+  - skill_1
+  - skill_4
+  - skill_12
+  - skill_13
+  - skill_10
+  - skill_2
+  - skill_3
+  - skill_7
+  - skill_8
+  - skill_15
+  - skill_14
+  - skill_16
+  - skill_11
+  - skill_5
+  - skill_9
+  m_RenderDataMap: {}
+  m_Tag: SkillAtlas
+  m_IsVariant: 0

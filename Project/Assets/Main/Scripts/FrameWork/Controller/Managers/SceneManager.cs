@@ -23,6 +23,9 @@ namespace GameBerry.Managers
 
         Transform _root;
 
+        [SerializeField]
+        private bool _showDebugToScreen = false;
+
         //App초기화가 되었는지
         bool completeAppInit = false;
 
@@ -30,6 +33,12 @@ namespace GameBerry.Managers
         //------------------------------------------------------------------------------------
         protected override void Init()
         {
+            if (_showDebugToScreen == true)
+            {
+                DebugToScreen _debugToScreen = gameObject.AddComponent<DebugToScreen>();
+                _debugToScreen.Init();
+            }
+
             _inSettingsScenes = new List<GameObject>();
             _scenes = new Dictionary<Constants.SceneName, GameObject>();
             _showList = new LinkedList<Constants.SceneName>();
@@ -42,44 +51,6 @@ namespace GameBerry.Managers
                 LoadStartScene();
         }
         //------------------------------------------------------------------------------------
-        [ContextMenu("dicview")]
-        private void testviewdic()
-        {
-            Dictionary<EquipmentType, int> m_equipId = new Dictionary<EquipmentType, int>();
-            m_equipId.Add(EquipmentType.Weapon, -1);
-            m_equipId.Add(EquipmentType.Necklace, -1);
-            m_equipId.Add(EquipmentType.Ring, -1);
-            string str = LitJson.JsonMapper.ToJson(m_equipId);
-
-            Debug.Log(str);
-
-            Dictionary<EquipmentType, int> setdata = new Dictionary<EquipmentType, int>();
-
-            var chartJson = LitJson.JsonMapper.ToObject(str);
-
-            for (int j = 0; j < (int)EquipmentType.Max; ++j)
-            {
-                EquipmentType type = (EquipmentType)j;
-                int a = (int)chartJson[type.ToString()];
-                setdata.Add(type, a);
-            }
-        }
-
-        [ContextMenu("aaaa")]
-        private void aaaa()
-        {
-            Dictionary<int, PlayerEquipmentInfo> infodic = new Dictionary<int, PlayerEquipmentInfo>();
-            PlayerEquipmentInfo info = null;
-            if (infodic.TryGetValue(111, out info) == true)
-            {
-                Debug.Log("있");
-            }
-            else
-            {
-                Debug.Log("없");
-            }
-        }
-
         void LoadStartScene()
         {
             if (startScene == Constants.SceneName.None)

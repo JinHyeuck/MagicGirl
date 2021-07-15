@@ -35,7 +35,7 @@ namespace GameBerry.TheBackEnd
                 }
                 else
                 {
-                    Debug.Log("차트 목록 못가져옴ㅠㅠ");
+                    Debug.Log("차트 목록 못가져옴");
                 }
 
                 Message.Send(new Event.GetAllGameChartResponseMsg { IsSuccess = callback.IsSuccess() });
