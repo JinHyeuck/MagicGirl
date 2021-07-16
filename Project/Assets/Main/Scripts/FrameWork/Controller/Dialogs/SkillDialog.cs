@@ -43,7 +43,7 @@ namespace GameBerry.UI
         //------------------------------------------------------------------------------------
         protected override void OnLoad()
         {
-            Message.AddListener<GameBerry.Event.RefrashSkillInfoListMsg>(RefrashSkillInfoList);
+            Message.AddListener<GameBerry.Event.RefreshSkillInfoListMsg>(RefreshSkillInfoList);
 
             m_skillLocalChart = Managers.TableManager.Instance.GetTableClass<SkillLocalChart>();
 
@@ -52,7 +52,7 @@ namespace GameBerry.UI
         //------------------------------------------------------------------------------------
         protected override void OnUnload()
         {
-            Message.RemoveListener<GameBerry.Event.RefrashSkillInfoListMsg>(RefrashSkillInfoList);
+            Message.RemoveListener<GameBerry.Event.RefreshSkillInfoListMsg>(RefreshSkillInfoList);
         }
         //------------------------------------------------------------------------------------
         private void SetElements()
@@ -102,7 +102,7 @@ namespace GameBerry.UI
             element.SetSkillElement(data, Managers.PlayerDataManager.Instance.GetPlayerSkillInfo(data));
         }
         //------------------------------------------------------------------------------------
-        private void RefrashSkillInfoList(GameBerry.Event.RefrashSkillInfoListMsg msg)
+        private void RefreshSkillInfoList(GameBerry.Event.RefreshSkillInfoListMsg msg)
         {
             for (int i = 0; i < msg.datas.Count; ++i)
             {

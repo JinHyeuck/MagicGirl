@@ -37,6 +37,7 @@ namespace GameBerry
         public int MaxTarget;
         public double ApplyTime;
         public double CoolTime;
+        public double Trigger_Range;
         public double Range;
         public int NeedMP;
 
@@ -90,9 +91,11 @@ namespace GameBerry
 
                     CoolTime = rows[i]["skill_cooltime"]["S"].ToString().ToDouble(),
 
+                    Trigger_Range = rows[i]["skill_trigger_range"]["S"].ToString().ToDouble(),
+
                     Range = rows[i]["skill_range"]["S"].ToString().ToDouble(),
 
-                    NeedMP = i != 0 ? rows[i]["skill_needmp"]["S"].ToString().FastStringToInt() : 0
+                    NeedMP = rows[i]["skill_needmp"]["S"].ToString().FastStringToInt()
                 };
 
                 data.SkillSprite = Atlas.GetSprite(string.Format("skill_{0}", data.Index));

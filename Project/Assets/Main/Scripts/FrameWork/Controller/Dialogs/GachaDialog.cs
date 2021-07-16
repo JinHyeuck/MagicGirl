@@ -57,7 +57,7 @@ namespace GameBerry.UI
                 }
 
                 if (btn.GachaAmount != null)
-                    btn.GachaAmount.text = string.Format("{0}ȸ", data.Amount);
+                    btn.GachaAmount.text = string.Format("{0}회", data.Amount);
 
                 if (btn.GachaPrice != null)
                     btn.GachaPrice.text = data.Price.ToString();

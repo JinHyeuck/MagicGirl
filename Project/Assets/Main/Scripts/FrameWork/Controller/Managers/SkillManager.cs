@@ -166,7 +166,7 @@ namespace GameBerry.Managers
             PlayerPrefs.SetInt(Define.OpenSkillSlotCountKey, m_openSkillSlotCount);
         }
         //------------------------------------------------------------------------------------
-        public SkillData GetNextSkill(int currUserMp)
+        public SkillData GetReadySkill(int currUserMp)
         {
             for (int i = 0; i < m_equipSkillList.Count; ++i)
             {

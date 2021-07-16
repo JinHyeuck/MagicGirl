@@ -109,7 +109,7 @@ namespace GameBerry.UI
         //------------------------------------------------------------------------------------
         public void Init()
         {
-            Message.AddListener<GameBerry.Event.RefrashEquipmentStonMsg>(RefrashEquipmentSton);
+            Message.AddListener<GameBerry.Event.RefreshEquipmentStonMsg>(RefrashEquipmentSton);
 
             m_equipmentLocalChart = Managers.TableManager.Instance.GetTableClass<EquipmentLocalChart>();
 
@@ -152,10 +152,10 @@ namespace GameBerry.UI
         //------------------------------------------------------------------------------------
         private void OnDestroy()
         {
-            Message.RemoveListener<GameBerry.Event.RefrashEquipmentStonMsg>(RefrashEquipmentSton);
+            Message.RemoveListener<GameBerry.Event.RefreshEquipmentStonMsg>(RefrashEquipmentSton);
         }
         //------------------------------------------------------------------------------------
-        private void RefrashEquipmentSton(GameBerry.Event.RefrashEquipmentStonMsg msg)
+        private void RefrashEquipmentSton(GameBerry.Event.RefreshEquipmentStonMsg msg)
         {
             if (m_equipmentStonCountText != null)
                 m_equipmentStonCountText.text = string.Format("{0:#,0}", Managers.PlayerDataManager.Instance.GetEquipmentSton());

@@ -8,15 +8,15 @@ namespace GameBerry.Managers
         private float m_playerInfoDataSaveTime = 5.0f;
         private float m_playerInfoDataSaveTimer = 0.0f;
 
-        private Event.RefrashLevelMsg m_refrashLevelMsg = new Event.RefrashLevelMsg();
-        private Event.RefrashExpMsg m_refrashExpMsg = new Event.RefrashExpMsg();
-        private Event.RefrashGoldMsg m_refrashGoldMsg = new Event.RefrashGoldMsg();
-        private Event.RefrashDiaMsg m_refrashDiaMsg = new Event.RefrashDiaMsg();
-        private Event.RefrashEquipmentStonMsg m_refrashEquipmentStonMsg = new Event.RefrashEquipmentStonMsg();
-        private Event.RefrashSkillStonMsg m_refrashSkillStonMsg = new Event.RefrashSkillStonMsg();
+        private Event.RefreshLevelMsg m_refreshLevelMsg = new Event.RefreshLevelMsg();
+        private Event.RefreshExpMsg m_refreshExpMsg = new Event.RefreshExpMsg();
+        private Event.RefreshGoldMsg m_refreshGoldMsg = new Event.RefreshGoldMsg();
+        private Event.RefreshDiaMsg m_refreshDiaMsg = new Event.RefreshDiaMsg();
+        private Event.RefreshEquipmentStonMsg m_refreshEquipmentStonMsg = new Event.RefreshEquipmentStonMsg();
+        private Event.RefreshSkillStonMsg m_refreshSkillStonMsg = new Event.RefreshSkillStonMsg();
         private Event.ChangeEquipElementMsg m_changeEquipElementMsg = new Event.ChangeEquipElementMsg();
-        private Event.RefrashEquipmentInfoListMsg m_refrashEquipmentInfoListResponseMsg = new Event.RefrashEquipmentInfoListMsg();
-        private Event.RefrashSkillInfoListMsg m_refrashSkillInfoListMsg = new Event.RefrashSkillInfoListMsg();
+        private Event.RefreshEquipmentInfoListMsg m_refreshEquipmentInfoListResponseMsg = new Event.RefreshEquipmentInfoListMsg();
+        private Event.RefreshSkillInfoListMsg m_refreshSkillInfoListMsg = new Event.RefreshSkillInfoListMsg();
 
 
         private LevelLocalChart m_levelLocalChart = null;
@@ -69,8 +69,8 @@ namespace GameBerry.Managers
                 m_levelLocalChart.GetLevelData(PlayerDataContainer.Level);
             }
 
-            Message.Send(m_refrashLevelMsg);
-            Message.Send(m_refrashExpMsg);
+            Message.Send(m_refreshLevelMsg);
+            Message.Send(m_refreshExpMsg);
         }
         //------------------------------------------------------------------------------------
         public double GetExp()
@@ -81,7 +81,7 @@ namespace GameBerry.Managers
         public void AddGold(double gold)
         {
             PlayerDataContainer.Gold += gold;
-            Message.Send(m_refrashGoldMsg);
+            Message.Send(m_refreshGoldMsg);
         }
         //------------------------------------------------------------------------------------
         public bool UseGold(double gold)
@@ -91,7 +91,7 @@ namespace GameBerry.Managers
             if (PlayerDataContainer.Gold > gold)
             { 
                 PlayerDataContainer.Gold -= gold;
-                Message.Send(m_refrashGoldMsg);
+                Message.Send(m_refreshGoldMsg);
                 isSuccess = true;
             }
 
@@ -106,13 +106,13 @@ namespace GameBerry.Managers
         public void AddDia(int dia)
         {
             PlayerDataContainer.Dia += dia;
-            Message.Send(m_refrashDiaMsg);
+            Message.Send(m_refreshDiaMsg);
         }
         //------------------------------------------------------------------------------------
         public void UseDia(int dia)
         {
             PlayerDataContainer.Dia -= dia;
-            Message.Send(m_refrashDiaMsg);
+            Message.Send(m_refreshDiaMsg);
         }
         //------------------------------------------------------------------------------------
         public int GetDia()
@@ -123,13 +123,13 @@ namespace GameBerry.Managers
         public void SetDia(int dia)
         {
             PlayerDataContainer.Dia = dia;
-            Message.Send(m_refrashDiaMsg);
+            Message.Send(m_refreshDiaMsg);
         }
         //------------------------------------------------------------------------------------
         public void AddEquipmentSton(int ston)
         {
             PlayerDataContainer.EquipmentSton += ston;
-            Message.Send(m_refrashEquipmentStonMsg);
+            Message.Send(m_refreshEquipmentStonMsg);
         }
         //------------------------------------------------------------------------------------
         public int GetEquipmentSton()
@@ -144,7 +144,7 @@ namespace GameBerry.Managers
             if (PlayerDataContainer.EquipmentSton > ston)
             {
                 PlayerDataContainer.EquipmentSton -= ston;
-                Message.Send(m_refrashEquipmentStonMsg);
+                Message.Send(m_refreshEquipmentStonMsg);
                 isSuccess = true;
             }
 
@@ -154,7 +154,7 @@ namespace GameBerry.Managers
         public void AddSkillSton(int ston)
         {
             PlayerDataContainer.SkillSton += ston;
-            Message.Send(m_refrashSkillStonMsg);
+            Message.Send(m_refreshSkillStonMsg);
         }
         //------------------------------------------------------------------------------------
         public int GetSkillSton()
@@ -313,7 +313,7 @@ namespace GameBerry.Managers
             Dictionary<int, PlayerEquipmentInfo> dic = null;
             PlayerEquipmentInfo info = null;
 
-            m_refrashEquipmentInfoListResponseMsg.datas.Clear();
+            m_refreshEquipmentInfoListResponseMsg.datas.Clear();
 
             if (PlayerDataContainer.m_equipmentInfo.ContainsKey(equipmentdata.Type) == false)
                 PlayerDataContainer.m_equipmentInfo.Add(equipmentdata.Type, new Dictionary<int, PlayerEquipmentInfo>());
@@ -330,9 +330,9 @@ namespace GameBerry.Managers
                 dic.Add(info.Id, info);
             }
 
-            m_refrashEquipmentInfoListResponseMsg.datas.Add(equipmentdata);
+            m_refreshEquipmentInfoListResponseMsg.datas.Add(equipmentdata);
 
-            Message.Send(m_refrashEquipmentInfoListResponseMsg);
+            Message.Send(m_refreshEquipmentInfoListResponseMsg);
         }
         //------------------------------------------------------------------------------------
         public void AddEquipElementList(List<EquipmentData> equipmentdata)
@@ -340,7 +340,7 @@ namespace GameBerry.Managers
             Dictionary<int, PlayerEquipmentInfo> dic = null;
             PlayerEquipmentInfo info = null;
 
-            m_refrashEquipmentInfoListResponseMsg.datas.Clear();
+            m_refreshEquipmentInfoListResponseMsg.datas.Clear();
 
             for (int i = 0; i < equipmentdata.Count; ++i)
             {
@@ -359,11 +359,11 @@ namespace GameBerry.Managers
                     dic.Add(info.Id, info);
                 }
 
-                if (m_refrashEquipmentInfoListResponseMsg.datas.Contains(equipmentdata[i]) == false)
-                    m_refrashEquipmentInfoListResponseMsg.datas.Add(equipmentdata[i]);
+                if (m_refreshEquipmentInfoListResponseMsg.datas.Contains(equipmentdata[i]) == false)
+                    m_refreshEquipmentInfoListResponseMsg.datas.Add(equipmentdata[i]);
             }
 
-            Message.Send(m_refrashEquipmentInfoListResponseMsg);
+            Message.Send(m_refreshEquipmentInfoListResponseMsg);
         }
         //------------------------------------------------------------------------------------
         public bool CombineEquipment(EquipmentData from, EquipmentData to, int amount)
@@ -380,12 +380,12 @@ namespace GameBerry.Managers
 
             AddEquipElement(to, amount);
 
-            m_refrashEquipmentInfoListResponseMsg.datas.Clear();
+            m_refreshEquipmentInfoListResponseMsg.datas.Clear();
 
             info.Count -= decreasecount;
 
-            m_refrashEquipmentInfoListResponseMsg.datas.Add(from);
-            Message.Send(m_refrashEquipmentInfoListResponseMsg);
+            m_refreshEquipmentInfoListResponseMsg.datas.Add(from);
+            Message.Send(m_refreshEquipmentInfoListResponseMsg);
 
             return true;
         }
@@ -418,10 +418,10 @@ namespace GameBerry.Managers
 
             info.Level += 1;
 
-            m_refrashEquipmentInfoListResponseMsg.datas.Clear();
-            m_refrashEquipmentInfoListResponseMsg.datas.Add(equipmentdata);
+            m_refreshEquipmentInfoListResponseMsg.datas.Clear();
+            m_refreshEquipmentInfoListResponseMsg.datas.Add(equipmentdata);
 
-            Message.Send(m_refrashEquipmentInfoListResponseMsg);
+            Message.Send(m_refreshEquipmentInfoListResponseMsg);
 
             return true;
         }
@@ -452,7 +452,7 @@ namespace GameBerry.Managers
         {
             PlayerSkillInfo info = null;
 
-            m_refrashSkillInfoListMsg.datas.Clear();
+            m_refreshSkillInfoListMsg.datas.Clear();
 
             for (int i = 0; i < skilldata.Count; ++i)
             {
@@ -466,11 +466,11 @@ namespace GameBerry.Managers
                     PlayerDataContainer.m_skillInfo.Add(info.Id, info);
                 }
 
-                if (m_refrashSkillInfoListMsg.datas.Contains(skilldata[i]) == false)
-                    m_refrashSkillInfoListMsg.datas.Add(skilldata[i]);
+                if (m_refreshSkillInfoListMsg.datas.Contains(skilldata[i]) == false)
+                    m_refreshSkillInfoListMsg.datas.Add(skilldata[i]);
             }
 
-            Message.Send(m_refrashSkillInfoListMsg);
+            Message.Send(m_refreshSkillInfoListMsg);
         }
         //------------------------------------------------------------------------------------
         //------------------------------------------------------------------------------------

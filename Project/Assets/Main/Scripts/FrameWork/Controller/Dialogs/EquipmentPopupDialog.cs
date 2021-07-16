@@ -133,7 +133,7 @@ namespace GameBerry.UI
         //------------------------------------------------------------------------------------
         protected override void OnLoad()
         {
-            Message.AddListener<GameBerry.Event.RefrashEquipmentStonMsg>(RefrashEquipmentSton);
+            Message.AddListener<GameBerry.Event.RefreshEquipmentStonMsg>(RefrashEquipmentSton);
             Message.AddListener<GameBerry.Event.SetEquipmentPopupMsg>(SetEquipmentPopup);
 
             m_equipmentLocalChart = Managers.TableManager.Instance.GetTableClass<EquipmentLocalChart>();
@@ -177,11 +177,11 @@ namespace GameBerry.UI
         //------------------------------------------------------------------------------------
         protected override void OnUnload()
         {
-            Message.RemoveListener<GameBerry.Event.RefrashEquipmentStonMsg>(RefrashEquipmentSton);
+            Message.RemoveListener<GameBerry.Event.RefreshEquipmentStonMsg>(RefrashEquipmentSton);
             Message.RemoveListener<GameBerry.Event.SetEquipmentPopupMsg>(SetEquipmentPopup);
         }
         //------------------------------------------------------------------------------------
-        private void RefrashEquipmentSton(GameBerry.Event.RefrashEquipmentStonMsg msg)
+        private void RefrashEquipmentSton(GameBerry.Event.RefreshEquipmentStonMsg msg)
         {
             if (m_equipmentStonCountText != null)
                 m_equipmentStonCountText.text = string.Format("{0:#,0}", Managers.PlayerDataManager.Instance.GetEquipmentSton());

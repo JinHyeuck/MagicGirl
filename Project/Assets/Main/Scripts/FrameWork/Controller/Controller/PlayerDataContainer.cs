@@ -29,6 +29,9 @@ namespace GameBerry
         // 플레이어가 소유한 스킬
         public static Dictionary<int, PlayerSkillInfo> m_skillInfo = new Dictionary<int, PlayerSkillInfo>();
 
+        // 플레이어가 스킬슬롯   <SlotPageId, <SlotID, skillId>> 슬롯은 열려있는데 장착한게 없으면 skillId가 -1이다.
+        public static Dictionary<int, Dictionary<int, int>> m_skillSlotData = new Dictionary<int, Dictionary<int, int>>();
+
         public static int Level;
         public static double Exp;
 
@@ -46,7 +49,7 @@ namespace GameBerry
         public static double EndDamage;
         public static double SkillDamage;
 
-
+        public static int OpenSlotCount;
     }
 
     public static class PlayerDataOperator

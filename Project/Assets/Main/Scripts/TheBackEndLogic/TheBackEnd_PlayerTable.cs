@@ -541,6 +541,12 @@ namespace GameBerry.TheBackEnd
                                     PlayerDataContainer.m_skillInfo.Add(info.Id, info);
                                 }
                             }
+                            else if (key == Define.CharacterSkillSlotInfo)
+                            {
+                                string str = data[i][key].ToString();
+                                LitJson.JsonData chartJson = LitJson.JsonMapper.ToObject(str);
+                                SetSkillSlotData(chartJson);
+                            }
 
                             returnValue += string.Format("{0} : {1} / ", key, data[i][key].ToString());
                         }
@@ -553,14 +559,37 @@ namespace GameBerry.TheBackEnd
             });
         }
         //------------------------------------------------------------------------------------
+        private static void SetSkillSlotData(LitJson.JsonData slotdata)
+        {
+            foreach (var key in slotdata.Keys)
+            {
+                Dictionary<int, int> element = new Dictionary<int, int>();
+                foreach (var elementkey in slotdata[key].Keys)
+                {
+                    var show1 = slotdata[key];
+                    var show = slotdata[key][elementkey];
+                    
+                    element.Add(elementkey.FastStringToInt(), slotdata[key][elementkey].ToString().FastStringToInt());
+                }
+
+                PlayerDataContainer.m_skillSlotData.Add(key.ToString().FastStringToInt(), element);
+            }
+        }
+        //------------------------------------------------------------------------------------
         private static void InsertCharacterSkillInfoTable()
         {
-            Dictionary<int, PlayerSkillInfo> skillInsertData = new Dictionary<int, PlayerSkillInfo>();
+            Dictionary<int, Dictionary<int, int>> skillSlotInsertData = new Dictionary<int, Dictionary<int, int>>();
+            Dictionary<int, int> pagevalue = new Dictionary<int, int>();
+            pagevalue.Add(0, -1);
 
-            string equipstr = LitJson.JsonMapper.ToJson(PlayerDataContainer.m_skillInfo);
+            skillSlotInsertData.Add(0, pagevalue);
+            skillSlotInsertData.Add(1, pagevalue);
+            skillSlotInsertData.Add(2, pagevalue);
+
 
             Param param = new Param();
-            param.Add(Define.CharacterSkillInfo, equipstr);
+            param.Add(Define.CharacterSkillInfo, LitJson.JsonMapper.ToJson(PlayerDataContainer.m_skillInfo));
+            param.Add(Define.CharacterSkillSlotInfo, LitJson.JsonMapper.ToJson(skillSlotInsertData));
 
             Debug.Log("InsertCharacterSkillInfoTable()");
 
@@ -583,6 +612,7 @@ namespace GameBerry.TheBackEnd
         {
             Param param = new Param();
             param.Add(Define.CharacterSkillInfo, LitJson.JsonMapper.ToJson(PlayerDataContainer.m_skillInfo));
+            param.Add(Define.CharacterSkillSlotInfo, LitJson.JsonMapper.ToJson(PlayerDataContainer.m_skillSlotData));
 
 
             SendQueue.Enqueue(Backend.GameData.Update, Define.CharacterSkillInfoTable, CharSkillInfoInData, param, (callback) =>

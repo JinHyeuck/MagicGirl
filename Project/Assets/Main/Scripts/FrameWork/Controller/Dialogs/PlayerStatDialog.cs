@@ -64,8 +64,8 @@ namespace GameBerry.UI
             m_levelLocalChart = Managers.TableManager.Instance.GetTableClass<LevelLocalChart>();
             m_statUpGradeLocalChart = Managers.TableManager.Instance.GetTableClass<StatUpGradeLocalChart>();
 
-            Message.AddListener<GameBerry.Event.RefrashLevelMsg>(RefrashLevel);
-            Message.AddListener<GameBerry.Event.RefrashExpMsg>(RefrashExp);
+            Message.AddListener<GameBerry.Event.RefreshLevelMsg>(RefrashLevel);
+            Message.AddListener<GameBerry.Event.RefreshExpMsg>(RefrashExp);
 
             if (m_upGradeContentRoot != null)
             {
@@ -103,8 +103,8 @@ namespace GameBerry.UI
         //------------------------------------------------------------------------------------
         protected override void OnUnload()
         {
-            Message.RemoveListener<GameBerry.Event.RefrashLevelMsg>(RefrashLevel);
-            Message.RemoveListener<GameBerry.Event.RefrashExpMsg>(RefrashExp);
+            Message.RemoveListener<GameBerry.Event.RefreshLevelMsg>(RefrashLevel);
+            Message.RemoveListener<GameBerry.Event.RefreshExpMsg>(RefrashExp);
         }
         //------------------------------------------------------------------------------------
         protected override void OnEnter()
@@ -115,13 +115,13 @@ namespace GameBerry.UI
             RefrashExp(null);
         }
         //------------------------------------------------------------------------------------
-        private void RefrashLevel(GameBerry.Event.RefrashLevelMsg msg)
+        private void RefrashLevel(GameBerry.Event.RefreshLevelMsg msg)
         {
             if (m_levelText != null)
                 m_levelText.text = Managers.PlayerDataManager.Instance.GetLevel().ToString();
         }
         //------------------------------------------------------------------------------------
-        private void RefrashExp(GameBerry.Event.RefrashExpMsg msg)
+        private void RefrashExp(GameBerry.Event.RefreshExpMsg msg)
         {
             int currentLevel = Managers.PlayerDataManager.Instance.GetLevel();
             double currentExp = Managers.PlayerDataManager.Instance.GetExp();

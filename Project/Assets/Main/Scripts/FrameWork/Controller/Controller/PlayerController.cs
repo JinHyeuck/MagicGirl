@@ -141,7 +141,7 @@ namespace GameBerry
             if (Managers.MonsterManager.Instance.GetForeFrontMonster() != null)
             {
                 if (m_nextAttackSkill == null)
-                    m_nextAttackSkill = Managers.SkillManager.Instance.GetNextSkill(m_currentMP);
+                    m_nextAttackSkill = Managers.SkillManager.Instance.GetReadySkill(m_currentMP);
 
                 if (m_nextAttackSkill != null)
                 {

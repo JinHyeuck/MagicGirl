@@ -59,40 +59,40 @@ namespace GameBerry.UI
 
             m_levelLocalChart = Managers.TableManager.Instance.GetTableClass<LevelLocalChart>();
 
-            Message.AddListener<GameBerry.Event.RefrashLevelMsg>(RefrashLevel);
-            Message.AddListener<GameBerry.Event.RefrashExpMsg>(RefrashExp);
-            Message.AddListener<GameBerry.Event.RefrashGoldMsg>(RefrashGold);
-            Message.AddListener<GameBerry.Event.RefrashDiaMsg>(RefrashDia);
-            Message.AddListener<GameBerry.Event.RefrashEquipmentStonMsg>(RefrashEquipmentSton);
-            Message.AddListener<GameBerry.Event.RefrashSkillStonMsg>(RefrashSkillSton);
+            Message.AddListener<GameBerry.Event.RefreshLevelMsg>(RefreshLevel);
+            Message.AddListener<GameBerry.Event.RefreshExpMsg>(RefreshExp);
+            Message.AddListener<GameBerry.Event.RefreshGoldMsg>(RefreshGold);
+            Message.AddListener<GameBerry.Event.RefreshDiaMsg>(RefreshDia);
+            Message.AddListener<GameBerry.Event.RefreshEquipmentStonMsg>(RefreshEquipmentSton);
+            Message.AddListener<GameBerry.Event.RefreshSkillStonMsg>(RefreshSkillSton);
         }
         //------------------------------------------------------------------------------------
         protected override void OnUnload()
         {
-            Message.RemoveListener<GameBerry.Event.RefrashLevelMsg>(RefrashLevel);
-            Message.RemoveListener<GameBerry.Event.RefrashExpMsg>(RefrashExp);
-            Message.RemoveListener<GameBerry.Event.RefrashGoldMsg>(RefrashGold);
-            Message.RemoveListener<GameBerry.Event.RefrashDiaMsg>(RefrashDia);
-            Message.RemoveListener<GameBerry.Event.RefrashEquipmentStonMsg>(RefrashEquipmentSton);
-            Message.RemoveListener<GameBerry.Event.RefrashSkillStonMsg>(RefrashSkillSton);
+            Message.RemoveListener<GameBerry.Event.RefreshLevelMsg>(RefreshLevel);
+            Message.RemoveListener<GameBerry.Event.RefreshExpMsg>(RefreshExp);
+            Message.RemoveListener<GameBerry.Event.RefreshGoldMsg>(RefreshGold);
+            Message.RemoveListener<GameBerry.Event.RefreshDiaMsg>(RefreshDia);
+            Message.RemoveListener<GameBerry.Event.RefreshEquipmentStonMsg>(RefreshEquipmentSton);
+            Message.RemoveListener<GameBerry.Event.RefreshSkillStonMsg>(RefreshSkillSton);
         }
         //------------------------------------------------------------------------------------
         protected override void OnEnter()
         {
-            RefrashLevel(null);
-            RefrashExp(null);
-            RefrashGold(null);
-            RefrashDia(null);
-            RefrashEquipmentSton(null);
+            RefreshLevel(null);
+            RefreshExp(null);
+            RefreshGold(null);
+            RefreshDia(null);
+            RefreshEquipmentSton(null);
         }
         //------------------------------------------------------------------------------------
-        private void RefrashLevel(GameBerry.Event.RefrashLevelMsg msg)
+        private void RefreshLevel(GameBerry.Event.RefreshLevelMsg msg)
         {
             if (m_levelText != null)
                 m_levelText.text = Managers.PlayerDataManager.Instance.GetLevel().ToString();
         }
         //------------------------------------------------------------------------------------
-        private void RefrashExp(GameBerry.Event.RefrashExpMsg msg)
+        private void RefreshExp(GameBerry.Event.RefreshExpMsg msg)
         {
             int currentLevel = Managers.PlayerDataManager.Instance.GetLevel();
             double currentExp = Managers.PlayerDataManager.Instance.GetExp();
@@ -118,25 +118,25 @@ namespace GameBerry.UI
                 m_expPercentText.text = string.Format("{0:0.00}%", ratio * 100.0);
         }
         //------------------------------------------------------------------------------------
-        private void RefrashGold(GameBerry.Event.RefrashGoldMsg msg)
+        private void RefreshGold(GameBerry.Event.RefreshGoldMsg msg)
         {
             if (m_goldText != null)
                 m_goldText.text = string.Format("{0:#,0}", Managers.PlayerDataManager.Instance.GetGold());
         }
         //------------------------------------------------------------------------------------
-        private void RefrashDia(GameBerry.Event.RefrashDiaMsg msg)
+        private void RefreshDia(GameBerry.Event.RefreshDiaMsg msg)
         {
             if (m_diaCountText != null)
                 m_diaCountText.text = string.Format("{0:#,0}", Managers.PlayerDataManager.Instance.GetDia());
         }
         //------------------------------------------------------------------------------------
-        private void RefrashEquipmentSton(GameBerry.Event.RefrashEquipmentStonMsg msg)
+        private void RefreshEquipmentSton(GameBerry.Event.RefreshEquipmentStonMsg msg)
         {
             if (m_equipmentStonCountText != null)
                 m_equipmentStonCountText.text = string.Format("{0:#,0}", Managers.PlayerDataManager.Instance.GetEquipmentSton());
         }
         //------------------------------------------------------------------------------------
-        private void RefrashSkillSton(GameBerry.Event.RefrashSkillStonMsg msg)
+        private void RefreshSkillSton(GameBerry.Event.RefreshSkillStonMsg msg)
         {
             
         }

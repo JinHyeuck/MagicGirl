@@ -71,7 +71,7 @@ namespace GameBerry.UI
             }
 
             Message.AddListener<GameBerry.Event.ChangeEquipElementMsg>(ChangeEquipElement);
-            Message.AddListener<GameBerry.Event.RefrashEquipmentInfoListMsg>(RefrashEquipmentInfoList);
+            Message.AddListener<GameBerry.Event.RefreshEquipmentInfoListMsg>(RefreshEquipmentInfoList);
 
             SetElements(m_currentEquipmentType);
         }
@@ -79,7 +79,7 @@ namespace GameBerry.UI
         protected override void OnUnload()
         {
             Message.RemoveListener<GameBerry.Event.ChangeEquipElementMsg>(ChangeEquipElement);
-            Message.RemoveListener<GameBerry.Event.RefrashEquipmentInfoListMsg>(RefrashEquipmentInfoList);
+            Message.RemoveListener<GameBerry.Event.RefreshEquipmentInfoListMsg>(RefreshEquipmentInfoList);
         }
         //------------------------------------------------------------------------------------
         private void OnClick_ChangeBtn(EquipmentType type)
@@ -155,7 +155,7 @@ namespace GameBerry.UI
                 element.SetEquipElement(true);
         }
         //------------------------------------------------------------------------------------
-        private void RefrashEquipmentInfoList(GameBerry.Event.RefrashEquipmentInfoListMsg msg)
+        private void RefreshEquipmentInfoList(GameBerry.Event.RefreshEquipmentInfoListMsg msg)
         {
             for (int i = 0; i < msg.datas.Count; ++i)
             {

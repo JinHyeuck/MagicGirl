@@ -2,27 +2,27 @@ using System.Collections.Generic;
 
 namespace GameBerry.Event
 {
-    public class RefrashLevelMsg : Message
+    public class RefreshLevelMsg : Message
     {
     }
 
-    public class RefrashExpMsg : Message
+    public class RefreshExpMsg : Message
     {
     }
 
-    public class RefrashGoldMsg : Message
+    public class RefreshGoldMsg : Message
     {
     }
 
-    public class RefrashDiaMsg : Message
+    public class RefreshDiaMsg : Message
     {
     }
 
-    public class RefrashEquipmentStonMsg : Message
+    public class RefreshEquipmentStonMsg : Message
     {
     }
 
-    public class RefrashSkillStonMsg : Message
+    public class RefreshSkillStonMsg : Message
     {
     }
 
@@ -33,7 +33,7 @@ namespace GameBerry.Event
         public int AfterEquipmentID;
     }
 
-    public class RefrashEquipmentInfoListMsg : Message
+    public class RefreshEquipmentInfoListMsg : Message
     {
         public List<EquipmentData> datas = new List<EquipmentData>();
     }
@@ -44,7 +44,7 @@ namespace GameBerry.Event
         public PlayerEquipmentInfo equipmentinfo;
     }
 
-    public class RefrashSkillInfoListMsg : Message
+    public class RefreshSkillInfoListMsg : Message
     {
         public List<SkillData> datas = new List<SkillData>();
     }
