@@ -12,7 +12,7 @@ namespace GameBerry
     {
         public int Id;
         public int Count = 0;
-        public int Level = 0;
+        public int Level = 1;
     }
 
     public static class PlayerDataContainer
@@ -49,7 +49,8 @@ namespace GameBerry
         public static double EndDamage;
         public static double SkillDamage;
 
-        public static int OpenSlotCount;
+        public static int CurrentOpenSlotCount;
+        public static int SkillSlotPage;
     }
 
     public static class PlayerDataOperator
@@ -147,7 +148,7 @@ namespace GameBerry
             if (skillinfo == null)
                 return defaultcount;
 
-            return defaultcount + (defaultcount * (int)((float)skillinfo.Level * 0.5f));
+            return defaultcount + (defaultcount * (int)((float)(skillinfo.Level - 1) * 0.5f));
         }
         //------------------------------------------------------------------------------------
         public static double GetSkillOptionValue(SkillData skildata, int skilllevel)

@@ -41,21 +41,42 @@ namespace GameBerry.UI
 
         //------------------------------------------------------------------------------------
         private SlotState m_currslotState = SlotState.None;
-        [HideInInspector]
-        public int m_slotID = -1;
+        private System.Action<int> m_callBack = null;
+
+        private int m_slotID = -1;
 
         //------------------------------------------------------------------------------------
-        public void Init(int slotid, System.Action<int> action)
+        public void Init(System.Action<int> action)
         {
             if (m_slotBtn)
                 m_slotBtn.onClick.AddListener(OnClick_SlotBtn);
 
-
+            m_callBack = action;
         }
         //------------------------------------------------------------------------------------
-        public void SetSkillSlot()
-        { 
+        public void SetSlotID(int id)
+        {
+            m_slotID = id;
+        }
+        //------------------------------------------------------------------------------------
+        public void SetSkill(SkillData data)
+        {
+            if (data == null)
+            {
+                if (m_skillGroup != null)
+                    m_skillGroup.gameObject.SetActive(false);
+            }
+            else
+            {
+                if (m_skillGroup != null)
+                    m_skillGroup.gameObject.SetActive(true);
 
+                if (m_skillIcon != null)
+                    m_skillIcon.sprite = data.SkillSprite;
+
+                if (m_skillTriggerTypeText != null)
+                    m_skillTriggerTypeText.text = data.SkillTriggerType.ToString();
+            }
         }
         //------------------------------------------------------------------------------------
         public void SetState(SlotState state)
@@ -65,11 +86,30 @@ namespace GameBerry.UI
 
             m_currslotState = state;
 
-
+            if (m_skillGroup != null)
+                m_skillGroup.gameObject.SetActive(false);
+        }
+        //------------------------------------------------------------------------------------
+        public void SetSlotBG(Sprite sp)
+        {
+            if (m_slotState != null)
+                m_slotState.sprite = sp;
         }
         //------------------------------------------------------------------------------------
         private void OnClick_SlotBtn()
+        {
+            if (m_callBack != null)
+                m_callBack(m_slotID);
+        }
+        //------------------------------------------------------------------------------------
+        public void SetCoolTime(float currtime, float totaltime)
         { 
+
+        }
+        //------------------------------------------------------------------------------------
+        public void EndCoolTime()
+        { 
+
         }
         //------------------------------------------------------------------------------------
     }

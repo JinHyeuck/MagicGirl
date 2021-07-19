@@ -547,6 +547,10 @@ namespace GameBerry.TheBackEnd
                                 LitJson.JsonData chartJson = LitJson.JsonMapper.ToObject(str);
                                 SetSkillSlotData(chartJson);
                             }
+                            else if (key == Define.CharacterSkillSlotPage)
+                            {
+                                PlayerDataContainer.SkillSlotPage = data[i][key].ToString().FastStringToInt();
+                            }
 
                             returnValue += string.Format("{0} : {1} / ", key, data[i][key].ToString());
                         }
@@ -561,18 +565,27 @@ namespace GameBerry.TheBackEnd
         //------------------------------------------------------------------------------------
         private static void SetSkillSlotData(LitJson.JsonData slotdata)
         {
+
             foreach (var key in slotdata.Keys)
             {
                 Dictionary<int, int> element = new Dictionary<int, int>();
                 foreach (var elementkey in slotdata[key].Keys)
                 {
-                    var show1 = slotdata[key];
-                    var show = slotdata[key][elementkey];
-                    
-                    element.Add(elementkey.FastStringToInt(), slotdata[key][elementkey].ToString().FastStringToInt());
+                    element.Add(elementkey.ToInt(), slotdata[key][elementkey].ToString().ToInt());
                 }
 
-                PlayerDataContainer.m_skillSlotData.Add(key.ToString().FastStringToInt(), element);
+                if (PlayerDataContainer.CurrentOpenSlotCount < element.Count)
+                    PlayerDataContainer.CurrentOpenSlotCount = element.Count;
+
+                PlayerDataContainer.m_skillSlotData.Add(key.ToString().ToInt(), element);
+            }
+
+            foreach (KeyValuePair<int, Dictionary<int, int>> pair in PlayerDataContainer.m_skillSlotData)
+            {
+                while (pair.Value.Count < PlayerDataContainer.CurrentOpenSlotCount)
+                {
+                    pair.Value.Add(pair.Value.Count, -1);
+                }
             }
         }
         //------------------------------------------------------------------------------------
@@ -590,6 +603,7 @@ namespace GameBerry.TheBackEnd
             Param param = new Param();
             param.Add(Define.CharacterSkillInfo, LitJson.JsonMapper.ToJson(PlayerDataContainer.m_skillInfo));
             param.Add(Define.CharacterSkillSlotInfo, LitJson.JsonMapper.ToJson(skillSlotInsertData));
+            param.Add(Define.CharacterSkillSlotPage, 0);
 
             Debug.Log("InsertCharacterSkillInfoTable()");
 
@@ -613,7 +627,7 @@ namespace GameBerry.TheBackEnd
             Param param = new Param();
             param.Add(Define.CharacterSkillInfo, LitJson.JsonMapper.ToJson(PlayerDataContainer.m_skillInfo));
             param.Add(Define.CharacterSkillSlotInfo, LitJson.JsonMapper.ToJson(PlayerDataContainer.m_skillSlotData));
-
+            param.Add(Define.CharacterSkillSlotPage, PlayerDataContainer.SkillSlotPage);
 
             SendQueue.Enqueue(Backend.GameData.Update, Define.CharacterSkillInfoTable, CharSkillInfoInData, param, (callback) =>
             {

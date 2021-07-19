@@ -70,6 +70,7 @@ public static class Define
     //CharacterSkillInfoKey
     public static readonly string CharacterSkillInfo = "skillinfo";
     public static readonly string CharacterSkillSlotInfo = "skillslotinfo";
+    public static readonly string CharacterSkillSlotPage = "skillslotpage";
 
     //CharacterDefaultSetting
     public static readonly int CharacterDefaultHP = 1000;

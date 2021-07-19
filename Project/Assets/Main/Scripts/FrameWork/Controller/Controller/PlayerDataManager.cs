@@ -473,6 +473,30 @@ namespace GameBerry.Managers
             Message.Send(m_refreshSkillInfoListMsg);
         }
         //------------------------------------------------------------------------------------
+        public int GetCurrentSkillSlotPage()
+        {
+            return PlayerDataContainer.SkillSlotPage;
+        }
+        //------------------------------------------------------------------------------------
+        public Dictionary<int, int> GetCurrentSkillSlot()
+        {
+            Dictionary<int, int> page = null;
+
+            PlayerDataContainer.m_skillSlotData.TryGetValue(GetCurrentSkillSlotPage(), out page);
+
+            return page;
+        }
+        //------------------------------------------------------------------------------------
+        public bool ChangeSkillSlotPage(int pageid)
+        {
+            if (PlayerDataContainer.m_skillSlotData.ContainsKey(pageid) == true)
+            {
+                PlayerDataContainer.SkillSlotPage = pageid;
+                return true;
+            }
+
+            return false;
+        }
         //------------------------------------------------------------------------------------
         #endregion
         //------------------------------------------------------------------------------------

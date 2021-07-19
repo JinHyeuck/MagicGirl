@@ -9,19 +9,22 @@ namespace GameBerry.UI
     public class SkillPageTabBtn
     {
         public Button ChangeTabBtn;
-        public EquipmentType ButtonType;
+        public int ButtonID;
 
-        private System.Action<EquipmentType> CallBack;
+        private System.Action<int> CallBack;
 
-        public void SetCallBack(System.Action<EquipmentType> callback)
+        public void SetCallBack(System.Action<int> callback)
         {
             CallBack = callback;
+
+            if (ChangeTabBtn != null)
+                ChangeTabBtn.onClick.AddListener(OnClick);
         }
 
-        public void OnClick()
+        private void OnClick()
         {
             if (CallBack != null)
-                CallBack(ButtonType);
+                CallBack(ButtonID);
         }
     }
 
@@ -31,12 +34,16 @@ namespace GameBerry.UI
         [SerializeField]
         private RectTransform m_skillRoot;
 
+        [SerializeField]
+        private List<SkillPageTabBtn> m_skillPageBtnList = new List<SkillPageTabBtn>();
+
         [Header("---------------------------")]
         [SerializeField]
         private UISkillElement m_skillElement;
 
         private List<UISkillElement> m_skillElement_List = new List<UISkillElement>();
         private Dictionary<int, UISkillElement> m_skillElement_Dic = new Dictionary<int, UISkillElement>();
+        private List<UISkillElement> m_equipSkillElement = new List<UISkillElement>();
 
         private SkillLocalChart m_skillLocalChart = null;
 
@@ -44,6 +51,12 @@ namespace GameBerry.UI
         protected override void OnLoad()
         {
             Message.AddListener<GameBerry.Event.RefreshSkillInfoListMsg>(RefreshSkillInfoList);
+            Message.AddListener<GameBerry.Event.SetSlotMsg>(SetSlot);
+
+            for (int i = 0; i < m_skillPageBtnList.Count; ++i)
+            {
+                m_skillPageBtnList[i].SetCallBack(OnClick_SkillSlotPage);
+            }
 
             m_skillLocalChart = Managers.TableManager.Instance.GetTableClass<SkillLocalChart>();
 
@@ -53,6 +66,7 @@ namespace GameBerry.UI
         protected override void OnUnload()
         {
             Message.RemoveListener<GameBerry.Event.RefreshSkillInfoListMsg>(RefreshSkillInfoList);
+            Message.RemoveListener<GameBerry.Event.SetSlotMsg>(SetSlot);
         }
         //------------------------------------------------------------------------------------
         private void SetElements()
@@ -108,6 +122,33 @@ namespace GameBerry.UI
             {
                 SetElement(m_skillElement_Dic[msg.datas[i].SkillID], msg.datas[i]);
             }
+        }
+        //------------------------------------------------------------------------------------
+        private void SetSlot(GameBerry.Event.SetSlotMsg msg)
+        {
+            for (int i = 0; i < m_equipSkillElement.Count; ++i)
+            {
+                m_equipSkillElement[i].SetEquipElement(false);
+            }
+
+            IEnumerator enumerator = msg.SkillSlot.Values.GetEnumerator();
+
+            while (enumerator.MoveNext() == true)
+            {
+                int skillid = (int)enumerator.Current;
+                UISkillElement element = null;
+
+                if (m_skillElement_Dic.TryGetValue(skillid, out element) == true)
+                {
+                    element.SetEquipElement(true);
+                    m_equipSkillElement.Add(element);
+                }
+            }
+        }
+        //------------------------------------------------------------------------------------
+        private void OnClick_SkillSlotPage(int pageid)
+        {
+            Managers.SkillManager.Instance.ChangeSkillSlotPage(pageid);
         }
         //------------------------------------------------------------------------------------
         private void OnElementCallBack(SkillData skillData, PlayerSkillInfo playerSkillInfo)

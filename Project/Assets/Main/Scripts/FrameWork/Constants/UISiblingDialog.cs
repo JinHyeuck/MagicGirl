@@ -12,6 +12,8 @@
         // InGame
         DunjeonPharmingDialog,
 
+        SkillSlotDialog,
+
         PlayerStatDialog,
         EquipmentDialog,
         SkillDialog,

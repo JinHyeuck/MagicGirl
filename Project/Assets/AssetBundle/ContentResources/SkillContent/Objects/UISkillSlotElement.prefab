@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_slotState: {fileID: 6201741650107741341}
-  m_skillGroup: {fileID: 7363058669284741886}
+  m_skillGroup: {fileID: 1220763078098191082}
   m_skillIcon: {fileID: 6548929528119251665}
   m_coolTimeFilled: {fileID: 4786361224228263765}
   m_buffApplyTime: {fileID: 3519828575521025218}

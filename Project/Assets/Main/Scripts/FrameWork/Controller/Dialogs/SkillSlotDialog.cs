@@ -20,17 +20,65 @@ namespace GameBerry.UI
         [SerializeField]
         private UISkillSlotElement m_uISkillSlotElement;
 
-        private Dictionary<int, UISkillSlotElement> m_uISkillSlotList_Dic = new Dictionary<int, UISkillSlotElement>();
-        private Dictionary<int, UISkillSlotElement> m_createdSlot_Dic = new Dictionary<int, UISkillSlotElement>();
+        [SerializeField]
+        UnityEngine.U2D.SpriteAtlas m_skillSlotAtlas = null;
 
-        private int m_addSlotIndex = -1;
+        private List<UISkillSlotElement> m_uICreatedSkillSlot_List = new List<UISkillSlotElement>();
+        private Dictionary<int, UISkillSlotElement> m_uiSetEndSkillSlot_Dic = new Dictionary<int, UISkillSlotElement>();
+
+        private SkillLocalChart m_skillLocalChart = null;
 
         //------------------------------------------------------------------------------------
         protected override void OnLoad()
         {
+            m_skillLocalChart = Managers.TableManager.Instance.GetTableClass<SkillLocalChart>();
+
             for (int i = 0; i < Define.CharacterDefaultSlotTotalCount; ++i)
             {
                 CreateSlot();
+            }
+
+            Message.AddListener<GameBerry.Event.SetSlotMsg>(SetSlot);
+        }
+        //------------------------------------------------------------------------------------
+        protected override void OnUnload()
+        {
+            Message.RemoveListener<GameBerry.Event.SetSlotMsg>(SetSlot);
+        }
+        //------------------------------------------------------------------------------------
+        private void SetSlot(GameBerry.Event.SetSlotMsg msg)
+        {
+            m_uiSetEndSkillSlot_Dic.Clear();
+
+            IEnumerator enumerator = msg.SkillSlot.Keys.GetEnumerator();
+
+            for (int i = 0; i < m_uICreatedSkillSlot_List.Count; ++i)
+            {
+                SlotState slotstate = SlotState.None;
+
+                if (enumerator.MoveNext() == true)
+                {
+                    int slotid = (int)enumerator.Current;
+                    slotstate = SlotState.OpenSlot;
+                    m_uICreatedSkillSlot_List[i].SetSlotID(slotid);
+                    m_uICreatedSkillSlot_List[i].SetState(slotstate);
+                    m_uICreatedSkillSlot_List[i].SetSkill(m_skillLocalChart.GetSkillData(msg.SkillSlot[slotid]));
+                }
+                else
+                {
+                    if (i == msg.SkillSlot.Count)
+                    {
+                        slotstate = SlotState.AddSlot;
+                        m_uICreatedSkillSlot_List[i].SetState(slotstate);
+                    }
+                    else
+                    {
+                        slotstate = SlotState.LockSlot;
+                        m_uICreatedSkillSlot_List[i].SetState(slotstate);
+                    }
+                }
+
+                m_uICreatedSkillSlot_List[i].SetSlotBG(m_skillSlotAtlas.GetSprite(slotstate.ToString()));
             }
         }
         //------------------------------------------------------------------------------------
@@ -38,32 +86,28 @@ namespace GameBerry.UI
         {
             GameObject clone = Instantiate(m_uISkillSlotElement.gameObject, m_slotRoot.transform);
             UISkillSlotElement slot = clone.GetComponent<UISkillSlotElement>();
+            slot.Init(OnClick_SlotBtn);
 
-            int slotid = m_createdSlot_Dic.Count;
-
-            slot.Init(slotid, OnClick_SlotBtn);
-
-            m_createdSlot_Dic.Add(slotid, slot);
+            m_uICreatedSkillSlot_List.Add(slot);
         }
         //------------------------------------------------------------------------------------
-        private void OpenSlot(int count)
-        {
-            foreach (KeyValuePair<int, UISkillSlotElement> pair in m_createdSlot_Dic)
-            {
-                if (pair.Value != null)
-                {
-                    if (pair.Value.m_slotID < count)
-                        pair.Value.SetState(SlotState.OpenSlot);
-                    else if (pair.Value.m_slotID == count)
-                    { 
-                        pair.Value.SetState(SlotState.AddSlot);
-                        m_addSlotIndex = pair.Value.m_slotID;
-                    }
-                    else
-                        pair.Value.SetState(SlotState.LockSlot);
-                }
-            }
-        }
+        //private void OpenSlot(int count)
+        //{
+        //    foreach (KeyValuePair<int, UISkillSlotElement> pair in m_uiSetEndSkillSlot_Dic)
+        //    {
+        //        if (pair.Value != null)
+        //        {
+        //            if (pair.Value.m_slotID < count)
+        //                pair.Value.SetState(SlotState.OpenSlot);
+        //            else if (pair.Value.m_slotID == count)
+        //            { 
+        //                pair.Value.SetState(SlotState.AddSlot);
+        //            }
+        //            else
+        //                pair.Value.SetState(SlotState.LockSlot);
+        //        }
+        //    }
+        //}
         //------------------------------------------------------------------------------------
         private void OnClick_SlotBtn(int slotid)
         {

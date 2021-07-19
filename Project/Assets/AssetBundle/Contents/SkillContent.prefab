@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _uiList:
   - SkillDialog
+  - SkillSlotDialog
   dialogList: []
 --- !u!114 &5349672865552904079
 MonoBehaviour:

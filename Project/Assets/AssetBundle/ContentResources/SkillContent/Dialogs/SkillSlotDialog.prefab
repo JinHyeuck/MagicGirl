@@ -1188,6 +1188,11 @@ MonoBehaviour:
   dialogView: {fileID: 1503526219307013578}
   _uiInAnimations: []
   _uiOutAnimations: []
+  m_autoSkillBtn: {fileID: 0}
+  m_autoSkillInteractionImage: {fileID: 0}
+  m_slotRoot: {fileID: 1366844352046361225}
+  m_uISkillSlotElement: {fileID: 2384665012748628033, guid: 3d809cd025ae3de4d89196bfd87bf267, type: 3}
+  m_skillSlotAtlas: {fileID: 4343727234628468602, guid: 8314d1160f71b514793c66361a37923b, type: 2}
 --- !u!1 &9204174485400914444
 GameObject:
   m_ObjectHideFlags: 0

@@ -438,9 +438,25 @@ namespace GameBerry
 			return outValue;
 		}
 
+		public static int ToInt(this string s)
+		{
+			int outValue;
+			int.TryParse(s, out outValue);
+
+			return outValue;
+		}
+
 		public static double ToDouble(this string s)
 		{
 			return Convert.ToDouble(s);
+		}
+
+		public static float ToFloat(this string s)
+		{
+			float outValue;
+			float.TryParse(s, out outValue);
+
+			return outValue;
 		}
 	}
 

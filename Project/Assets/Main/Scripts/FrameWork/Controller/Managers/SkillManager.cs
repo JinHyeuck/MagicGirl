@@ -1,198 +1,161 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GameBerry.UI;
 
 namespace GameBerry.Managers
 {
     public class SkillCoolTimeData
     {
         public float StartTime = 0.0f;
-        public int SkillID = -1;
+        public SkillData SkillData = null;
+        public UISkillSlotElement UIElement = null;
     }
 
     public class SkillManager : MonoSingleton<SkillManager>
     {
-        private SkillLocalChart m_skillLocalTable = null;
+        private Dictionary<int, int> m_currentSkillSlot = new Dictionary<int, int>();
 
-        private List<SkillData> m_equipSkillList = new List<SkillData>(); // 슬롯에 등록한 스킬
 
-        private Dictionary<int, SkillData> m_usableSkillList = new Dictionary<int, SkillData>(); // 열려있는 스킬
+        // PassiveSkill들은 포함이 안된다.
+        private Dictionary<int, SkillCoolTimeData> m_activeSkillList = new Dictionary<int, SkillCoolTimeData>();
+        private List<SkillData> m_readySkillData = new List<SkillData>();
+        private LinkedList<SkillCoolTimeData> m_usedSkill = new LinkedList<SkillCoolTimeData>();
 
-        private LinkedList<SkillCoolTimeData> m_coolTimeSkill_Linked = new LinkedList<SkillCoolTimeData>();
-        private Dictionary<int, SkillData> m_coolTimeSkill_Dic = new Dictionary<int, SkillData>();
+        private Queue<SkillCoolTimeData> m_skillCoolDataPool = new Queue<SkillCoolTimeData>();
+        // PassiveSkill들은 포함이 안된다.
 
         private SkillData m_defaultSkill = null;
 
-        private string m_openSkillData = string.Empty;
-        private string m_equipSkillData = string.Empty;
+        private SkillLocalChart m_skillLocalChart;
 
-        private int m_openSkillSlotCount = 0;
+        private Event.SetSlotMsg m_setSlotMsg = new Event.SetSlotMsg();
 
         //------------------------------------------------------------------------------------
         protected override void Init()
         {
-            m_skillLocalTable = TableManager.Instance.GetTableClass<SkillLocalChart>();
-
-            m_openSkillSlotCount = PlayerPrefs.GetInt(Define.OpenSkillSlotCountKey, 0);
-
-            m_openSkillData = PlayerPrefs.GetString(Define.OpenSkillListKey, string.Empty);
-            string[] openskillarr = m_openSkillData.Split(',');
-
-            for (int i = 0; i < openskillarr.Length; ++i)
-            {
-                m_usableSkillList.Add(openskillarr[i].FastStringToInt(), m_skillLocalTable.GetSkillData(openskillarr[i].FastStringToInt()));
-            }
-
-            m_equipSkillData = PlayerPrefs.GetString(Define.EquipSkillKey, string.Empty);
-            string[] equipskillarr = m_equipSkillData.Split(',');
-
-            for (int i = 0; i < equipskillarr.Length; ++i)
-            {
-                if (m_openSkillSlotCount - 1 >= i)
-                {
-                    string key = equipskillarr[i];
-                    SkillData data = null;
-                    if (m_usableSkillList.TryGetValue(key.FastStringToInt(), out data) == true)
-                        m_equipSkillList.Add(data);
-                    else
-                        m_equipSkillList.Add(null);
-                }
-            }
+            m_skillLocalChart = TableManager.Instance.GetTableClass<SkillLocalChart>();
 
             SkillData defa = new SkillData();
             defa.OptionValue = 1.0;
             defa.MaxTarget = 1;
-            defa.Range = 1.0;
+            defa.Range = 1.0f;
 
             m_defaultSkill = defa;
         }
         //------------------------------------------------------------------------------------
+        public void SetSkillSlot()
+        {
+            foreach (KeyValuePair<int, SkillCoolTimeData> pair in m_activeSkillList)
+                m_skillCoolDataPool.Enqueue(pair.Value);
+
+            m_currentSkillSlot = PlayerDataManager.Instance.GetCurrentSkillSlot();
+            m_activeSkillList.Clear();
+            m_readySkillData.Clear();
+            m_usedSkill.Clear();
+
+            foreach (KeyValuePair<int, int> pair in m_currentSkillSlot)
+            {
+                if (pair.Value != -1)
+                {
+                    SkillData data = m_skillLocalChart.GetSkillData(pair.Value);
+
+                    if (data == null)
+                        continue;
+
+                    if (data.SkillTriggerType == SkillTriggerType.Active || data.SkillTriggerType == SkillTriggerType.Buff)
+                    {
+                        if (m_skillCoolDataPool.Count <= 0)
+                            m_skillCoolDataPool.Enqueue(new SkillCoolTimeData());
+
+                        SkillCoolTimeData cooldata = m_skillCoolDataPool.Dequeue();
+                        cooldata.StartTime = 0.0f;
+                        cooldata.SkillData = data;
+                        cooldata.UIElement = null;
+
+                        m_activeSkillList.Add(data.SkillID, cooldata);
+
+                        m_readySkillData.Add(data);
+                    }
+                }
+            }
+
+            m_setSlotMsg.SkillSlot = m_currentSkillSlot;
+
+            Message.Send(m_setSlotMsg);
+        }
+        //------------------------------------------------------------------------------------
         private void Update()
         {
-            // 쿨타임 체크
+            var node = m_usedSkill.First;
+            while (node != null)
             {
-                var node = m_coolTimeSkill_Linked.First;
-                while (node != null)
+                float coolTime = node.Value.SkillData.CoolTime;
+                float currenttime = Time.time - node.Value.StartTime;
+                UISkillSlotElement element = node.Value.UIElement;
+
+                if (currenttime >= coolTime)
                 {
-                    SkillData skillData = null;
-                    if (m_coolTimeSkill_Dic.TryGetValue(node.Value.SkillID, out skillData) == true)
-                    {
-                        if (node.Value.StartTime + skillData.CoolTime < Time.time)
-                        {
-                            m_coolTimeSkill_Dic.Remove(node.Value.SkillID);
-                            m_coolTimeSkill_Linked.Remove(node);
-                            node = node.Next;
-                        }
-                    }
-                    else
-                    {
-                        m_coolTimeSkill_Linked.Remove(node);
-                        node = node.Next;
-                    }
-                }
-            }
-        }
-        //------------------------------------------------------------------------------------
-        private void AddOpenSkillData(int key)
-        {
-            // 새로운 스킬이 추가되었을 때는 여기서 한다.
-            if (string.IsNullOrEmpty(m_openSkillData) != false)
-            {
-                m_openSkillData = string.Format("{0},{1}", m_openSkillData, key);
-            }
-            else
-            {
-                m_openSkillData = key.ToString();
-            }
+                    if (element != null)
+                        element.EndCoolTime();
 
-            PlayerPrefs.SetString(Define.OpenSkillListKey, m_openSkillData);
-
-            m_usableSkillList.Add(key, m_skillLocalTable.GetSkillData(key));
-        }
-        //------------------------------------------------------------------------------------
-        private void ChangeEquipSkillData(int key, int index)
-        {
-            // 슬롯에 장착한 스킬이 달라지면 여기서 한다.
-            if (m_equipSkillList.Count <= index)
-                return;
-
-            m_equipSkillList[index] = m_skillLocalTable.GetSkillData(key);
-
-            SaveEquipSkillData();
-        }
-        //------------------------------------------------------------------------------------
-        private void RemoveEquipSkillData(string key, int index)
-        {
-            // 슬롯에 스킬을 빼면 여기로 온다.
-            if (m_equipSkillList.Count <= index)
-                return;
-
-            m_equipSkillList[index] = null;
-
-            SaveEquipSkillData();
-        }
-        //------------------------------------------------------------------------------------
-        private void SaveEquipSkillData()
-        {
-            string newdata = string.Empty;
-
-            for (int i = 0; i < m_equipSkillList.Count; ++i)
-            {
-                string keystr = string.Empty;
-                if (m_equipSkillList[i] != null)
-                    keystr = m_equipSkillList[i].SkillID.ToString();
-                else
-                    keystr = " ";
-
-                if (i == 0)
-                {
-                    newdata = string.Format("{0}", keystr);
+                    m_usedSkill.Remove(node);
                 }
                 else
                 {
-                    newdata = string.Format("{0},{1}", newdata, keystr);
+                    if (element != null)
+                        element.SetCoolTime(currenttime, coolTime);
                 }
+
+                node = node.Next;
             }
 
-            m_equipSkillData = newdata;
-
-            PlayerPrefs.SetString(Define.EquipSkillKey, m_equipSkillData);
         }
         //------------------------------------------------------------------------------------
-        private void AddSkillSlot()
+        public void ChangeSkillSlotPage(int slotpage)
         {
-            m_equipSkillList.Add(null);
-            m_openSkillSlotCount = m_equipSkillList.Count;
-            PlayerPrefs.SetInt(Define.OpenSkillSlotCountKey, m_openSkillSlotCount);
+            // 스킬슬롯 와따리갔따리 하지 못하게 여기서 스롯쿨 넣어주기
+            // 스킬슬롯 와따리갔따리 하지 못하게 여기서 스롯쿨 넣어주기
+            // 스킬슬롯 와따리갔따리 하지 못하게 여기서 스롯쿨 넣어주기
+
+            if (PlayerDataManager.Instance.ChangeSkillSlotPage(slotpage) == true)
+            {
+                SetSkillSlot();
+            }
+        }
+        //------------------------------------------------------------------------------------
+        public void LinkedElement(int skillid, UISkillSlotElement element)
+        {
+            SkillCoolTimeData data = null;
+            if (m_activeSkillList.TryGetValue(skillid, out data) == true)
+            {
+                data.UIElement = element;
+            }
         }
         //------------------------------------------------------------------------------------
         public SkillData GetReadySkill(int currUserMp)
         {
-            for (int i = 0; i < m_equipSkillList.Count; ++i)
+            for (int i = 0; i < m_readySkillData.Count; ++i)
             {
-                if (m_equipSkillList[i].NeedMP > currUserMp)
-                    continue;
-
-                if (m_equipSkillList[i].SkillTriggerType != SkillTriggerType.Active)
-                    continue;
-
-                if (m_coolTimeSkill_Dic.ContainsKey(m_equipSkillList[i].SkillID) == true)
-                    continue;
-
-                return m_equipSkillList[i];
+                if (m_readySkillData[i].NeedMP <= currUserMp)
+                    return m_readySkillData[i];
             }
 
             return m_defaultSkill;
         }
         //------------------------------------------------------------------------------------
-        public void UseSkill(SkillData skillData)
+        public void UseSkill(SkillData data)
         {
-            SkillCoolTimeData data = new SkillCoolTimeData();
-            data.SkillID = skillData.SkillID;
-            data.StartTime = Time.time;
+            if (data == m_defaultSkill)
+                return;
 
-            m_coolTimeSkill_Linked.AddLast(data);
-            m_coolTimeSkill_Dic.Add(skillData.SkillID, skillData);
+            if (m_readySkillData.Contains(data) == true)
+                m_readySkillData.Remove(data);
+
+            SkillCoolTimeData cooltime = m_activeSkillList[data.SkillID];
+            cooltime.StartTime = Time.time;
+
+            m_usedSkill.AddLast(cooltime);
         }
         //------------------------------------------------------------------------------------
     }

@@ -42,9 +42,9 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 7bb1ec0411a0a934888589aaa32d13e1, type: 3}
   - {fileID: 21300000, guid: 46411b241cf7efd4b98ffd606eccfa12, type: 3}
   m_PackedSpriteNamesToIndex:
-  - SkillSlot_Lock
-  - SkillSlot_None
-  - SkillSlot_Add
+  - LockSlot
+  - OpenSlot
+  - AddSlot
   m_RenderDataMap: {}
   m_Tag: SkillAtlas
   m_IsVariant: 0

@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameBerry.Contents
+namespace GameBerry.UI
 {
-    public class EquipmentContent : IContent
+    public class SkillPopupDialog : IDialog
     {
+
     }
 }

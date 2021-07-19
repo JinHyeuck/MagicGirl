@@ -35,10 +35,10 @@ namespace GameBerry
         public SkillOptionType OptionType = SkillOptionType.None;
         public double OptionValue = 0.0f;
         public int MaxTarget;
-        public double ApplyTime;
-        public double CoolTime;
-        public double Trigger_Range;
-        public double Range;
+        public float ApplyTime;
+        public float CoolTime;
+        public float Trigger_Range;
+        public float Range;
         public int NeedMP;
 
         public string SkillSpriteName = null;
@@ -87,13 +87,13 @@ namespace GameBerry
 
                     MaxTarget = rows[i]["skill_maxtarget"]["S"].ToString().FastStringToInt(),
 
-                    ApplyTime = rows[i]["skill_applytime"]["S"].ToString().ToDouble(),
+                    ApplyTime = rows[i]["skill_applytime"]["S"].ToString().ToFloat(),
 
-                    CoolTime = rows[i]["skill_cooltime"]["S"].ToString().ToDouble(),
+                    CoolTime = rows[i]["skill_cooltime"]["S"].ToString().ToFloat(),
 
-                    Trigger_Range = rows[i]["skill_trigger_range"]["S"].ToString().ToDouble(),
+                    Trigger_Range = rows[i]["skill_trigger_range"]["S"].ToString().ToFloat(),
 
-                    Range = rows[i]["skill_range"]["S"].ToString().ToDouble(),
+                    Range = rows[i]["skill_range"]["S"].ToString().ToFloat(),
 
                     NeedMP = rows[i]["skill_needmp"]["S"].ToString().FastStringToInt()
                 };

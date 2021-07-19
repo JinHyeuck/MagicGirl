@@ -175,6 +175,9 @@ namespace GameBerry
         private void UseSkill(SkillData skillData)
         {
             Managers.MonsterManager.Instance.OnDamage(skillData.Range, (int)skillData.OptionValue, transform.position);
+            Managers.SkillManager.Instance.UseSkill(skillData);
+
+            m_nextAttackSkill = null;
         }
         //------------------------------------------------------------------------------------
         private void ChangeState(PlayerState characterState)
