@@ -68,13 +68,8 @@ namespace GameBerry.UI
                     m_skillLevelText.gameObject.SetActive(false);
                 else
                 {
-                    if (equipmentinfo.Level > 0)
-                    {
-                        m_skillLevelText.gameObject.SetActive(true);
-                        m_skillLevelText.text = string.Format("Lv.{0}", equipmentinfo.Level);
-                    }
-                    else
-                        m_skillLevelText.gameObject.SetActive(false);
+                    m_skillLevelText.gameObject.SetActive(true);
+                    m_skillLevelText.text = string.Format("Lv.{0}", equipmentinfo.Level);
                 }
             }
 

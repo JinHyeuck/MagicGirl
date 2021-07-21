@@ -10,6 +10,7 @@ namespace GameBerry
         Gold,
         Exp,
         EquipmentSton,
+        SkillSton,
     }
 
     public class DunjeonMonsterReward
@@ -17,6 +18,7 @@ namespace GameBerry
         public double Gold;
         public double Exp;
         public int EquipmentSton;
+        public int SkillSton;
     }
 
     public class DunjeonData
@@ -78,6 +80,7 @@ namespace GameBerry
                 data.Reward.Gold = (i + 1) * 5;
                 data.Reward.Exp = (i + 1) * 3;
                 data.Reward.EquipmentSton = (i + 1) * 4;
+                data.Reward.SkillSton = (i + 1) * 2;
 
                 m_dunjeonDataDatas.Add(data);
                 m_dunjeonDataDatas_Dic.Add(data.DunjeonID, data);

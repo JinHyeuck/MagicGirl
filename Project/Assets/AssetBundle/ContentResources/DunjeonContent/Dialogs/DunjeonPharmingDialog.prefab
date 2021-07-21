@@ -273,6 +273,8 @@ MonoBehaviour:
     RewardIcon: {fileID: 21300000, guid: f9934f32971d232469e07211e5bfe7c3, type: 3}
   - RewardType: 3
     RewardIcon: {fileID: 21300000, guid: 5dfc8f50ea3859342aa1f71d512880fa, type: 3}
+  - RewardType: 4
+    RewardIcon: {fileID: 21300000, guid: 5a15cf7b44a127f4ab451911b632997f, type: 3}
 --- !u!1 &6150963798658890885
 GameObject:
   m_ObjectHideFlags: 0

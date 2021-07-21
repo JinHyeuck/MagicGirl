@@ -47,11 +47,13 @@ namespace GameBerry.UI
 
         private SkillLocalChart m_skillLocalChart = null;
 
+        private GameBerry.Event.SetSkillPopupMsg m_setSkillPopupMsg = new GameBerry.Event.SetSkillPopupMsg();
+
         //------------------------------------------------------------------------------------
         protected override void OnLoad()
         {
             Message.AddListener<GameBerry.Event.RefreshSkillInfoListMsg>(RefreshSkillInfoList);
-            Message.AddListener<GameBerry.Event.SetSlotMsg>(SetSlot);
+            Message.AddListener<GameBerry.Event.SetSkillSlotMsg>(SetSlot);
 
             for (int i = 0; i < m_skillPageBtnList.Count; ++i)
             {
@@ -66,7 +68,7 @@ namespace GameBerry.UI
         protected override void OnUnload()
         {
             Message.RemoveListener<GameBerry.Event.RefreshSkillInfoListMsg>(RefreshSkillInfoList);
-            Message.RemoveListener<GameBerry.Event.SetSlotMsg>(SetSlot);
+            Message.RemoveListener<GameBerry.Event.SetSkillSlotMsg>(SetSlot);
         }
         //------------------------------------------------------------------------------------
         private void SetElements()
@@ -124,7 +126,7 @@ namespace GameBerry.UI
             }
         }
         //------------------------------------------------------------------------------------
-        private void SetSlot(GameBerry.Event.SetSlotMsg msg)
+        private void SetSlot(GameBerry.Event.SetSkillSlotMsg msg)
         {
             for (int i = 0; i < m_equipSkillElement.Count; ++i)
             {
@@ -153,7 +155,12 @@ namespace GameBerry.UI
         //------------------------------------------------------------------------------------
         private void OnElementCallBack(SkillData skillData, PlayerSkillInfo playerSkillInfo)
         {
+            m_setSkillPopupMsg.skilldata = skillData;
+            m_setSkillPopupMsg.skillinfo = playerSkillInfo;
 
+            Message.Send(m_setSkillPopupMsg);
+
+            RequestDialogEnter<SkillPopupDialog>();
         }
         //------------------------------------------------------------------------------------
     }

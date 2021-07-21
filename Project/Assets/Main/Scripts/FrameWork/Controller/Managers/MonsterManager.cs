@@ -118,9 +118,10 @@ namespace GameBerry.Managers
             while (node != null)
             {
                 if (Vector3.Distance(playerpos, node.Value.transform.position) < range)
-                { 
+                {
+                    var nextnode = node.Next;
                     node.Value.OnDamage(damage);
-                    node = node.Next;
+                    node = nextnode;
                 }
                 else
                     break;
@@ -166,6 +167,7 @@ namespace GameBerry.Managers
             m_monsterKillRewardData.Gold = (int)((float)m_rewardData.Gold * Random.Range(0.9f, 1.0f));
             m_monsterKillRewardData.Exp = m_rewardData.Exp;
             m_monsterKillRewardData.EquipmentSton = (int)((float)m_rewardData.EquipmentSton * Random.Range(0.9f, 1.0f));
+            m_monsterKillRewardData.SkillSton = (int)((float)m_rewardData.SkillSton * Random.Range(0.9f, 1.0f));
 
             PlayerManager.Instance.RecvMonsterKillReward(m_monsterKillRewardData);
         }

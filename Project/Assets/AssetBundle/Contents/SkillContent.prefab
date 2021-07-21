@@ -47,6 +47,7 @@ MonoBehaviour:
   _uiList:
   - SkillDialog
   - SkillSlotDialog
+  - SkillPopupDialog
   dialogList: []
 --- !u!114 &5349672865552904079
 MonoBehaviour:

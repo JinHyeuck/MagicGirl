@@ -49,6 +49,17 @@ namespace GameBerry.Event
         public List<SkillData> datas = new List<SkillData>();
     }
 
+    public class SetSkillSlotMsg : Message
+    {
+        public Dictionary<int, int> SkillSlot = new Dictionary<int, int>();
+    }
+
+    public class SetSkillPopupMsg : Message
+    {
+        public SkillData skilldata;
+        public PlayerSkillInfo skillinfo;
+    }
+
     public class DunjeonPharmingRewardMsg : Message
     {
         public DunjeonRewardType RewardType = DunjeonRewardType.None;

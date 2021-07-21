@@ -26,8 +26,12 @@ namespace GameBerry
         private int m_maxHP = 1000;
         private int m_currentHP = 0;
 
+
         private int m_maxMP = 0;
         private int m_currentMP = 100;
+        public int CurrentMP { get { return m_currentMP; } }
+
+
 
         private float m_moveSpeed = 2.0f;
 
@@ -176,8 +180,14 @@ namespace GameBerry
         {
             Managers.MonsterManager.Instance.OnDamage(skillData.Range, (int)skillData.OptionValue, transform.position);
             Managers.SkillManager.Instance.UseSkill(skillData);
+            UseMP(skillData.NeedMP);
 
             m_nextAttackSkill = null;
+        }
+        //------------------------------------------------------------------------------------
+        public void UseMP(int mp)
+        { 
+            // ³ªÁß¿¡ ¿¥ÇÇ ±ï¾ÆÁÖ±â
         }
         //------------------------------------------------------------------------------------
         private void ChangeState(PlayerState characterState)

@@ -45,6 +45,8 @@ namespace GameBerry.UI
 
         private int m_slotID = -1;
 
+        private SkillData m_currentSkillData = null;
+
         //------------------------------------------------------------------------------------
         public void Init(System.Action<int> action)
         {
@@ -77,6 +79,8 @@ namespace GameBerry.UI
                 if (m_skillTriggerTypeText != null)
                     m_skillTriggerTypeText.text = data.SkillTriggerType.ToString();
             }
+
+            m_currentSkillData = data;
         }
         //------------------------------------------------------------------------------------
         public void SetState(SlotState state)
@@ -88,6 +92,12 @@ namespace GameBerry.UI
 
             if (m_skillGroup != null)
                 m_skillGroup.gameObject.SetActive(false);
+        }
+        //------------------------------------------------------------------------------------
+        public void SetLinkSlot()
+        {
+            if (m_currentSkillData != null)
+                Managers.SkillManager.Instance.LinkSlotElement(m_currentSkillData.SkillID, this);
         }
         //------------------------------------------------------------------------------------
         public void SetSlotBG(Sprite sp)
@@ -103,13 +113,33 @@ namespace GameBerry.UI
         }
         //------------------------------------------------------------------------------------
         public void SetCoolTime(float currtime, float totaltime)
-        { 
+        {
+            if (m_coolTimeText != null)
+                m_coolTimeText.text = string.Format("{0 : 0.#}", totaltime - currtime);
 
+            if (m_coolTimeFilled != null && totaltime > 0.0f)
+                m_coolTimeFilled.fillAmount = currtime / totaltime;
         }
         //------------------------------------------------------------------------------------
         public void EndCoolTime()
-        { 
+        {
+            if (m_coolTimeText != null)
+                m_coolTimeText.text = string.Empty;
 
+            if (m_coolTimeFilled != null)
+                m_coolTimeFilled.fillAmount = 0.0f;
+        }
+        //------------------------------------------------------------------------------------
+        public void SetBuffApplyTime(float currtime, float totaltime)
+        {
+            if (m_buffApplyTime != null && totaltime > 0.0f)
+                m_buffApplyTime.fillAmount = (totaltime - currtime) / totaltime;
+        }
+        //------------------------------------------------------------------------------------
+        public void EndBuffApplyTime()
+        {
+            if (m_buffApplyTime != null)
+                m_buffApplyTime.fillAmount = 0.0f;
         }
         //------------------------------------------------------------------------------------
     }

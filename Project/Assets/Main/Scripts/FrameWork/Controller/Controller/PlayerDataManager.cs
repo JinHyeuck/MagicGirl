@@ -162,6 +162,20 @@ namespace GameBerry.Managers
             return PlayerDataContainer.SkillSton;
         }
         //------------------------------------------------------------------------------------
+        public bool UseSkillSton(int ston)
+        {
+            bool isSuccess = false;
+
+            if (PlayerDataContainer.SkillSton >= ston)
+            {
+                PlayerDataContainer.SkillSton -= ston;
+                Message.Send(m_refreshSkillStonMsg);
+                isSuccess = true;
+            }
+
+            return isSuccess;
+        }
+        //------------------------------------------------------------------------------------
         #region StatUpGrade
         //------------------------------------------------------------------------------------
         public int GetCurrentUpGradeStatLevel(StatUpGradeType type)
@@ -448,6 +462,39 @@ namespace GameBerry.Managers
             return info.Level + 1;
         }
         //------------------------------------------------------------------------------------
+        public int GetNeedLevelUPSkillSton(SkillData skilldata, PlayerSkillInfo skillinfo)
+        {
+            return PlayerDataOperator.GetNeedLevelUPSkillSton(skilldata, skillinfo);
+        }
+        //------------------------------------------------------------------------------------
+        public bool SetLevelUpSkill(SkillData equipmentdata)
+        {
+            PlayerSkillInfo info = GetPlayerSkillInfo(equipmentdata);
+
+            if (info == null)
+                return false;
+
+            int needSkill = GetNeedLevelUPSkillCount(equipmentdata);
+            if (needSkill > info.Count)
+                return false;
+
+
+            int needSton = GetNeedLevelUPSkillSton(equipmentdata, info);
+
+            if (UseSkillSton(needSton) == false)
+                return false;
+
+            info.Count -= needSkill;
+            info.Level += 1;
+
+            m_refreshSkillInfoListMsg.datas.Clear();
+            m_refreshSkillInfoListMsg.datas.Add(equipmentdata);
+
+            Message.Send(m_refreshSkillInfoListMsg);
+
+            return true;
+        }
+        //------------------------------------------------------------------------------------
         public void AddSkillElementList(List<SkillData> skilldata)
         {
             PlayerSkillInfo info = null;
@@ -496,6 +543,15 @@ namespace GameBerry.Managers
             }
 
             return false;
+        }
+        //------------------------------------------------------------------------------------
+        public double GetSkillOptionValue(SkillData skilldata)
+        {
+            PlayerSkillInfo skillinfo = GetPlayerSkillInfo(skilldata);
+
+            int skilllevel = skillinfo == null ? 0 : skillinfo.Level;
+
+            return PlayerDataOperator.GetSkillOptionValue(skilldata, skilllevel);
         }
         //------------------------------------------------------------------------------------
         #endregion

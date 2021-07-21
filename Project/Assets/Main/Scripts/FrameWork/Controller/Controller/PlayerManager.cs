@@ -47,6 +47,16 @@ namespace GameBerry.Managers
             return m_playerController;
         }
         //------------------------------------------------------------------------------------
+        public int GetCurrentPlayerMP()
+        {
+            return m_playerController.CurrentMP;
+        }
+        //------------------------------------------------------------------------------------
+        public void UseMP(int mp)
+        {
+            m_playerController.UseMP(mp);
+        }
+        //------------------------------------------------------------------------------------
         public InGameCameraController GetInGameCameraController()
         {
             return m_inGameCamera;
@@ -85,6 +95,7 @@ namespace GameBerry.Managers
             PlayerDataManager.Instance.AddGold(reward.Gold);
             PlayerDataManager.Instance.AddExp(reward.Exp);
             PlayerDataManager.Instance.AddEquipmentSton(reward.EquipmentSton);
+            PlayerDataManager.Instance.AddSkillSton(reward.SkillSton);
 
             if (reward.Gold > 0)
             {
@@ -104,6 +115,13 @@ namespace GameBerry.Managers
             {
                 m_dunjeonPharmingRewardMsg.RewardType = DunjeonRewardType.EquipmentSton;
                 m_dunjeonPharmingRewardMsg.RewardCount = reward.EquipmentSton;
+                Message.Send(m_dunjeonPharmingRewardMsg);
+            }
+
+            if (reward.SkillSton > 0)
+            {
+                m_dunjeonPharmingRewardMsg.RewardType = DunjeonRewardType.SkillSton;
+                m_dunjeonPharmingRewardMsg.RewardCount = reward.SkillSton;
                 Message.Send(m_dunjeonPharmingRewardMsg);
             }
         }

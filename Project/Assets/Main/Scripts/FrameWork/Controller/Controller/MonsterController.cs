@@ -73,7 +73,7 @@ namespace GameBerry
             if (m_monsterRenderer != null)
                 m_monsterRenderer.sprite = Managers.MonsterManager.Instance.GetMonsterSprite(data.MonsterImageName);
 
-            m_monsterMaxHp = m_myMonsterData.HP * 2;
+            m_monsterMaxHp = m_myMonsterData.HP;
             m_monsterCurrentHp = m_monsterMaxHp;
             m_monsterDamage = m_myMonsterData.Damage;
         }

@@ -594,6 +594,7 @@ namespace GameBerry.TheBackEnd
             Dictionary<int, Dictionary<int, int>> skillSlotInsertData = new Dictionary<int, Dictionary<int, int>>();
             Dictionary<int, int> pagevalue = new Dictionary<int, int>();
             pagevalue.Add(0, -1);
+            pagevalue.Add(1, -1);
 
             skillSlotInsertData.Add(0, pagevalue);
             skillSlotInsertData.Add(1, pagevalue);

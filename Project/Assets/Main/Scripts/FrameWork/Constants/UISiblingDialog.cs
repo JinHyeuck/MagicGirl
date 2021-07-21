@@ -23,6 +23,7 @@
         InGamePlayMenuDialog,
 
         EquipmentPopupDialog,
+        SkillPopupDialog,
         GachaResultDialog,
 
         // Global UI 501 ~ 999
