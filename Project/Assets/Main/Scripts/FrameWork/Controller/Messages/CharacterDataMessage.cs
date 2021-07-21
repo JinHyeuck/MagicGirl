@@ -49,6 +49,12 @@ namespace GameBerry.Event
         public List<SkillData> datas = new List<SkillData>();
     }
 
+    public class InitializeSkillSlotMsg : Message
+    {
+        public Dictionary<int, Managers.SkillSlotData> SkillSlot = new Dictionary<int, Managers.SkillSlotData>();
+    }
+
+
     public class SetSkillSlotMsg : Message
     {
         public Dictionary<int, int> SkillSlot = new Dictionary<int, int>();

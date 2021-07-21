@@ -32,61 +32,72 @@ namespace GameBerry.UI
         {
             m_skillLocalChart = Managers.TableManager.Instance.GetTableClass<SkillLocalChart>();
 
-            for (int i = 0; i < Define.CharacterDefaultSlotTotalCount; ++i)
-            {
-                CreateSlot();
-            }
-
-            Message.AddListener<GameBerry.Event.SetSkillSlotMsg>(SetSlot);
+            Message.AddListener<GameBerry.Event.InitializeSkillSlotMsg>(InitializeSkillSlot);
         }
         //------------------------------------------------------------------------------------
         protected override void OnUnload()
         {
-            Message.RemoveListener<GameBerry.Event.SetSkillSlotMsg>(SetSlot);
+            Message.RemoveListener<GameBerry.Event.InitializeSkillSlotMsg>(InitializeSkillSlot);
         }
         //------------------------------------------------------------------------------------
-        private void SetSlot(GameBerry.Event.SetSkillSlotMsg msg)
+        private void InitializeSkillSlot(GameBerry.Event.InitializeSkillSlotMsg msg)
         {
-            IEnumerator enumerator = msg.SkillSlot.Keys.GetEnumerator();
-
-            for (int i = 0; i < m_uICreatedSkillSlot_List.Count; ++i)
+            foreach (KeyValuePair<int, Managers.SkillSlotData> pair in msg.SkillSlot)
             {
-                SlotState slotstate = SlotState.None;
-
-                if (enumerator.MoveNext() == true)
-                {
-                    int slotid = (int)enumerator.Current;
-                    slotstate = SlotState.OpenSlot;
-                    m_uICreatedSkillSlot_List[i].SetSlotID(slotid);
-                    m_uICreatedSkillSlot_List[i].SetState(slotstate);
-                    m_uICreatedSkillSlot_List[i].SetSkill(m_skillLocalChart.GetSkillData(msg.SkillSlot[slotid]));
-                    m_uICreatedSkillSlot_List[i].SetLinkSlot();
-                }
-                else
-                {
-                    if (i == msg.SkillSlot.Count)
-                    {
-                        slotstate = SlotState.AddSlot;
-                        m_uICreatedSkillSlot_List[i].SetState(slotstate);
-                    }
-                    else
-                    {
-                        slotstate = SlotState.LockSlot;
-                        m_uICreatedSkillSlot_List[i].SetState(slotstate);
-                    }
-                }
-
-                m_uICreatedSkillSlot_List[i].SetSlotBG(m_skillSlotAtlas.GetSprite(slotstate.ToString()));
+                UISkillSlotElement element = CreateSlot();
+                pair.Value.SlotElements.Add(element);
+                element.SetSlotID(pair.Value.SlotID);
+                element.SetState(pair.Value.CurrSlotState);
+                element.SetSlotBG(m_skillSlotAtlas.GetSprite(pair.Value.CurrSlotState.ToString()));
             }
         }
         //------------------------------------------------------------------------------------
-        private void CreateSlot()
+        private void InitializeSkillSlotasdfsadfsad(GameBerry.Event.InitializeSkillSlotMsg msg)
+        {
+            //IEnumerator enumerator = msg.SkillSlot.Keys.GetEnumerator();
+
+            //for (int i = 0; i < msg.SkillSlot.Count; ++i)
+            //{
+            //    SlotState slotstate = SlotState.None;
+
+            //    UISkillSlotElement element = CreateSlot();
+
+            //    if (enumerator.MoveNext() == true)
+            //    {
+            //        int slotid = (int)enumerator.Current;
+            //        slotstate = SlotState.OpenSlot;
+            //        element.SetSlotID(slotid);
+            //        element.SetState(slotstate);
+            //        element.SetSkill(m_skillLocalChart.GetSkillData(msg.SkillSlot[slotid]));
+            //        element.SetLinkSlot();
+            //    }
+            //    else
+            //    {
+            //        if (i == msg.SkillSlot.Count)
+            //        {
+            //            slotstate = SlotState.AddSlot;
+            //            m_uICreatedSkillSlot_List[i].SetState(slotstate);
+            //        }
+            //        else
+            //        {
+            //            slotstate = SlotState.LockSlot;
+            //            m_uICreatedSkillSlot_List[i].SetState(slotstate);
+            //        }
+            //    }
+
+            //    m_uICreatedSkillSlot_List[i].SetSlotBG(m_skillSlotAtlas.GetSprite(slotstate.ToString()));
+            //}
+        }
+        //------------------------------------------------------------------------------------
+        private UISkillSlotElement CreateSlot()
         {
             GameObject clone = Instantiate(m_uISkillSlotElement.gameObject, m_slotRoot.transform);
             UISkillSlotElement slot = clone.GetComponent<UISkillSlotElement>();
             slot.Init(OnClick_SlotBtn);
 
             m_uICreatedSkillSlot_List.Add(slot);
+
+            return slot;
         }
         //------------------------------------------------------------------------------------
         private void OnClick_SlotBtn(int slotid)

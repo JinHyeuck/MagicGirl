@@ -71,12 +71,8 @@ namespace GameBerry.UI
 
             Message.AddListener<GameBerry.Event.RefreshSkillStonMsg>(RefreshSkillSton);
             Message.AddListener<GameBerry.Event.SetSkillPopupMsg>(SetSkillPopup);
-            Message.AddListener<GameBerry.Event.SetSkillSlotMsg>(SetSlot);
 
-            for (int i = 0; i < Define.CharacterDefaultSlotTotalCount; ++i)
-            {
-                CreateSlot();
-            }
+            Message.AddListener<GameBerry.Event.InitializeSkillSlotMsg>(InitializeSkillSlot);
 
             if (m_skillLevelUpBtn != null)
                 m_skillLevelUpBtn.onClick.AddListener(OnClick_LevelUpBtn);
@@ -104,7 +100,8 @@ namespace GameBerry.UI
         {
             Message.RemoveListener<GameBerry.Event.RefreshSkillStonMsg>(RefreshSkillSton);
             Message.RemoveListener<GameBerry.Event.SetSkillPopupMsg>(SetSkillPopup);
-            Message.RemoveListener<GameBerry.Event.SetSkillSlotMsg>(SetSlot);
+
+            Message.RemoveListener<GameBerry.Event.InitializeSkillSlotMsg>(InitializeSkillSlot);
         }
         //------------------------------------------------------------------------------------
         private void RefreshSkillSton(GameBerry.Event.RefreshSkillStonMsg msg)
@@ -160,52 +157,32 @@ namespace GameBerry.UI
                 m_changeSlotPopup.gameObject.SetActive(true);
         }
         //------------------------------------------------------------------------------------
-        private void CreateSlot()
+        private UISkillSlotElement CreateSlot()
         {
             GameObject clone = Instantiate(m_uiSkillSlotElement.gameObject, m_slotElementRoot.transform);
             UISkillSlotElement slot = clone.GetComponent<UISkillSlotElement>();
             slot.Init(OnClick_SlotBtn);
 
             m_uICreatedSkillSlot_List.Add(slot);
+
+            return slot;
         }
         //------------------------------------------------------------------------------------
-        private void SetSlot(GameBerry.Event.SetSkillSlotMsg msg)
+        private void InitializeSkillSlot(GameBerry.Event.InitializeSkillSlotMsg msg)
         {
-            IEnumerator enumerator = msg.SkillSlot.Keys.GetEnumerator();
-
-            for (int i = 0; i < m_uICreatedSkillSlot_List.Count; ++i)
+            foreach (KeyValuePair<int, Managers.SkillSlotData> pair in msg.SkillSlot)
             {
-                SlotState slotstate = SlotState.None;
-
-                if (enumerator.MoveNext() == true)
-                {
-                    int slotid = (int)enumerator.Current;
-                    slotstate = SlotState.OpenSlot;
-                    m_uICreatedSkillSlot_List[i].SetSlotID(slotid);
-                    m_uICreatedSkillSlot_List[i].SetState(slotstate);
-                    m_uICreatedSkillSlot_List[i].SetSkill(m_skillLocalChart.GetSkillData(msg.SkillSlot[slotid]));
-                }
-                else
-                {
-                    if (i == msg.SkillSlot.Count)
-                    {
-                        slotstate = SlotState.AddSlot;
-                        m_uICreatedSkillSlot_List[i].SetState(slotstate);
-                    }
-                    else
-                    {
-                        slotstate = SlotState.LockSlot;
-                        m_uICreatedSkillSlot_List[i].SetState(slotstate);
-                    }
-                }
-
-                m_uICreatedSkillSlot_List[i].SetSlotBG(m_skillSlotAtlas.GetSprite(slotstate.ToString()));
+                UISkillSlotElement element = CreateSlot();
+                pair.Value.SlotElements.Add(element);
+                element.SetSlotID(pair.Value.SlotID);
+                element.SetState(pair.Value.CurrSlotState);
+                element.SetSlotBG(m_skillSlotAtlas.GetSprite(pair.Value.CurrSlotState.ToString()));
             }
         }
         //------------------------------------------------------------------------------------
         private void OnClick_SlotBtn(int slotid)
         {
-            Managers.SkillManager.Instance.ChangeSlotSkill(m_currentSkillData, slotid);
+            Managers.SkillManager.Instance.SetSlotSkill(slotid, m_currentSkillData);
         }
         //------------------------------------------------------------------------------------
     }

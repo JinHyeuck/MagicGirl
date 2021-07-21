@@ -2,16 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using GameBerry.Managers;
 
 namespace GameBerry.UI
 {
-    public enum SlotState
-    { 
-        None = 0,
-        OpenSlot,
-        AddSlot,
-        LockSlot,
-    }
+
 
     public class UISkillSlotElement : MonoBehaviour
     {
@@ -78,6 +73,15 @@ namespace GameBerry.UI
 
                 if (m_skillTriggerTypeText != null)
                     m_skillTriggerTypeText.text = data.SkillTriggerType.ToString();
+
+                if (m_coolTimeText != null)
+                    m_coolTimeText.text = string.Empty;
+
+                if (m_coolTimeFilled != null)
+                    m_coolTimeFilled.fillAmount = 0.0f;
+
+                if (m_buffApplyTime != null)
+                    m_buffApplyTime.fillAmount = 0.0f;
             }
 
             m_currentSkillData = data;
@@ -89,7 +93,6 @@ namespace GameBerry.UI
                 return;
 
             m_currslotState = state;
-
             if (m_skillGroup != null)
                 m_skillGroup.gameObject.SetActive(false);
         }

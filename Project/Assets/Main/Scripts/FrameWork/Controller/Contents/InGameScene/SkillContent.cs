@@ -8,7 +8,7 @@ namespace GameBerry.Contents
     {
         protected override void OnLoadComplete()
         {
-            Managers.SkillManager.Instance.SetSkillSlot();
+            Managers.SkillManager.Instance.InitializeSkillSlot();
         }
     }
 }

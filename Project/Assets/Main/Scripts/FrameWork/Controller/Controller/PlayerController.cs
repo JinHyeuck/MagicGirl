@@ -19,8 +19,6 @@ namespace GameBerry
         [SerializeField]
         private Animator m_playerAnimator = null;
 
-        private SkillData m_nextAttackSkill;
-
         private float m_attackRange = 2.0f;
 
         private int m_maxHP = 1000;
@@ -144,20 +142,34 @@ namespace GameBerry
 
             if (Managers.MonsterManager.Instance.GetForeFrontMonster() != null)
             {
-                if (m_nextAttackSkill == null)
-                    m_nextAttackSkill = Managers.SkillManager.Instance.GetReadySkill(m_currentMP);
+                //if (m_nextAttackSkill != null)
+                //{
+                //    if (m_characterState != PlayerState.Attack)
+                //    {
+                //        if (Vector3.Distance(Managers.MonsterManager.Instance.GetForeFrontMonster().transform.position, transform.position) < m_nextAttackSkill.Range)
+                //        {
+                //            ChangeState(PlayerState.Attack);
+                //            return;
+                //        }
+                //        else
+                //        { 
+                //            ChangeState(PlayerState.Run);
+                //            return;
+                //        }
+                //    }
+                //}
 
-                if (m_nextAttackSkill != null)
+                if (Managers.SkillManager.Instance.NextActiveSkill != null)
                 {
                     if (m_characterState != PlayerState.Attack)
                     {
-                        if (Vector3.Distance(Managers.MonsterManager.Instance.GetForeFrontMonster().transform.position, transform.position) < m_nextAttackSkill.Range)
+                        if (Vector3.Distance(Managers.MonsterManager.Instance.GetForeFrontMonster().transform.position, transform.position) < Managers.SkillManager.Instance.NextActiveSkill.Range)
                         {
                             ChangeState(PlayerState.Attack);
                             return;
                         }
                         else
-                        { 
+                        {
                             ChangeState(PlayerState.Run);
                             return;
                         }
@@ -168,7 +180,7 @@ namespace GameBerry
         //------------------------------------------------------------------------------------
         private void OnAttack()
         {
-            UseSkill(m_nextAttackSkill);
+            UseSkill(Managers.SkillManager.Instance.NextActiveSkill);
         }
         //------------------------------------------------------------------------------------
         private void OnEndAttack()
@@ -181,8 +193,6 @@ namespace GameBerry
             Managers.MonsterManager.Instance.OnDamage(skillData.Range, (int)skillData.OptionValue, transform.position);
             Managers.SkillManager.Instance.UseSkill(skillData);
             UseMP(skillData.NeedMP);
-
-            m_nextAttackSkill = null;
         }
         //------------------------------------------------------------------------------------
         public void UseMP(int mp)
