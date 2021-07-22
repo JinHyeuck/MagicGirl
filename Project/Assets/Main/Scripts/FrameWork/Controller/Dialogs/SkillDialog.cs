@@ -37,6 +37,12 @@ namespace GameBerry.UI
         [SerializeField]
         private List<SkillPageTabBtn> m_skillPageBtnList = new List<SkillPageTabBtn>();
 
+        [SerializeField]
+        private Color m_skillPageApplyColor = Color.white;
+
+        [SerializeField]
+        private Color m_skillPageNotApplyColor = Color.white;
+
         [Header("---------------------------")]
         [SerializeField]
         private UISkillElement m_skillElement;
@@ -53,7 +59,8 @@ namespace GameBerry.UI
         protected override void OnLoad()
         {
             Message.AddListener<GameBerry.Event.RefreshSkillInfoListMsg>(RefreshSkillInfoList);
-            Message.AddListener<GameBerry.Event.SetSkillSlotMsg>(SetSlot);
+            Message.AddListener<GameBerry.Event.ChangeEquipSkillMsg>(ChangeEquipSkill);
+            Message.AddListener<GameBerry.Event.ChangeSkillSlotPageMsg>(ChangeSkillSlotPage);
 
             for (int i = 0; i < m_skillPageBtnList.Count; ++i)
             {
@@ -68,7 +75,8 @@ namespace GameBerry.UI
         protected override void OnUnload()
         {
             Message.RemoveListener<GameBerry.Event.RefreshSkillInfoListMsg>(RefreshSkillInfoList);
-            Message.RemoveListener<GameBerry.Event.SetSkillSlotMsg>(SetSlot);
+            Message.RemoveListener<GameBerry.Event.ChangeEquipSkillMsg>(ChangeEquipSkill);
+            Message.RemoveListener<GameBerry.Event.ChangeSkillSlotPageMsg>(ChangeSkillSlotPage);
         }
         //------------------------------------------------------------------------------------
         private void SetElements()
@@ -126,21 +134,20 @@ namespace GameBerry.UI
             }
         }
         //------------------------------------------------------------------------------------
-        private void SetSlot(GameBerry.Event.SetSkillSlotMsg msg)
+        private void ChangeEquipSkill(GameBerry.Event.ChangeEquipSkillMsg msg)
         {
             for (int i = 0; i < m_equipSkillElement.Count; ++i)
             {
                 m_equipSkillElement[i].SetEquipElement(false);
             }
 
-            IEnumerator enumerator = msg.SkillSlot.Values.GetEnumerator();
+            m_equipSkillElement.Clear();
 
-            while (enumerator.MoveNext() == true)
+            for (int i = 0; i < msg.EquipSkillList.Count; ++i)
             {
-                int skillid = (int)enumerator.Current;
                 UISkillElement element = null;
 
-                if (m_skillElement_Dic.TryGetValue(skillid, out element) == true)
+                if (m_skillElement_Dic.TryGetValue(msg.EquipSkillList[i], out element) == true)
                 {
                     element.SetEquipElement(true);
                     m_equipSkillElement.Add(element);
@@ -151,6 +158,17 @@ namespace GameBerry.UI
         private void OnClick_SkillSlotPage(int pageid)
         {
             Managers.SkillManager.Instance.ChangeSkillSlotPage(pageid);
+        }
+        //------------------------------------------------------------------------------------
+        private void ChangeSkillSlotPage(GameBerry.Event.ChangeSkillSlotPageMsg msg)
+        {
+            for (int i = 0; i < m_skillPageBtnList.Count; ++i)
+            {
+                if (m_skillPageBtnList[i].ChangeTabBtn != null)
+                {
+                    m_skillPageBtnList[i].ChangeTabBtn.image.color = m_skillPageBtnList[i].ButtonID == msg.SkillPageID ? m_skillPageApplyColor : m_skillPageNotApplyColor;
+                }
+            }
         }
         //------------------------------------------------------------------------------------
         private void OnElementCallBack(SkillData skillData, PlayerSkillInfo playerSkillInfo)

@@ -54,16 +54,25 @@ namespace GameBerry.Event
         public Dictionary<int, Managers.SkillSlotData> SkillSlot = new Dictionary<int, Managers.SkillSlotData>();
     }
 
-
-    public class SetSkillSlotMsg : Message
+    public class ChangeEquipSkillMsg : Message
     {
-        public Dictionary<int, int> SkillSlot = new Dictionary<int, int>();
+        public List<int> EquipSkillList = new List<int>();
     }
 
     public class SetSkillPopupMsg : Message
     {
         public SkillData skilldata;
         public PlayerSkillInfo skillinfo;
+    }
+
+    public class ChangeSkillSlotPageMsg : Message
+    {
+        public int SkillPageID = -1;
+    }
+
+    public class SetAutoSkillModeMsg : Message
+    {
+        public bool AutoSkillMode = false;
     }
 
     public class DunjeonPharmingRewardMsg : Message

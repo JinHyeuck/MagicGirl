@@ -40,8 +40,6 @@ namespace GameBerry.UI
 
         private int m_slotID = -1;
 
-        private SkillData m_currentSkillData = null;
-
         //------------------------------------------------------------------------------------
         public void Init(System.Action<int> action)
         {
@@ -83,8 +81,6 @@ namespace GameBerry.UI
                 if (m_buffApplyTime != null)
                     m_buffApplyTime.fillAmount = 0.0f;
             }
-
-            m_currentSkillData = data;
         }
         //------------------------------------------------------------------------------------
         public void SetState(SlotState state)
@@ -95,12 +91,6 @@ namespace GameBerry.UI
             m_currslotState = state;
             if (m_skillGroup != null)
                 m_skillGroup.gameObject.SetActive(false);
-        }
-        //------------------------------------------------------------------------------------
-        public void SetLinkSlot()
-        {
-            if (m_currentSkillData != null)
-                Managers.SkillManager.Instance.LinkSlotElement(m_currentSkillData.SkillID, this);
         }
         //------------------------------------------------------------------------------------
         public void SetSlotBG(Sprite sp)

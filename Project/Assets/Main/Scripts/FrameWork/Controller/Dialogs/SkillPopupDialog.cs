@@ -182,7 +182,7 @@ namespace GameBerry.UI
         //------------------------------------------------------------------------------------
         private void OnClick_SlotBtn(int slotid)
         {
-            Managers.SkillManager.Instance.SetSlotSkill(slotid, m_currentSkillData);
+            Managers.SkillManager.Instance.ChangeSlotSkill(slotid, m_currentSkillData);
         }
         //------------------------------------------------------------------------------------
     }

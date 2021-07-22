@@ -491,6 +491,8 @@ MonoBehaviour:
     ButtonID: 1
   - ChangeTabBtn: {fileID: 3402708981297574323}
     ButtonID: 2
+  m_skillPageApplyColor: {r: 0, g: 1, b: 0.9607843, a: 1}
+  m_skillPageNotApplyColor: {r: 1, g: 1, b: 1, a: 1}
   m_skillElement: {fileID: 7180825467035083209, guid: 1f87a89a4e2b96b43abf3e4dfac6462d, type: 3}
 --- !u!1 &4171991095015055425
 GameObject:
@@ -667,7 +669,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -980,7 +982,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -1176,7 +1178,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
