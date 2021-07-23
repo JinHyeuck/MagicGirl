@@ -23,7 +23,7 @@ namespace GameBerry.UI
         [SerializeField]
         UnityEngine.U2D.SpriteAtlas m_skillSlotAtlas = null;
 
-        private List<UISkillSlotElement> m_uICreatedSkillSlot_List = new List<UISkillSlotElement>();
+        private Dictionary<int, UISkillSlotElement> m_uICreatedSkillSlot_Dic = new Dictionary<int, UISkillSlotElement>();
 
         private bool m_playAutoSkillDirection = false;
 
@@ -43,12 +43,16 @@ namespace GameBerry.UI
 
             Message.AddListener<GameBerry.Event.InitializeSkillSlotMsg>(InitializeSkillSlot);
             Message.AddListener<GameBerry.Event.SetAutoSkillModeMsg>(SetAutoSkillMode);
+
+            Message.AddListener<GameBerry.Event.ChangeSlotStateMsg>(ChangeSlotState);
         }
         //------------------------------------------------------------------------------------
         protected override void OnUnload()
         {
             Message.RemoveListener<GameBerry.Event.InitializeSkillSlotMsg>(InitializeSkillSlot);
             Message.RemoveListener<GameBerry.Event.SetAutoSkillModeMsg>(SetAutoSkillMode);
+
+            Message.RemoveListener<GameBerry.Event.ChangeSlotStateMsg>(ChangeSlotState);
         }
         //------------------------------------------------------------------------------------
         private void Update()
@@ -85,6 +89,8 @@ namespace GameBerry.UI
                 element.SetSlotID(pair.Value.SlotID);
                 element.SetState(pair.Value.CurrSlotState);
                 element.SetSlotBG(m_skillSlotAtlas.GetSprite(pair.Value.CurrSlotState.ToString()));
+
+                m_uICreatedSkillSlot_Dic.Add(pair.Value.SlotID, element);
             }
         }
         //------------------------------------------------------------------------------------
@@ -93,8 +99,6 @@ namespace GameBerry.UI
             GameObject clone = Instantiate(m_uISkillSlotElement.gameObject, m_slotRoot.transform);
             UISkillSlotElement slot = clone.GetComponent<UISkillSlotElement>();
             slot.Init(OnClick_SlotBtn);
-
-            m_uICreatedSkillSlot_List.Add(slot);
 
             return slot;
         }
@@ -132,6 +136,31 @@ namespace GameBerry.UI
             else
             {
                 m_autoSkillDirectionStartTime = Time.time;
+            }
+        }
+        //------------------------------------------------------------------------------------
+        private void ChangeSlotState(GameBerry.Event.ChangeSlotStateMsg msg)
+        {
+            if (msg.SkillSlotData == null)
+                return;
+
+            for (int i = 0; i < msg.SkillSlotData.Count; ++i)
+            {
+                Managers.SkillSlotData slotdata = msg.SkillSlotData[i];
+
+                if (slotdata == null)
+                    continue;
+
+                if (m_uICreatedSkillSlot_Dic.ContainsKey(slotdata.SlotID) == false)
+                    continue;
+
+                UISkillSlotElement element = null;
+
+                if (m_uICreatedSkillSlot_Dic.TryGetValue(slotdata.SlotID, out element) == false)
+                    continue;
+
+                element.SetState(slotdata.CurrSlotState);
+                element.SetSlotBG(m_skillSlotAtlas.GetSprite(slotdata.CurrSlotState.ToString()));
             }
         }
         //------------------------------------------------------------------------------------

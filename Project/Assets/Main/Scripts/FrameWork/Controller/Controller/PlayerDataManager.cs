@@ -545,6 +545,14 @@ namespace GameBerry.Managers
             return false;
         }
         //------------------------------------------------------------------------------------
+        public void OpenSkillSlot(int slotid)
+        {
+            foreach (KeyValuePair<int, Dictionary<int, int>> pair in PlayerDataContainer.m_skillSlotData)
+            {
+                pair.Value.Add(slotid, -1);
+            }
+        }
+        //------------------------------------------------------------------------------------
         public double GetSkillOptionValue(SkillData skilldata)
         {
             PlayerSkillInfo skillinfo = GetPlayerSkillInfo(skilldata);
@@ -552,6 +560,16 @@ namespace GameBerry.Managers
             int skilllevel = skillinfo == null ? 0 : skillinfo.Level;
 
             return PlayerDataOperator.GetSkillOptionValue(skilldata, skilllevel);
+        }
+        //------------------------------------------------------------------------------------
+        public void ApplySkillBuff(SkillData skilldata)
+        { // 패시브와 버프스킬들이 여기로 들어온다.
+            
+        }
+        //------------------------------------------------------------------------------------
+        public void ReleaseSkillBuff(SkillData skilldata)
+        { // 패시브와 버프스킬들이 여기로 들어온다. 
+
         }
         //------------------------------------------------------------------------------------
         #endregion

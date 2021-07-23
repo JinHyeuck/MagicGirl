@@ -75,6 +75,11 @@ namespace GameBerry.Event
         public bool AutoSkillMode = false;
     }
 
+    public class ChangeSlotStateMsg : Message
+    {
+        public List<Managers.SkillSlotData> SkillSlotData = null;
+    }
+
     public class DunjeonPharmingRewardMsg : Message
     {
         public DunjeonRewardType RewardType = DunjeonRewardType.None;

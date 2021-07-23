@@ -62,7 +62,7 @@ namespace GameBerry.UI
         private SkillData m_currentSkillData = null;
         private PlayerSkillInfo m_currentSKillInfo = null;
 
-        private List<UISkillSlotElement> m_uICreatedSkillSlot_List = new List<UISkillSlotElement>();
+        private Dictionary<int, UISkillSlotElement> m_uICreatedSkillSlot_Dic = new Dictionary<int, UISkillSlotElement>();
 
         //------------------------------------------------------------------------------------
         protected override void OnLoad()
@@ -73,6 +73,7 @@ namespace GameBerry.UI
             Message.AddListener<GameBerry.Event.SetSkillPopupMsg>(SetSkillPopup);
 
             Message.AddListener<GameBerry.Event.InitializeSkillSlotMsg>(InitializeSkillSlot);
+            Message.AddListener<GameBerry.Event.ChangeSlotStateMsg>(ChangeSlotState);
 
             if (m_skillLevelUpBtn != null)
                 m_skillLevelUpBtn.onClick.AddListener(OnClick_LevelUpBtn);
@@ -102,6 +103,7 @@ namespace GameBerry.UI
             Message.RemoveListener<GameBerry.Event.SetSkillPopupMsg>(SetSkillPopup);
 
             Message.RemoveListener<GameBerry.Event.InitializeSkillSlotMsg>(InitializeSkillSlot);
+            Message.RemoveListener<GameBerry.Event.ChangeSlotStateMsg>(ChangeSlotState);
         }
         //------------------------------------------------------------------------------------
         private void RefreshSkillSton(GameBerry.Event.RefreshSkillStonMsg msg)
@@ -163,8 +165,6 @@ namespace GameBerry.UI
             UISkillSlotElement slot = clone.GetComponent<UISkillSlotElement>();
             slot.Init(OnClick_SlotBtn);
 
-            m_uICreatedSkillSlot_List.Add(slot);
-
             return slot;
         }
         //------------------------------------------------------------------------------------
@@ -177,12 +177,39 @@ namespace GameBerry.UI
                 element.SetSlotID(pair.Value.SlotID);
                 element.SetState(pair.Value.CurrSlotState);
                 element.SetSlotBG(m_skillSlotAtlas.GetSprite(pair.Value.CurrSlotState.ToString()));
+
+                m_uICreatedSkillSlot_Dic.Add(pair.Value.SlotID, element);
             }
         }
         //------------------------------------------------------------------------------------
         private void OnClick_SlotBtn(int slotid)
         {
             Managers.SkillManager.Instance.ChangeSlotSkill(slotid, m_currentSkillData);
+        }
+        //------------------------------------------------------------------------------------
+        private void ChangeSlotState(GameBerry.Event.ChangeSlotStateMsg msg)
+        {
+            if (msg.SkillSlotData == null)
+                return;
+
+            for (int i = 0; i < msg.SkillSlotData.Count; ++i)
+            {
+                Managers.SkillSlotData slotdata = msg.SkillSlotData[i];
+
+                if (slotdata == null)
+                    continue;
+
+                if (m_uICreatedSkillSlot_Dic.ContainsKey(slotdata.SlotID) == false)
+                    continue;
+
+                UISkillSlotElement element = null;
+
+                if (m_uICreatedSkillSlot_Dic.TryGetValue(slotdata.SlotID, out element) == false)
+                    continue;
+
+                element.SetState(slotdata.CurrSlotState);
+                element.SetSlotBG(m_skillSlotAtlas.GetSprite(slotdata.CurrSlotState.ToString()));
+            }
         }
         //------------------------------------------------------------------------------------
     }

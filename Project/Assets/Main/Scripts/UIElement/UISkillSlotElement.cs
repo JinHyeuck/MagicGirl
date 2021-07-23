@@ -108,7 +108,7 @@ namespace GameBerry.UI
         public void SetCoolTime(float currtime, float totaltime)
         {
             if (m_coolTimeText != null)
-                m_coolTimeText.text = string.Format("{0 : 0.#}", totaltime - currtime);
+                m_coolTimeText.text = string.Format("{0 : 0.0}", totaltime - currtime);
 
             if (m_coolTimeFilled != null && totaltime > 0.0f)
                 m_coolTimeFilled.fillAmount = currtime / totaltime;
