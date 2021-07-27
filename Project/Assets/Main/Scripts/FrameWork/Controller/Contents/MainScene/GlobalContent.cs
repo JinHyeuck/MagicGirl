@@ -20,6 +20,7 @@ namespace GameBerry.Contents
 
 
         private static GameBerry.Event.DoFadeMsg m_fadeMsg = new GameBerry.Event.DoFadeMsg();
+        private static GameBerry.Event.DoDunjeonFadeMsg m_dunjeonFadeMsg = new GameBerry.Event.DoDunjeonFadeMsg();
 
         //------------------------------------------------------------------------------------
         protected override void OnLoadStart()
@@ -38,6 +39,7 @@ namespace GameBerry.Contents
         protected override void OnEnter()
         {
             IDialog.RequestDialogEnter<GlobalPopupDialog>();
+            IDialog.RequestDialogEnter<GlobalDunjeonFadeDialog>();
             IDialog.RequestDialogEnter<GlobalFadeDialog>();
         }
         //------------------------------------------------------------------------------------
@@ -46,6 +48,7 @@ namespace GameBerry.Contents
             IDialog.RequestDialogExit<GlobalPopupDialog>();
             IDialog.RequestDialogExit<GlobalBufferingDialog>();
             IDialog.RequestDialogExit<GlobalButtonLockDialog>();
+            IDialog.RequestDialogExit<GlobalDunjeonFadeDialog>();
             IDialog.RequestDialogExit<GlobalFadeDialog>();
         }
         //------------------------------------------------------------------------------------
@@ -65,6 +68,16 @@ namespace GameBerry.Contents
             m_fadeMsg.visible = visible;
 
             Message.Send(m_fadeMsg);
+        }
+        //------------------------------------------------------------------------------------
+        public static void DoDunjeonFade(bool visible, float duration = 1.0f)
+        {
+            // visible : false 투명 -> 검은색으로
+
+            m_dunjeonFadeMsg.duration = duration;
+            m_dunjeonFadeMsg.visible = visible;
+
+            Message.Send(m_dunjeonFadeMsg);
         }
         //------------------------------------------------------------------------------------
         public static void VisibleBufferingUI(bool visible)

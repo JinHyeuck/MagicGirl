@@ -105,12 +105,12 @@ namespace GameBerry.UI
         //------------------------------------------------------------------------------------
         private void OnClick_SlotBtn(int slotid)
         {
-            Managers.SkillManager.Instance.OnClick_SkillSlot(slotid);
+            Managers.SkillSlotManager.Instance.OnClick_SkillSlot(slotid);
         }
         //------------------------------------------------------------------------------------
         private void OnClick_AutoTrigger()
         {
-            Managers.SkillManager.Instance.OnClick_AutoTrigger();
+            Managers.SkillSlotManager.Instance.OnClick_AutoTrigger();
         }
         //------------------------------------------------------------------------------------
         private void SetAutoSkillMode(GameBerry.Event.SetAutoSkillModeMsg msg)

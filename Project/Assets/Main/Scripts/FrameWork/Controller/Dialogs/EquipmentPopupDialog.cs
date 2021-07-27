@@ -235,8 +235,8 @@ namespace GameBerry.UI
                     if (equipmentdata.Option.ContainsKey(options[i]) == false)
                         continue;
 
-                    double curr = Managers.PlayerDataManager.Instance.GetEquipmentOptionValue(equipmentdata, options[i]);
-                    double next = Managers.PlayerDataManager.Instance.GetEquipmentNextLevelOptionValue(equipmentdata, options[i]);
+                    double curr = Managers.EquipmentDataManager.Instance.GetEquipmentOptionValue(equipmentdata, options[i]);
+                    double next = Managers.EquipmentDataManager.Instance.GetEquipmentNextLevelOptionValue(equipmentdata, options[i]);
 
                     contenttext += string.Format("{0} {1}->{2}", options[i].ToString(), curr, next);
 
@@ -288,9 +288,9 @@ namespace GameBerry.UI
             if (equipmentinfo != null)
             {
                 if (m_levelUPBtnText != null)
-                    m_levelUPBtnText.text = Managers.PlayerDataManager.Instance.GetNeedLevelUPEquipmentSton(equipmentdata, equipmentinfo).ToString();
+                    m_levelUPBtnText.text = Managers.EquipmentDataManager.Instance.GetNeedLevelUPEquipmentSton(equipmentdata, equipmentinfo).ToString();
 
-                bool equipstate = Managers.PlayerDataManager.Instance.IsEquipElement(equipmentdata);
+                bool equipstate = Managers.EquipmentDataManager.Instance.IsEquipElement(equipmentdata);
 
                 if (m_equipBtn != null)
                 {
@@ -309,7 +309,7 @@ namespace GameBerry.UI
             PlayerEquipmentInfo NextEquipmentInfo = null;
 
             if (NextEquipmentData != null)
-                NextEquipmentInfo = Managers.PlayerDataManager.Instance.GetPlayerEquipmentInfo(NextEquipmentData.Type, NextEquipmentData.Id);
+                NextEquipmentInfo = Managers.EquipmentDataManager.Instance.GetPlayerEquipmentInfo(NextEquipmentData.Type, NextEquipmentData.Id);
 
             if (m_combine_CurrentEquipmentName != null)
                 m_combine_CurrentEquipmentName.text = equipmentdata.EquipmentName;
@@ -373,26 +373,26 @@ namespace GameBerry.UI
         private void OnClick_BeforeEquipment()
         {
             EquipmentData beforedata = m_currentEquipmentData.PrevData;
-            PlayerEquipmentInfo beforeinfo = Managers.PlayerDataManager.Instance.GetPlayerEquipmentInfo(beforedata.Type, beforedata.Id);
+            PlayerEquipmentInfo beforeinfo = Managers.EquipmentDataManager.Instance.GetPlayerEquipmentInfo(beforedata.Type, beforedata.Id);
             SetEquipment(beforedata, beforeinfo);
         }
         //------------------------------------------------------------------------------------
         private void OnClick_AfterEquipment()
         {
             EquipmentData afterdata = m_currentEquipmentData.NextData;
-            PlayerEquipmentInfo afterinfo = Managers.PlayerDataManager.Instance.GetPlayerEquipmentInfo(afterdata.Type, afterdata.Id);
+            PlayerEquipmentInfo afterinfo = Managers.EquipmentDataManager.Instance.GetPlayerEquipmentInfo(afterdata.Type, afterdata.Id);
             SetEquipment(afterdata, afterinfo);
         }
         //------------------------------------------------------------------------------------
         private void OnClick_LevelUPBtn()
         {
-            if (Managers.PlayerDataManager.Instance.SetLevelUpEquipment(m_currentEquipmentData) == true)
+            if (Managers.EquipmentDataManager.Instance.SetLevelUpEquipment(m_currentEquipmentData) == true)
                 SetEquipment(m_currentEquipmentData, m_currentEquipmentInfo);
         }
         //------------------------------------------------------------------------------------
         private void OnClick_equipBtn()
         {
-            if (Managers.PlayerDataManager.Instance.SetEquipElement(m_currentEquipmentData) == true)
+            if (Managers.EquipmentDataManager.Instance.SetEquipElement(m_currentEquipmentData) == true)
             {
                 if (m_equipBtn != null)
                 {
@@ -431,8 +431,8 @@ namespace GameBerry.UI
         {
             if (m_combineCount > 0)
             {
-                if (Managers.PlayerDataManager.Instance.CombineEquipment(m_currentEquipmentData, m_equipmentLocalChart.GetNextEquipmentData(m_currentEquipmentData.Id), m_combineCount) == true)
-                    SetCombineUI(m_currentEquipmentData, Managers.PlayerDataManager.Instance.GetPlayerEquipmentInfo(m_currentEquipmentData));
+                if (Managers.EquipmentDataManager.Instance.CombineEquipment(m_currentEquipmentData, m_equipmentLocalChart.GetNextEquipmentData(m_currentEquipmentData.Id), m_combineCount) == true)
+                    SetCombineUI(m_currentEquipmentData, Managers.EquipmentDataManager.Instance.GetPlayerEquipmentInfo(m_currentEquipmentData));
             }
         }
         //------------------------------------------------------------------------------------

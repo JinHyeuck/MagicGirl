@@ -159,11 +159,11 @@ namespace GameBerry
                 //    }
                 //}
 
-                if (Managers.SkillManager.Instance.NextActiveSkill != null)
+                if (Managers.SkillSlotManager.Instance.NextActiveSkill != null)
                 {
                     if (m_characterState != PlayerState.Attack)
                     {
-                        if (Vector3.Distance(Managers.MonsterManager.Instance.GetForeFrontMonster().transform.position, transform.position) < Managers.SkillManager.Instance.NextActiveSkill.Range)
+                        if (Vector3.Distance(Managers.MonsterManager.Instance.GetForeFrontMonster().transform.position, transform.position) < Managers.SkillSlotManager.Instance.NextActiveSkill.Range)
                         {
                             ChangeState(PlayerState.Attack);
                             return;
@@ -180,7 +180,7 @@ namespace GameBerry
         //------------------------------------------------------------------------------------
         private void OnAttack()
         {
-            UseSkill(Managers.SkillManager.Instance.NextActiveSkill);
+            UseSkill(Managers.SkillSlotManager.Instance.NextActiveSkill);
         }
         //------------------------------------------------------------------------------------
         private void OnEndAttack()
@@ -191,7 +191,7 @@ namespace GameBerry
         private void UseSkill(SkillData skillData)
         {
             Managers.MonsterManager.Instance.OnDamage(skillData.Range, (int)skillData.OptionValue, transform.position);
-            Managers.SkillManager.Instance.UseSkill(skillData);
+            Managers.SkillSlotManager.Instance.UseSkill(skillData);
             UseMP(skillData.NeedMP);
         }
         //------------------------------------------------------------------------------------

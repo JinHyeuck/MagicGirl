@@ -122,7 +122,7 @@ namespace GameBerry.UI
                     CreateEquipmentElement();
 
                 SetElement(m_equipmentElement_List[i], datalist[i]);
-                m_equipmentElement_List[i].SetEquipElement(Managers.PlayerDataManager.Instance.IsEquipElement(datalist[i]));
+                m_equipmentElement_List[i].SetEquipElement(Managers.EquipmentDataManager.Instance.IsEquipElement(datalist[i]));
                 m_equipmentElement_List[i].gameObject.SetActive(true);
 
                 m_equipmentElement_Dic.Add(datalist[i].Id, m_equipmentElement_List[i]);
@@ -141,7 +141,7 @@ namespace GameBerry.UI
             if (element == null || data == null)
                 return;
 
-            element.SetEquipmentElement(data, Managers.PlayerDataManager.Instance.GetPlayerEquipmentInfo(data.Type, data.Id));
+            element.SetEquipmentElement(data, Managers.EquipmentDataManager.Instance.GetPlayerEquipmentInfo(data.Type, data.Id));
         }
         //------------------------------------------------------------------------------------
         private void ChangeEquipElement(GameBerry.Event.ChangeEquipElementMsg msg)

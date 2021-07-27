@@ -107,13 +107,13 @@ namespace GameBerry.UI
         {
             Debug.LogWarning("업그레이드ㄱㄱ");
 
-            if (Managers.PlayerDataManager.Instance.IsMaxUpGrade(m_isStatUpGradeType) == true)
+            if (Managers.StatUpGradeDataManager.Instance.IsMaxUpGrade(m_isStatUpGradeType) == true)
             {
                 Debug.Log("이미 만랩");
                 return;
             }
 
-            bool upgradeSuccess = Managers.PlayerDataManager.Instance.InCreaseUpGradeStatLevel(m_isStatUpGradeType);
+            bool upgradeSuccess = Managers.StatUpGradeDataManager.Instance.InCreaseUpGradeStatLevel(m_isStatUpGradeType);
 
             if (upgradeSuccess == true)
             {
@@ -130,14 +130,14 @@ namespace GameBerry.UI
         private void SetCurrentLevel()
         {
             if (m_upGradeCurrentLevel != null)
-                m_upGradeCurrentLevel.text = Managers.PlayerDataManager.Instance.GetCurrentUpGradeStatLevel(m_isStatUpGradeType).ToString();
+                m_upGradeCurrentLevel.text = Managers.StatUpGradeDataManager.Instance.GetCurrentUpGradeStatLevel(m_isStatUpGradeType).ToString();
         }
         //------------------------------------------------------------------------------------
         private void SetUpGradeState()
         {
             if (m_upGradeState != null)
             {
-                string textstr = Managers.PlayerDataManager.Instance.IsMaxUpGrade(m_isStatUpGradeType) == true ? Managers.PlayerDataManager.Instance.GetCurrentUpGradeStatValue(m_isStatUpGradeType).ToString() : string.Format("{0} -> {1}", Managers.PlayerDataManager.Instance.GetCurrentUpGradeStatValue(m_isStatUpGradeType), Managers.PlayerDataManager.Instance.GetNextUpGradeStatValue(m_isStatUpGradeType));
+                string textstr = Managers.StatUpGradeDataManager.Instance.IsMaxUpGrade(m_isStatUpGradeType) == true ? Managers.StatUpGradeDataManager.Instance.GetCurrentUpGradeStatValue(m_isStatUpGradeType).ToString() : string.Format("{0} -> {1}", Managers.StatUpGradeDataManager.Instance.GetCurrentUpGradeStatValue(m_isStatUpGradeType), Managers.StatUpGradeDataManager.Instance.GetNextUpGradeStatValue(m_isStatUpGradeType));
                 m_upGradeState.text = textstr;
             }
         }
@@ -146,7 +146,7 @@ namespace GameBerry.UI
         {
             if (m_upGradePrice != null)
             {
-                string textstr = Managers.PlayerDataManager.Instance.IsMaxUpGrade(m_isStatUpGradeType) == true ? "MAX" : string.Format("{0:0}", Managers.PlayerDataManager.Instance.GetUpGradeStatPrice(m_isStatUpGradeType));
+                string textstr = Managers.StatUpGradeDataManager.Instance.IsMaxUpGrade(m_isStatUpGradeType) == true ? "MAX" : string.Format("{0:0}", Managers.StatUpGradeDataManager.Instance.GetUpGradeStatPrice(m_isStatUpGradeType));
                 m_upGradePrice.text = textstr;
             }
         }

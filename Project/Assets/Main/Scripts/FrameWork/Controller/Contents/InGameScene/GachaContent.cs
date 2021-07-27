@@ -120,8 +120,8 @@ namespace GameBerry.Contents
 
             UI.IDialog.RequestDialogEnter<UI.GachaResultDialog>();
 
-            Managers.PlayerDataManager.Instance.AddEquipElementList(m_resultGachaMsg.GachaEquipmentList);
-            Managers.PlayerDataManager.Instance.AddSkillElementList(m_resultGachaMsg.GachaSkillList);
+            Managers.EquipmentDataManager.Instance.AddEquipElementList(m_resultGachaMsg.GachaEquipmentList);
+            Managers.SkillDataManager.Instance.AddSkillElementList(m_resultGachaMsg.GachaSkillList);
 
             Message.Send(m_resultGachaMsg);
 

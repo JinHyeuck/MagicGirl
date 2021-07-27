@@ -129,7 +129,7 @@ namespace GameBerry.UI
                 m_skillNameText.text = skilldata.SkillName;
 
             if (m_skillEquipOptionText != null)
-                m_skillEquipOptionText.text = string.Format("optionValue : {0:0.#}", Managers.PlayerDataManager.Instance.GetSkillOptionValue(skilldata));
+                m_skillEquipOptionText.text = string.Format("optionValue : {0:0.#}", Managers.SkillDataManager.Instance.GetSkillOptionValue(skilldata));
 
             if (m_skillCoolTitleText != null)
                 m_skillCoolTitleText.text = skilldata.SkillTriggerType == SkillTriggerType.Passive ? "PASSIVE" : "대기시간";
@@ -141,12 +141,12 @@ namespace GameBerry.UI
                 m_skillNeedMPText.text = skilldata.NeedMP <= 0.0f ? "-" : skilldata.NeedMP.ToString();
 
             if (m_skillLevelUpText != null)
-                m_skillLevelUpText.text = Managers.PlayerDataManager.Instance.GetNeedLevelUPSkillSton(skilldata, skillinfo).ToString();
+                m_skillLevelUpText.text = Managers.SkillDataManager.Instance.GetNeedLevelUPSkillSton(skilldata, skillinfo).ToString();
         }
         //------------------------------------------------------------------------------------
         private void OnClick_LevelUpBtn()
         {
-            if (Managers.PlayerDataManager.Instance.SetLevelUpSkill(m_currentSkillData) == true)
+            if (Managers.SkillDataManager.Instance.SetLevelUpSkill(m_currentSkillData) == true)
                 SetSkill(m_currentSkillData, m_currentSKillInfo);
         }
         //------------------------------------------------------------------------------------
@@ -184,7 +184,7 @@ namespace GameBerry.UI
         //------------------------------------------------------------------------------------
         private void OnClick_SlotBtn(int slotid)
         {
-            Managers.SkillManager.Instance.ChangeSlotSkill(slotid, m_currentSkillData);
+            Managers.SkillSlotManager.Instance.ChangeSlotSkill(slotid, m_currentSkillData);
         }
         //------------------------------------------------------------------------------------
         private void ChangeSlotState(GameBerry.Event.ChangeSlotStateMsg msg)

@@ -69,4 +69,10 @@
         public float duration;
         public bool visible; // false 투명 -> 검은색으로
     }
+
+    public class DoDunjeonFadeMsg : Message
+    {
+        public float duration;
+        public bool visible; // false 투명 -> 검은색으로
+    }
 }

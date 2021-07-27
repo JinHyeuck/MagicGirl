@@ -1,25 +1,25 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
 namespace GameBerry.UI
 {
-    public class GlobalFadeDialog : IDialog
+    public class GlobalDunjeonFadeDialog : IDialog
     {
         [SerializeField]
         private Image m_fade;
 
         protected override void OnLoad()
         {
-            Message.AddListener<GameBerry.Event.DoFadeMsg>(DoFade);
+            Message.AddListener<GameBerry.Event.DoDunjeonFadeMsg>(DoDunjeonFade);
         }
 
         protected override void OnUnload()
         {
-            Message.RemoveListener<GameBerry.Event.DoFadeMsg>(DoFade);
+            Message.RemoveListener<GameBerry.Event.DoDunjeonFadeMsg>(DoDunjeonFade);
         }
 
-        private void DoFade(GameBerry.Event.DoFadeMsg msg)
+        private void DoDunjeonFade(GameBerry.Event.DoDunjeonFadeMsg msg)
         {
             if (m_fade != null)
             {

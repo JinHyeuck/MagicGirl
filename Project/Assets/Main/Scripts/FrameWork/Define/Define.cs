@@ -73,9 +73,25 @@ public static class Define
     public static readonly string CharacterSkillSlotPage = "skillslotpage";
 
     //CharacterDefaultSetting
-    public static readonly int CharacterDefaultHP = 1000;
-
     public static readonly int CharacterDefaultSlotTotalCount = 10;
     public static readonly int CharacterDefaultSlotCount = 1;
 
+    public static readonly double CharacterDefaultGold = 1000.0;
+    public static readonly double CharacterDefaultDia = 10.0;
+    public static readonly double CharacterDefaultEquipmentSton = 1000.0;
+    public static readonly double CharacterDefaultSkillSton = 1000.0;
+
+    public static readonly double CharacterDefaultHP = 100.0;
+    public static readonly double CharacterDefaultHPRecovery = 1.0f;
+
+    public static readonly double CharacterDefaultMP = 100.0;
+    public static readonly double CharacterDefaultMPRecovery = 10.0f;
+
+    public static readonly double CharacterDefaultMoveSpeed = 2.0;
+    public static readonly double CharacterDefaultAttackSpeed = 10.0f;
+
+    public static readonly double CharacterDefaultAddGoldPer = 1.0;
+    public static readonly double CharacterDefaultAddExpPer = 1.0f;
+
+    public static readonly double CharacterDefaultCoolTimeRatio = 1.0f;
 }

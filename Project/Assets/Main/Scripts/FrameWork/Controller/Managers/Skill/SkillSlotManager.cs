@@ -63,7 +63,7 @@ namespace GameBerry.Managers
         }
     }
 
-    public class SkillManager : MonoSingleton<SkillManager>
+    public class SkillSlotManager : MonoSingleton<SkillSlotManager>
     {
         // <SlotID, Skillid>
         private Dictionary<int, int> m_currentSkillSlot = new Dictionary<int, int>();
@@ -117,7 +117,7 @@ namespace GameBerry.Managers
         //------------------------------------------------------------------------------------
         public void InitializeSkillSlot()
         {
-            m_currentSkillSlot = PlayerDataManager.Instance.GetCurrentSkillSlot();
+            m_currentSkillSlot = SkillDataManager.Instance.GetCurrentSkillSlot();
 
             IEnumerator enumerator = m_currentSkillSlot.Keys.GetEnumerator();
 
@@ -151,7 +151,7 @@ namespace GameBerry.Managers
 
             SendEquipSlotMsg();
 
-            m_changeSkillSlotPageMsg.SkillPageID = PlayerDataManager.Instance.GetCurrentSkillSlotPage();
+            m_changeSkillSlotPageMsg.SkillPageID = SkillDataManager.Instance.GetCurrentSkillSlotPage();
             Message.Send(m_changeSkillSlotPageMsg);
         }
         //------------------------------------------------------------------------------------
@@ -374,7 +374,7 @@ namespace GameBerry.Managers
         //------------------------------------------------------------------------------------
         public void ChangeSkillSlotPage(int slotpage)
         {
-            if (PlayerDataManager.Instance.ChangeSkillSlotPage(slotpage) == true)
+            if (SkillDataManager.Instance.ChangeSkillSlotPage(slotpage) == true)
             {
                 // 슬롯이 바뀐 경우에는 모든 스킬들을 릴리즈 시켜준다.
 
@@ -387,7 +387,7 @@ namespace GameBerry.Managers
                 m_readyActiveSkillData.Clear();
                 m_readyBuffSkillData.Clear();
 
-                m_currentSkillSlot = PlayerDataManager.Instance.GetCurrentSkillSlot();
+                m_currentSkillSlot = SkillDataManager.Instance.GetCurrentSkillSlot();
 
                 foreach (KeyValuePair<int, int> pair in m_currentSkillSlot)
                 {
@@ -398,19 +398,19 @@ namespace GameBerry.Managers
 
                 SetNextActiveSkill();
 
-                m_changeSkillSlotPageMsg.SkillPageID = PlayerDataManager.Instance.GetCurrentSkillSlotPage();
+                m_changeSkillSlotPageMsg.SkillPageID = SkillDataManager.Instance.GetCurrentSkillSlotPage();
                 Message.Send(m_changeSkillSlotPageMsg);
             }
         }
         //------------------------------------------------------------------------------------
         private void ApplyBuff(SkillData data)
         {
-            PlayerDataManager.Instance.ApplySkillBuff(data);
+            SkillDataManager.Instance.ApplySkillBuff(data);
         }
         //------------------------------------------------------------------------------------
         private void ReleaseBuff(SkillData data)
         {
-            PlayerDataManager.Instance.ReleaseSkillBuff(data);
+            SkillDataManager.Instance.ReleaseSkillBuff(data);
         }
         //------------------------------------------------------------------------------------
         private SkillData GetReadySkill(int currUserMp)
@@ -547,7 +547,7 @@ namespace GameBerry.Managers
 
             m_changeSlotStateMsg.SkillSlotData.Add(slot);
 
-            PlayerDataManager.Instance.OpenSkillSlot(slot.SlotID);
+            SkillDataManager.Instance.OpenSkillSlot(slot.SlotID);
 
             int nextslotid = slot.SlotID + 1;
 

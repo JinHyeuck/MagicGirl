@@ -123,7 +123,7 @@ namespace GameBerry.UI
             if (element == null || data == null)
                 return;
 
-            element.SetSkillElement(data, Managers.PlayerDataManager.Instance.GetPlayerSkillInfo(data));
+            element.SetSkillElement(data, Managers.SkillDataManager.Instance.GetPlayerSkillInfo(data));
         }
         //------------------------------------------------------------------------------------
         private void RefreshSkillInfoList(GameBerry.Event.RefreshSkillInfoListMsg msg)
@@ -157,7 +157,7 @@ namespace GameBerry.UI
         //------------------------------------------------------------------------------------
         private void OnClick_SkillSlotPage(int pageid)
         {
-            Managers.SkillManager.Instance.ChangeSkillSlotPage(pageid);
+            Managers.SkillSlotManager.Instance.ChangeSkillSlotPage(pageid);
         }
         //------------------------------------------------------------------------------------
         private void ChangeSkillSlotPage(GameBerry.Event.ChangeSkillSlotPageMsg msg)

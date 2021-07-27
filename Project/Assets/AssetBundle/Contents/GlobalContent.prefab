@@ -49,6 +49,7 @@ MonoBehaviour:
   - GlobalButtonLockDialog
   - GlobalFadeDialog
   - GlobalPopupDialog
+  - GlobalDunjeonFadeDialog
   dialogList: []
 --- !u!114 &7712006289203153765
 MonoBehaviour:

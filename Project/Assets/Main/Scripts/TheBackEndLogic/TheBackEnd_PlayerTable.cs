@@ -103,7 +103,7 @@ namespace GameBerry.TheBackEnd
                                 {
                                     EquipmentType type = (EquipmentType)j;
                                     int equipID = (int)chartJson[type.ToString()];
-                                    PlayerDataContainer.m_equipId.Add(type, equipID);
+                                    EquipmentDataContainer.m_equipId.Add(type, equipID);
                                 }
                             }
 
@@ -125,7 +125,8 @@ namespace GameBerry.TheBackEnd
                 if (bro.IsSuccess() == false)
                 {
                     Debug.Log(bro.GetStatusCode());
-                    Debug.Log(bro.GetErrorCode());
+                    Debug.Log(bro.GetErrorCode());  
+
                     Debug.Log(bro.GetMessage());
                     return;
                 }
@@ -207,7 +208,7 @@ namespace GameBerry.TheBackEnd
             param.Add(Define.PlayerDia, PlayerDataContainer.Dia);
             param.Add(Define.PlayerEquipmentSton, PlayerDataContainer.EquipmentSton);
             param.Add(Define.PlayerSkillSton, PlayerDataContainer.SkillSton);
-            param.Add(Define.PlayerEquipID, LitJson.JsonMapper.ToJson(PlayerDataContainer.m_equipId));
+            param.Add(Define.PlayerEquipID, LitJson.JsonMapper.ToJson(EquipmentDataContainer.m_equipId));
 
             SendQueue.Enqueue(Backend.GameData.Update, Define.CharacterInfoTable, CharInfoInData, param, (callback) =>
             {
@@ -257,35 +258,35 @@ namespace GameBerry.TheBackEnd
                             }
                             else if (key == Define.PlayerUpGradeAddDamage)
                             {
-                                PlayerDataContainer.m_upGradeStatLevel.Add(StatUpGradeType.AddDamage, (int)data[i][key]);
+                                StatUpGradeDataContainer.m_upGradeStatLevel.Add(StatUpGradeType.AddDamage, (int)data[i][key]);
                             }
                             else if (key == Define.PlayerUpGradeCriticalDamage)
                             {
-                                PlayerDataContainer.m_upGradeStatLevel.Add(StatUpGradeType.CriticalDamage, (int)data[i][key]);
+                                StatUpGradeDataContainer.m_upGradeStatLevel.Add(StatUpGradeType.CriticalDamage, (int)data[i][key]);
                             }
                             else if (key == Define.PlayerUpGradeCriticalPer)
                             {
-                                PlayerDataContainer.m_upGradeStatLevel.Add(StatUpGradeType.CriticalPercent, (int)data[i][key]);
+                                StatUpGradeDataContainer.m_upGradeStatLevel.Add(StatUpGradeType.CriticalPercent, (int)data[i][key]);
                             }
                             else if (key == Define.PlayerUpGradeAddGold)
                             {
-                                PlayerDataContainer.m_upGradeStatLevel.Add(StatUpGradeType.AddGold, (int)data[i][key]);
+                                StatUpGradeDataContainer.m_upGradeStatLevel.Add(StatUpGradeType.AddGold, (int)data[i][key]);
                             }
                             else if (key == Define.PlayerUpGradeMP)
                             {
-                                PlayerDataContainer.m_upGradeStatLevel.Add(StatUpGradeType.AddMP, (int)data[i][key]);
+                                StatUpGradeDataContainer.m_upGradeStatLevel.Add(StatUpGradeType.AddMP, (int)data[i][key]);
                             }
                             else if (key == Define.PlayerUpGradeMPRecovery)
                             {
-                                PlayerDataContainer.m_upGradeStatLevel.Add(StatUpGradeType.AddMpRecovery, (int)data[i][key]);
+                                StatUpGradeDataContainer.m_upGradeStatLevel.Add(StatUpGradeType.AddMpRecovery, (int)data[i][key]);
                             }
                             else if (key == Define.PlayerUpGradeCastingSpeed)
                             {
-                                PlayerDataContainer.m_upGradeStatLevel.Add(StatUpGradeType.CastingSpeed, (int)data[i][key]);
+                                StatUpGradeDataContainer.m_upGradeStatLevel.Add(StatUpGradeType.CastingSpeed, (int)data[i][key]);
                             }
                             else if (key == Define.PlayerUpGradeMoveSpeed)
                             {
-                                PlayerDataContainer.m_upGradeStatLevel.Add(StatUpGradeType.MoveSpeed, (int)data[i][key]);
+                                StatUpGradeDataContainer.m_upGradeStatLevel.Add(StatUpGradeType.MoveSpeed, (int)data[i][key]);
                             }
 
                             returnValue += string.Format("{0} : {1} / ", key, data[i][key].ToString());
@@ -331,14 +332,14 @@ namespace GameBerry.TheBackEnd
         public static void UpdateCharacterUpGradeStatTable()
         {
             Param param = new Param();
-            param.Add(Define.PlayerUpGradeAddDamage, PlayerDataContainer.m_upGradeStatLevel[StatUpGradeType.AddDamage]);
-            param.Add(Define.PlayerUpGradeCriticalDamage, PlayerDataContainer.m_upGradeStatLevel[StatUpGradeType.CriticalDamage]);
-            param.Add(Define.PlayerUpGradeCriticalPer, PlayerDataContainer.m_upGradeStatLevel[StatUpGradeType.CriticalPercent]);
-            param.Add(Define.PlayerUpGradeAddGold, PlayerDataContainer.m_upGradeStatLevel[StatUpGradeType.AddGold]);
-            param.Add(Define.PlayerUpGradeMP, PlayerDataContainer.m_upGradeStatLevel[StatUpGradeType.AddMP]);
-            param.Add(Define.PlayerUpGradeMPRecovery, PlayerDataContainer.m_upGradeStatLevel[StatUpGradeType.AddMpRecovery]);
-            param.Add(Define.PlayerUpGradeCastingSpeed, PlayerDataContainer.m_upGradeStatLevel[StatUpGradeType.CastingSpeed]);
-            param.Add(Define.PlayerUpGradeMoveSpeed, PlayerDataContainer.m_upGradeStatLevel[StatUpGradeType.MoveSpeed]);
+            param.Add(Define.PlayerUpGradeAddDamage, StatUpGradeDataContainer.m_upGradeStatLevel[StatUpGradeType.AddDamage]);
+            param.Add(Define.PlayerUpGradeCriticalDamage, StatUpGradeDataContainer.m_upGradeStatLevel[StatUpGradeType.CriticalDamage]);
+            param.Add(Define.PlayerUpGradeCriticalPer, StatUpGradeDataContainer.m_upGradeStatLevel[StatUpGradeType.CriticalPercent]);
+            param.Add(Define.PlayerUpGradeAddGold, StatUpGradeDataContainer.m_upGradeStatLevel[StatUpGradeType.AddGold]);
+            param.Add(Define.PlayerUpGradeMP, StatUpGradeDataContainer.m_upGradeStatLevel[StatUpGradeType.AddMP]);
+            param.Add(Define.PlayerUpGradeMPRecovery, StatUpGradeDataContainer.m_upGradeStatLevel[StatUpGradeType.AddMpRecovery]);
+            param.Add(Define.PlayerUpGradeCastingSpeed, StatUpGradeDataContainer.m_upGradeStatLevel[StatUpGradeType.CastingSpeed]);
+            param.Add(Define.PlayerUpGradeMoveSpeed, StatUpGradeDataContainer.m_upGradeStatLevel[StatUpGradeType.MoveSpeed]);
 
             SendQueue.Enqueue(Backend.GameData.Update, Define.CharacterUpGradeStatTable, CharUpGradeStatInData, param, (callback) =>
             {
@@ -418,7 +419,7 @@ namespace GameBerry.TheBackEnd
                                         tempDic.Add(equipdata.Id, equipdata);
                                     }
 
-                                    PlayerDataContainer.m_equipmentInfo.Add((EquipmentType)j, tempDic);
+                                    EquipmentDataContainer.m_equipmentInfo.Add((EquipmentType)j, tempDic);
                                 }
                             }
 
@@ -466,7 +467,7 @@ namespace GameBerry.TheBackEnd
         public static void UpdateCharacterEquipmentInfoTable()
         {
             Param param = new Param();
-            param.Add(Define.CharacterEquipmentInfoTable, LitJson.JsonMapper.ToJson(PlayerDataContainer.m_equipmentInfo));
+            param.Add(Define.CharacterEquipmentInfoTable, LitJson.JsonMapper.ToJson(EquipmentDataContainer.m_equipmentInfo));
 
             SendQueue.Enqueue(Backend.GameData.Update, Define.CharacterEquipmentInfoTable, CharEquipmentInfoInData, param, (callback) =>
             {
@@ -538,7 +539,7 @@ namespace GameBerry.TheBackEnd
                                         info.Level = rawelement["Level"].ToString().FastStringToInt();
                                     }
 
-                                    PlayerDataContainer.m_skillInfo.Add(info.Id, info);
+                                    SkillDataContainer.m_skillInfo.Add(info.Id, info);
                                 }
                             }
                             else if (key == Define.CharacterSkillSlotInfo)
@@ -549,7 +550,7 @@ namespace GameBerry.TheBackEnd
                             }
                             else if (key == Define.CharacterSkillSlotPage)
                             {
-                                PlayerDataContainer.SkillSlotPage = data[i][key].ToString().FastStringToInt();
+                                SkillDataContainer.SkillSlotPage = data[i][key].ToString().FastStringToInt();
                             }
 
                             returnValue += string.Format("{0} : {1} / ", key, data[i][key].ToString());
@@ -574,15 +575,15 @@ namespace GameBerry.TheBackEnd
                     element.Add(elementkey.ToInt(), slotdata[key][elementkey].ToString().ToInt());
                 }
 
-                if (PlayerDataContainer.CurrentOpenSlotCount < element.Count)
-                    PlayerDataContainer.CurrentOpenSlotCount = element.Count;
+                if (SkillDataContainer.CurrentOpenSlotCount < element.Count)
+                    SkillDataContainer.CurrentOpenSlotCount = element.Count;
 
-                PlayerDataContainer.m_skillSlotData.Add(key.ToString().ToInt(), element);
+                SkillDataContainer.m_skillSlotData.Add(key.ToString().ToInt(), element);
             }
 
-            foreach (KeyValuePair<int, Dictionary<int, int>> pair in PlayerDataContainer.m_skillSlotData)
+            foreach (KeyValuePair<int, Dictionary<int, int>> pair in SkillDataContainer.m_skillSlotData)
             {
-                while (pair.Value.Count < PlayerDataContainer.CurrentOpenSlotCount)
+                while (pair.Value.Count < SkillDataContainer.CurrentOpenSlotCount)
                 {
                     pair.Value.Add(pair.Value.Count, -1);
                 }
@@ -602,7 +603,7 @@ namespace GameBerry.TheBackEnd
 
 
             Param param = new Param();
-            param.Add(Define.CharacterSkillInfo, LitJson.JsonMapper.ToJson(PlayerDataContainer.m_skillInfo));
+            param.Add(Define.CharacterSkillInfo, LitJson.JsonMapper.ToJson(SkillDataContainer.m_skillInfo));
             param.Add(Define.CharacterSkillSlotInfo, LitJson.JsonMapper.ToJson(skillSlotInsertData));
             param.Add(Define.CharacterSkillSlotPage, 0);
 
@@ -626,9 +627,9 @@ namespace GameBerry.TheBackEnd
         public static void UpdateCharacterSkillInfoTable()
         {
             Param param = new Param();
-            param.Add(Define.CharacterSkillInfo, LitJson.JsonMapper.ToJson(PlayerDataContainer.m_skillInfo));
-            param.Add(Define.CharacterSkillSlotInfo, LitJson.JsonMapper.ToJson(PlayerDataContainer.m_skillSlotData));
-            param.Add(Define.CharacterSkillSlotPage, PlayerDataContainer.SkillSlotPage);
+            param.Add(Define.CharacterSkillInfo, LitJson.JsonMapper.ToJson(SkillDataContainer.m_skillInfo));
+            param.Add(Define.CharacterSkillSlotInfo, LitJson.JsonMapper.ToJson(SkillDataContainer.m_skillSlotData));
+            param.Add(Define.CharacterSkillSlotPage, SkillDataContainer.SkillSlotPage);
 
             SendQueue.Enqueue(Backend.GameData.Update, Define.CharacterSkillInfoTable, CharSkillInfoInData, param, (callback) =>
             {

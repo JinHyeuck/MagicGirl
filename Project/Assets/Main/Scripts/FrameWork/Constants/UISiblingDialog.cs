@@ -11,6 +11,7 @@
 
         // InGame
         DunjeonPharmingDialog,
+        GlobalDunjeonFadeDialog,
 
         SkillSlotDialog,
 

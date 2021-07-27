@@ -89,7 +89,7 @@ namespace GameBerry.Managers
         //------------------------------------------------------------------------------------
         private IEnumerator PlayDunjeonDirection()
         { // 시작에 대한 연출이 있다면 여기서 해야한다.
-            Contents.GlobalContent.DoFade(true);
+            Contents.GlobalContent.DoDunjeonFade(true);
             yield return new WaitForSeconds(1.5f);
 
             StartDunjeon();
@@ -107,7 +107,7 @@ namespace GameBerry.Managers
         //------------------------------------------------------------------------------------
         private IEnumerator EndDunjeonDirection()
         { // 끝나는 연출이 있다면 여기서 해야한다.
-            Contents.GlobalContent.DoFade(false);
+            Contents.GlobalContent.DoDunjeonFade(false);
             yield return new WaitForSeconds(1.5f);
 
             SetDunjeon();

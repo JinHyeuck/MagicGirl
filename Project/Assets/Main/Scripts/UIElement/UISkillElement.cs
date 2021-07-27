@@ -75,7 +75,7 @@ namespace GameBerry.UI
 
             int CurrentAmount = equipmentinfo == null ? 0 : equipmentinfo.Count;
 
-            int LevelUpAmount = Managers.PlayerDataManager.Instance.GetNeedLevelUPSkillCount(SkillData);
+            int LevelUpAmount = Managers.SkillDataManager.Instance.GetNeedLevelUPSkillCount(SkillData);
 
             if (m_amountCountFilled != null)
             {
