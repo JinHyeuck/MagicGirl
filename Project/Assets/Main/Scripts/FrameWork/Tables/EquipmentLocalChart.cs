@@ -36,27 +36,6 @@ namespace GameBerry
         Max,
     }
 
-    public enum EquipmentOption
-    {
-        DamageInt = 0,
-        CriticalDamage,
-        DamagePer,
-        EndDamage,
-        SkillDamage,
-
-        MPInt,
-        MPPer,
-
-        MPRecoveryInt,
-        MPRecoveryPer,
-
-        Castingspeed,
-        Cooltime,
-        Addexp,
-
-        Max,
-    }
-
     public enum EquipmentApplyOption
     { 
         EquipmentOption = 0,
@@ -76,8 +55,8 @@ namespace GameBerry
 
         public Sprite EquipmentSprite;
 
-        public Dictionary<EquipmentApplyOption, List<EquipmentOption>> ApplyOption = new Dictionary<EquipmentApplyOption, List<EquipmentOption>>();
-        public Dictionary<EquipmentOption, double> Option = new Dictionary<EquipmentOption, double>();
+        public Dictionary<EquipmentApplyOption, List<StatType>> ApplyOption = new Dictionary<EquipmentApplyOption, List<StatType>>();
+        public Dictionary<StatType, double> Option = new Dictionary<StatType, double>();
 
         public double DamageInt = 0.0;
         public double CriticalDamage = 0.0;
@@ -142,46 +121,54 @@ namespace GameBerry
                 if (Atlas != null)
                     data.EquipmentSprite = Atlas.GetSprite(eqtype.ToString());
 
-                for (int j = 0; j < (int)EquipmentOption.Max; ++j)
-                {
-                    EquipmentOption option = (EquipmentOption)j;
-                    try
-                    {
-                        string id = option.ToString().ToLower();
-                        SetEquipmentOption(data ,option, rows[i][id]);
-                    }
-                    catch (System.Exception ex)
-                    {
-                        Debug.LogError(ex.ToString());
-                    }
-                }
+                // 이부분 스텟Maxcout로 하지 말고 equipment_option, enable_option에 있는 것들만 적용하게 바꾸기
+                //for (int j = 0; j < (int)StatType.Max; ++j)
+                //{
+                //    StatType option = (StatType)j;
+                //    try
+                //    {
+                //        string id = option.ToString();
+                //        SetEquipmentOption(data ,option, rows[i][id]);
+                //    }
+                //    catch (System.Exception ex)
+                //    {
+                //        Debug.LogError(ex.ToString());
+                //    }
+                //}
 
                 string applyoptions = rows[i]["equipment_option"]["S"].ToString();
                 string[] applyoption = applyoptions.Split(',');
 
-                List<EquipmentOption> optionlist = new List<EquipmentOption>();
+                List<StatType> optionlist = new List<StatType>();
 
                 for (int j = 0; j < applyoption.Length; ++j)
                 {
-                    optionlist.Add(EnumExtensions.Parse<EquipmentOption>(applyoption[j]));
+                    StatType option = EnumExtensions.Parse<StatType>(applyoption[j]);
+                    optionlist.Add(option);
+
+                    SetEquipmentOption(data, option, rows[i][option.ToString()]);
                 }
 
                 data.ApplyOption.Add(EquipmentApplyOption.EquipmentOption, optionlist);
 
 
                 applyoptions = rows[i]["enable_option"]["S"].ToString();
-                applyoption = applyoptions.Split(',');
-
-                optionlist = new List<EquipmentOption>();
-
-                for (int j = 0; j < applyoption.Length; ++j)
+                if (string.IsNullOrWhiteSpace(applyoptions) == false)
                 {
-                    optionlist.Add(EnumExtensions.Parse<EquipmentOption>(applyoption[j]));
+                    applyoption = applyoptions.Split(',');
+
+                    optionlist = new List<StatType>();
+
+                    for (int j = 0; j < applyoption.Length; ++j)
+                    {
+                        StatType option = EnumExtensions.Parse<StatType>(applyoption[j]);
+                        optionlist.Add(option);
+
+                        SetEquipmentOption(data, option, rows[i][option.ToString()]);
+                    }
+
+                    data.ApplyOption.Add(EquipmentApplyOption.EnableOption, optionlist);
                 }
-
-                data.ApplyOption.Add(EquipmentApplyOption.EnableOption, optionlist);
-
-
 
                 m_equipmentData_Dic.Add(data.Id, data);
 
@@ -221,7 +208,7 @@ namespace GameBerry
             }
         }
         //------------------------------------------------------------------------------------
-        private void SetEquipmentOption(EquipmentData equipdata, EquipmentOption option, JsonData jsondata)
+        private void SetEquipmentOption(EquipmentData equipdata, StatType option, JsonData jsondata)
         {
             if (equipdata == null || jsondata == null)
                 return;

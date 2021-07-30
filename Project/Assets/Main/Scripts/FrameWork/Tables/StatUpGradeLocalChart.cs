@@ -6,27 +6,9 @@ using LitJson;
 
 namespace GameBerry
 {
-    public enum StatUpGradeType : byte
-    {
-        AddDamage = 0,
-
-        CriticalDamage,
-        CriticalPercent,
-
-        AddGold,
-
-        AddMP,
-        AddMpRecovery,
-
-        CastingSpeed,
-        MoveSpeed,
-
-        Max,
-    }
-
     public class StatUpGradeData
     {
-        public StatUpGradeType StatUpgradeType = StatUpGradeType.Max;
+        public StatType StatUpgradeType = StatType.Max;
         public int MaxLevel = 0;
         public double AddValue = 0.0f;
         public int DefaultPrice = 0;
@@ -38,7 +20,7 @@ namespace GameBerry
     public class StatUpGradeLocalChart
     {
         public List<StatUpGradeData> m_statUpGradeDatas = new List<StatUpGradeData>();
-        private Dictionary<StatUpGradeType, StatUpGradeData> m_statUpGradeDatas_Dic = new Dictionary<StatUpGradeType, StatUpGradeData>();
+        private Dictionary<StatType, StatUpGradeData> m_statUpGradeDatas_Dic = new Dictionary<StatType, StatUpGradeData>();
 
         //------------------------------------------------------------------------------------
         public void InitData()
@@ -49,9 +31,11 @@ namespace GameBerry
 
             for (int i = 0; i < rows.Count; ++i)
             {
+                StatType stattype = EnumExtensions.Parse<StatType>(rows[i]["stattype"]["S"].ToString());
+
                 StatUpGradeData data = new StatUpGradeData
                 {
-                    StatUpgradeType = (StatUpGradeType)rows[i]["index"]["S"].ToString().FastStringToInt(),
+                    StatUpgradeType = stattype,
 
                     MaxLevel = rows[i]["maxlevel"]["S"].ToString().FastStringToInt(),
 
@@ -71,7 +55,7 @@ namespace GameBerry
             }
         }
         //------------------------------------------------------------------------------------
-        public StatUpGradeData GetStatUpGradeData(StatUpGradeType type)
+        public StatUpGradeData GetStatUpGradeData(StatType type)
         {
             StatUpGradeData data = null;
             m_statUpGradeDatas_Dic.TryGetValue(type, out data);

@@ -8,7 +8,7 @@ namespace GameBerry.UI
     [System.Serializable]
     public class UpGradeSpriteData
     {
-        public StatUpGradeType Type;
+        public StatType Type;
         public Sprite SpriteData;
     }
 

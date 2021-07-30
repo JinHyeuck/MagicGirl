@@ -6,10 +6,74 @@ namespace GameBerry.Managers
 {
     public class EquipmentDataManager : MonoSingleton<EquipmentDataManager>
     {
+        private Dictionary<StatType, StatElementValue> m_addStatValue = new Dictionary<StatType, StatElementValue>();
+
         private Event.ChangeEquipElementMsg m_changeEquipElementMsg = new Event.ChangeEquipElementMsg();
         private Event.RefreshEquipmentInfoListMsg m_refreshEquipmentInfoListResponseMsg = new Event.RefreshEquipmentInfoListMsg();
 
         #region Equipment
+        //------------------------------------------------------------------------------------
+        public void AddEquipmentInfo(EquipmentType type, Dictionary<int, PlayerEquipmentInfo> data)
+        {
+            EquipmentDataContainer.m_equipmentInfo.Add(type, data);
+        }
+        //------------------------------------------------------------------------------------
+        public void AddEquipID(EquipmentType type, int id)
+        {
+            EquipmentDataContainer.m_equipId.Add(type, id);
+        }
+        //------------------------------------------------------------------------------------
+        public void SetStatElementValue()
+        {
+            EquipmentLocalChart equipchart = TableManager.Instance.GetTableClass<EquipmentLocalChart>();
+
+            // 보유시능력 적용
+            foreach (KeyValuePair<EquipmentType, Dictionary<int, PlayerEquipmentInfo>> pair in EquipmentDataContainer.m_equipmentInfo)
+            {
+                foreach (KeyValuePair<int, PlayerEquipmentInfo> valuepair in pair.Value)
+                {
+                    EquipmentData equipdata = equipchart.GetEquipmentData(valuepair.Key);
+
+                    if (equipdata.ApplyOption.ContainsKey(EquipmentApplyOption.EnableOption) == true)
+                    {
+                        List<StatType> enableoption = equipdata.ApplyOption[EquipmentApplyOption.EnableOption];
+
+                        for (int i = 0; i < enableoption.Count; ++i)
+                        {
+                            if (m_addStatValue.ContainsKey(enableoption[i]) == false)
+                                m_addStatValue.Add(enableoption[i], new StatElementValue());
+
+                            m_addStatValue[enableoption[i]].StatValue += GetEquipmentOptionValue(equipdata, enableoption[i]);
+                        }
+                    }
+                }
+            }
+
+            // 장착시 능력
+            foreach (KeyValuePair<EquipmentType, int> pair in EquipmentDataContainer.m_equipId)
+            {
+                EquipmentData equipdata = equipchart.GetEquipmentData(pair.Value);
+
+                if (equipdata.ApplyOption.ContainsKey(EquipmentApplyOption.EquipmentOption) == true)
+                {
+                    List<StatType> enableoption = equipdata.ApplyOption[EquipmentApplyOption.EquipmentOption];
+
+                    for (int i = 0; i < enableoption.Count; ++i)
+                    {
+                        if (m_addStatValue.ContainsKey(enableoption[i]) == false)
+                            m_addStatValue.Add(enableoption[i], new StatElementValue());
+
+                        m_addStatValue[enableoption[i]].StatValue += GetEquipmentOptionValue(equipdata, enableoption[i]);
+                    }
+                }
+            }
+
+
+            foreach (KeyValuePair<StatType, StatElementValue> pair in m_addStatValue)
+            {
+                PlayerDataManager.Instance.AddStatElementValue(pair.Key, pair.Value);
+            }
+        }
         //------------------------------------------------------------------------------------
         public PlayerEquipmentInfo GetPlayerEquipmentInfo(EquipmentType type, int id)
         {
@@ -193,14 +257,14 @@ namespace GameBerry.Managers
             return true;
         }
         //------------------------------------------------------------------------------------
-        public double GetEquipmentOptionValue(EquipmentData equipmentdata, EquipmentOption option)
+        public double GetEquipmentOptionValue(EquipmentData equipmentdata, StatType option)
         {
             PlayerEquipmentInfo info = GetPlayerEquipmentInfo(equipmentdata);
 
             return EquipmentDataOperator.GetEquipmentOptionValue(equipmentdata, info == null ? 0 : info.Level, option);
         }
         //------------------------------------------------------------------------------------
-        public double GetEquipmentNextLevelOptionValue(EquipmentData equipmentdata, EquipmentOption option)
+        public double GetEquipmentNextLevelOptionValue(EquipmentData equipmentdata, StatType option)
         {
             PlayerEquipmentInfo info = GetPlayerEquipmentInfo(equipmentdata);
             int level = info == null ? 0 : info.Level;

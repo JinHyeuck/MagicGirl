@@ -22,7 +22,6 @@ namespace GameBerry.Managers
         {
             m_playerInfoDataSaveTimer = Time.time + m_playerInfoDataSaveTime;
 
-            StatUpGradeDataOperator.Init();
             m_levelLocalChart = Managers.TableManager.Instance.GetTableClass<LevelLocalChart>();
         }
         //------------------------------------------------------------------------------------
@@ -74,6 +73,8 @@ namespace GameBerry.Managers
         {
             return PlayerDataContainer.Exp;
         }
+        //------------------------------------------------------------------------------------
+        #region Goods
         //------------------------------------------------------------------------------------
         public void AddGold(double gold)
         {
@@ -171,6 +172,87 @@ namespace GameBerry.Managers
             }
 
             return isSuccess;
+        }
+        //------------------------------------------------------------------------------------
+        #endregion
+        //------------------------------------------------------------------------------------
+        public void AddStatElementValue(StatType type, StatElementValue elementvalue)
+        {
+            if (PlayerDataContainer.m_addStatValues.ContainsKey(type) == false)
+                PlayerDataContainer.m_addStatValues.Add(type, new List<StatElementValue>());
+
+            PlayerDataContainer.m_addStatValues[type].Add(elementvalue);
+        }
+        //------------------------------------------------------------------------------------
+        public void SetAllOutPutStat()
+        {
+            SetOutPutDamage();
+            SetOutPutCriticalDamage();
+
+            SetOutPutHP();
+            SetOutPutHPRecovery();
+
+            SetOutPutMP();
+            SetOutPutMPRecovery();
+        }
+        //------------------------------------------------------------------------------------
+        public void SetOutPutDamage()
+        {
+            PlayerDataOperator.SetOutPutDamage();
+        }
+        //------------------------------------------------------------------------------------
+        public void SetOutPutCriticalDamage()
+        {
+            PlayerDataOperator.SetOutPutCriticalDamage();
+        }
+        //------------------------------------------------------------------------------------
+        public void SetOutPutHP()
+        {
+            PlayerDataOperator.SetOutPutHP();
+        }
+        //------------------------------------------------------------------------------------
+        public void SetOutPutHPRecovery()
+        {
+            PlayerDataOperator.SetOutPutHPRecovery();
+        }
+        //------------------------------------------------------------------------------------
+        public void SetOutPutMP()
+        {
+            PlayerDataOperator.SetOutPutMP();
+        }
+        //------------------------------------------------------------------------------------
+        public void SetOutPutMPRecovery()
+        {
+            PlayerDataOperator.SetOutPutMPRecovery();
+        }
+        //------------------------------------------------------------------------------------
+        public double GetAttackDamage(SkillData attackSkillData)
+        {
+            double basedamage = PlayerDataOperator.GetAttackDamage();
+
+            double skillratio = SkillDataManager.Instance.GetSkillOptionValue(attackSkillData) * PlayerDataContainer.SkillDamagePer;
+
+            return basedamage * skillratio;
+        }
+        //------------------------------------------------------------------------------------
+        public double GetOutPutHP()
+        {
+            return PlayerDataContainer.OutPutHP;
+        }
+        //------------------------------------------------------------------------------------
+        public double GetOutPutHPRecovery()
+        {
+            return PlayerDataContainer.OutPutHPRecovery;
+        }
+        //------------------------------------------------------------------------------------
+        public double GetOutPutMP()
+        {
+            return PlayerDataContainer.OutPutMP;
+        }
+        //------------------------------------------------------------------------------------
+        public double GetOutPutMPRecovery()
+        {
+            return PlayerDataContainer.OutPutMPRecovery;
         }
         //------------------------------------------------------------------------------------
     }

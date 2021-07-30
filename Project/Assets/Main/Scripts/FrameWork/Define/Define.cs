@@ -50,7 +50,7 @@ public static class Define
     public static readonly string PlayerUpGradeAddGold = "playerupgradeaddgold";
     public static readonly string PlayerUpGradeMP = "playerupgrademp";
     public static readonly string PlayerUpGradeMPRecovery = "playerupgrademprecovery";
-    public static readonly string PlayerUpGradeCastingSpeed = "playerupgradecastingspeed";
+    public static readonly string PlayerUpGradeAttackSpeed = "playerupgradeattackspeed";
     public static readonly string PlayerUpGradeMoveSpeed = "playerupgrademovespeed";
 
     public static readonly string PlayerDayQuestStep = "dayqueststep";
@@ -68,30 +68,39 @@ public static class Define
     public static readonly int EquipmentQualityOperationValue = 2;
 
     //CharacterSkillInfoKey
-    public static readonly string CharacterSkillInfo = "skillinfo";
-    public static readonly string CharacterSkillSlotInfo = "skillslotinfo";
-    public static readonly string CharacterSkillSlotPage = "skillslotpage";
+    public static readonly string PlayerSkillInfo = "skillinfo";
+    public static readonly string PlayerSkillSlotInfo = "skillslotinfo";
+    public static readonly string PlayerSkillSlotPage = "skillslotpage";
 
     //CharacterDefaultSetting
-    public static readonly int CharacterDefaultSlotTotalCount = 10;
-    public static readonly int CharacterDefaultSlotCount = 1;
+    public static readonly int PlayerDefaultSlotTotalCount = 10;
+    public static readonly int PlayerDefaultSlotCount = 1;
 
-    public static readonly double CharacterDefaultGold = 1000.0;
-    public static readonly double CharacterDefaultDia = 10.0;
-    public static readonly double CharacterDefaultEquipmentSton = 1000.0;
-    public static readonly double CharacterDefaultSkillSton = 1000.0;
+    public static readonly double PlayerDefaultGold = 1000.0;
+    public static readonly double PlayerDefaultDia = 10.0;
+    public static readonly double PlayerDefaultEquipmentSton = 1000.0;
+    public static readonly double PlayerDefaultSkillSton = 1000.0;
 
-    public static readonly double CharacterDefaultHP = 100.0;
-    public static readonly double CharacterDefaultHPRecovery = 1.0f;
+    public static readonly double PlayerDefaultDamage = 1.0;
+    public static readonly double PlayerDefaultDamagePer = 1.0;
 
-    public static readonly double CharacterDefaultMP = 100.0;
-    public static readonly double CharacterDefaultMPRecovery = 10.0f;
+    public static readonly double PlayerDefaultCriticalDamage = 1.0;
+    public static readonly double PlayerDefaultCriticalPer = 0.0;
 
-    public static readonly double CharacterDefaultMoveSpeed = 2.0;
-    public static readonly double CharacterDefaultAttackSpeed = 10.0f;
+    public static readonly double PlayerDefaultEndDamagePer = 1.0;
+    public static readonly double PlayerDefaultSkillDamagePer = 1.0;
 
-    public static readonly double CharacterDefaultAddGoldPer = 1.0;
-    public static readonly double CharacterDefaultAddExpPer = 1.0f;
+    public static readonly double PlayerDefaultHP = 100.0;
+    public static readonly double PlayerDefaultHPRecovery = 1.0f;
 
-    public static readonly double CharacterDefaultCoolTimeRatio = 1.0f;
+    public static readonly double PlayerDefaultMP = 100.0;
+    public static readonly double PlayerDefaultMPRecovery = 10.0f;
+
+    public static readonly double PlayerDefaultMoveSpeed = 2.0;
+    public static readonly double PlayerDefaultAttackSpeed = 10.0f;
+
+    public static readonly double PlayerDefaultAddGoldPer = 1.0;
+    public static readonly double PlayerDefaultAddExpPer = 1.0f;
+
+    public static readonly double PlayerDefaultCoolTimeRatio = 1.0f;
 }

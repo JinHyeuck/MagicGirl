@@ -121,7 +121,7 @@ namespace GameBerry.Managers
 
             IEnumerator enumerator = m_currentSkillSlot.Keys.GetEnumerator();
 
-            for (int i = 0; i < Define.CharacterDefaultSlotTotalCount; ++i)
+            for (int i = 0; i < Define.PlayerDefaultSlotTotalCount; ++i)
             {
                 SkillSlotData slotdata = new SkillSlotData();
 

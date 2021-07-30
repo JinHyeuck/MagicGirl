@@ -46,7 +46,7 @@ namespace GameBerry
             return defaultcount + (defaultcount * (int)((float)equipmentinfo.Level * 0.5f));
         }
         //------------------------------------------------------------------------------------
-        public static double GetEquipmentOptionValue(EquipmentData equipmentdata, int equiplevel, EquipmentOption option)
+        public static double GetEquipmentOptionValue(EquipmentData equipmentdata, int equiplevel, StatType option)
         {
             if (equipmentdata == null)
                 return 0.0;

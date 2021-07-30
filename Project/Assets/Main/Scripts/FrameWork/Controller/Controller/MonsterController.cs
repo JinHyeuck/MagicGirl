@@ -29,7 +29,7 @@ namespace GameBerry
         private string m_spawnID = string.Empty;
 
         private int m_monsterMaxHp = 0;
-        private int m_monsterCurrentHp = 0;
+        private double m_monsterCurrentHp = 0;
         private int m_monsterDamage = 0;
 
 
@@ -104,7 +104,8 @@ namespace GameBerry
                 {
                     if (m_readyPlayerAttack == true && m_currentState != MonsterState.Attack)
                     {
-                        if (Vector3.Distance(transform.position, m_playerController.transform.position) < m_attackRange)
+                        //if (Vector3.Distance(transform.position, m_playerController.transform.position) < m_attackRange)
+                        if (MathDatas.Abs(transform.position.x - m_playerController.transform.position.x) < m_attackRange)
                         {
                             ChangeState(MonsterState.Attack);
                         }
@@ -141,7 +142,7 @@ namespace GameBerry
             }
         }
         //------------------------------------------------------------------------------------
-        public void OnDamage(int damage)
+        public void OnDamage(double damage)
         {
             m_monsterCurrentHp -= damage;
             if (m_monsterCurrentHp <= 0)

@@ -7,7 +7,7 @@ namespace GameBerry
     public static class StatUpGradeDataContainer
     {
         // 플레이어 스텟 강화 현황
-        public static Dictionary<StatUpGradeType, int> m_upGradeStatLevel = new Dictionary<StatUpGradeType, int>();
+        public static Dictionary<StatType, int> m_upGradeStatLevel = new Dictionary<StatType, int>();
     }
 
     public static class StatUpGradeDataOperator
@@ -20,7 +20,7 @@ namespace GameBerry
             m_statUpGradeLocalChart = Managers.TableManager.Instance.GetTableClass<StatUpGradeLocalChart>();
         }
         //------------------------------------------------------------------------------------
-        public static double GetUpGradeStatPrice(StatUpGradeType type, int upgradestate)
+        public static double GetUpGradeStatPrice(StatType type, int upgradestate)
         {
             if (m_statUpGradeLocalChart == null)
                 return double.MaxValue;
@@ -35,7 +35,7 @@ namespace GameBerry
             return price;
         }
         //------------------------------------------------------------------------------------
-        public static double GetCurrentUpGradeStatValue(StatUpGradeType type, int upgradestate)
+        public static double GetCurrentUpGradeStatValue(StatType type, int upgradestate)
         {
             if (m_statUpGradeLocalChart == null)
                 return 0.0;
@@ -48,7 +48,7 @@ namespace GameBerry
             return data.AddValue * upgradestate;
         }
         //------------------------------------------------------------------------------------
-        public static bool IsMaxStatUpGrade(StatUpGradeType type, int upgradestate)
+        public static bool IsMaxStatUpGrade(StatType type, int upgradestate)
         {
             if (m_statUpGradeLocalChart == null)
                 return true;

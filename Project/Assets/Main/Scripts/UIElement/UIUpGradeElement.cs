@@ -38,10 +38,10 @@ namespace GameBerry.UI
 
         private bool m_isPointDown = false;
 
-        private StatUpGradeType m_isStatUpGradeType = StatUpGradeType.Max;
+        private StatType m_isStatUpGradeType = StatType.Max;
 
         //------------------------------------------------------------------------------------
-        public void Init(StatUpGradeType type, Sprite icon, int maxlevel)
+        public void Init(StatType type, Sprite icon, int maxlevel)
         {
             m_isStatUpGradeType = type;
 

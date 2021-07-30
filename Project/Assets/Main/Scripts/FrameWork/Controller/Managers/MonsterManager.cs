@@ -112,12 +112,13 @@ namespace GameBerry.Managers
             }
         }
         //------------------------------------------------------------------------------------
-        public void OnDamage(float range, int damage, Vector3 playerpos)
+        public void OnDamage(float range, double damage, Vector3 playerpos)
         {
             var node = m_spawnedMonster_Linked.First;
             while (node != null)
             {
-                if (Vector3.Distance(playerpos, node.Value.transform.position) < range)
+                //if (Vector3.Distance(playerpos, node.Value.transform.position) < range)
+                if (MathDatas.Abs(playerpos.x - node.Value.transform.position.x) < range)
                 {
                     var nextnode = node.Next;
                     node.Value.OnDamage(damage);

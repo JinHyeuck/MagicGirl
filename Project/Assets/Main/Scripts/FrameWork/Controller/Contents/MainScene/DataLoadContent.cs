@@ -157,6 +157,14 @@ namespace GameBerry.Contents
         //------------------------------------------------------------------------------------
         private void CompleteCharacterSkillInfoLoad(GameBerry.Event.CompleteCharacterSkillInfoLoadMsg msg)
         {
+            OnAllCompleteTableSetting();
+        }
+        //------------------------------------------------------------------------------------
+        private void OnAllCompleteTableSetting()
+        {
+            Managers.StatUpGradeDataManager.Instance.SetStatElementValue();
+            Managers.EquipmentDataManager.Instance.SetStatElementValue();
+            Managers.PlayerDataManager.Instance.SetAllOutPutStat();
             SetLoadComplete();
         }
         //------------------------------------------------------------------------------------

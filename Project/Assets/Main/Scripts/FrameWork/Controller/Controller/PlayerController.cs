@@ -14,12 +14,16 @@ namespace GameBerry
         Dead,
     }
 
+    public class PlayerDamageData
+    {
+        public double AttackDamage;
+        public bool IsCritical;
+    }
+
     public class PlayerController : MonoBehaviour
     {
         [SerializeField]
         private Animator m_playerAnimator = null;
-
-        private float m_attackRange = 2.0f;
 
         private int m_maxHP = 1000;
         private int m_currentHP = 0;
@@ -142,28 +146,12 @@ namespace GameBerry
 
             if (Managers.MonsterManager.Instance.GetForeFrontMonster() != null)
             {
-                //if (m_nextAttackSkill != null)
-                //{
-                //    if (m_characterState != PlayerState.Attack)
-                //    {
-                //        if (Vector3.Distance(Managers.MonsterManager.Instance.GetForeFrontMonster().transform.position, transform.position) < m_nextAttackSkill.Range)
-                //        {
-                //            ChangeState(PlayerState.Attack);
-                //            return;
-                //        }
-                //        else
-                //        { 
-                //            ChangeState(PlayerState.Run);
-                //            return;
-                //        }
-                //    }
-                //}
-
                 if (Managers.SkillSlotManager.Instance.NextActiveSkill != null)
                 {
                     if (m_characterState != PlayerState.Attack)
                     {
-                        if (Vector3.Distance(Managers.MonsterManager.Instance.GetForeFrontMonster().transform.position, transform.position) < Managers.SkillSlotManager.Instance.NextActiveSkill.Range)
+                        //if (Vector3.Distance(Managers.MonsterManager.Instance.GetForeFrontMonster().transform.position, transform.position) < Managers.SkillSlotManager.Instance.NextActiveSkill.Range)
+                        if (MathDatas.Abs(Managers.MonsterManager.Instance.GetForeFrontMonster().transform.position.x - transform.position.x) < Managers.SkillSlotManager.Instance.NextActiveSkill.Range)
                         {
                             ChangeState(PlayerState.Attack);
                             return;
@@ -190,7 +178,8 @@ namespace GameBerry
         //------------------------------------------------------------------------------------
         private void UseSkill(SkillData skillData)
         {
-            Managers.MonsterManager.Instance.OnDamage(skillData.Range, (int)skillData.OptionValue, transform.position);
+            //Managers.MonsterManager.Instance.OnDamage(skillData.Range, (int)skillData.OptionValue, transform.position);
+            Managers.MonsterManager.Instance.OnDamage(skillData.Range, Managers.PlayerDataManager.Instance.GetAttackDamage(skillData), transform.position);
             Managers.SkillSlotManager.Instance.UseSkill(skillData);
             UseMP(skillData.NeedMP);
         }
@@ -240,6 +229,7 @@ namespace GameBerry
                 case PlayerState.Dead:
                     {
                         PlayAnimation(Define.AniTrigger_Dead);
+                        Managers.PlayerManager.Instance.PlayerDead();
                         break;
                     }
             }

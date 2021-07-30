@@ -6,6 +6,8 @@ namespace GameBerry.Managers
 {
     public class SkillDataManager : MonoSingleton<SkillDataManager>
     {
+        private Dictionary<StatType, StatElementValue> m_addStatValue = new Dictionary<StatType, StatElementValue>();
+
         private Event.RefreshSkillInfoListMsg m_refreshSkillInfoListMsg = new Event.RefreshSkillInfoListMsg();
 
         //------------------------------------------------------------------------------------

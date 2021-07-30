@@ -226,7 +226,7 @@ namespace GameBerry.UI
 
             if (m_equipmentOptionText != null)
             {
-                List<EquipmentOption> options = equipmentdata.ApplyOption[EquipmentApplyOption.EquipmentOption];
+                List<StatType> options = equipmentdata.ApplyOption[EquipmentApplyOption.EquipmentOption];
 
                 string contenttext = string.Empty;
 
@@ -249,25 +249,30 @@ namespace GameBerry.UI
 
             if (m_enableOptionText != null)
             {
-                List<EquipmentOption> options = equipmentdata.ApplyOption[EquipmentApplyOption.EnableOption];
-
-                string contenttext = string.Empty;
-
-                for (int i = 0; i < options.Count; ++i)
+                if (equipmentdata.ApplyOption.ContainsKey(EquipmentApplyOption.EnableOption) == true)
                 {
-                    if (equipmentdata.Option.ContainsKey(options[i]) == false)
-                        continue;
+                    List<StatType> options = equipmentdata.ApplyOption[EquipmentApplyOption.EnableOption];
 
-                    double curr = 0.0;
-                    equipmentdata.Option.TryGetValue(options[i], out curr);
+                    string contenttext = string.Empty;
 
-                    contenttext += string.Format("{0} {1}", options[i].ToString(), curr);
+                    for (int i = 0; i < options.Count; ++i)
+                    {
+                        if (equipmentdata.Option.ContainsKey(options[i]) == false)
+                            continue;
 
-                    if (i <= options.Count - 2)
-                        contenttext += "\n";
+                        double curr = 0.0;
+                        equipmentdata.Option.TryGetValue(options[i], out curr);
+
+                        contenttext += string.Format("{0} {1}", options[i].ToString(), curr);
+
+                        if (i <= options.Count - 2)
+                            contenttext += "\n";
+                    }
+
+                    m_enableOptionText.text = contenttext;
                 }
-
-                m_enableOptionText.text = contenttext;
+                else
+                    m_enableOptionText.text = string.Empty;
             }
 
             if (m_levelUPBtn != null)

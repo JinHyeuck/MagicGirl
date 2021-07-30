@@ -195,7 +195,7 @@ namespace GameBerry.UI
 
             if (m_equipmentOptionText != null)
             {
-                List<EquipmentOption> options = equipmentdata.ApplyOption[EquipmentApplyOption.EquipmentOption];
+                List<StatType> options = equipmentdata.ApplyOption[EquipmentApplyOption.EquipmentOption];
 
                 string contenttext = string.Empty;
 
@@ -218,7 +218,7 @@ namespace GameBerry.UI
 
             if (m_enableOptionText != null)
             {
-                List<EquipmentOption> options = equipmentdata.ApplyOption[EquipmentApplyOption.EnableOption];
+                List<StatType> options = equipmentdata.ApplyOption[EquipmentApplyOption.EnableOption];
 
                 string contenttext = string.Empty;
 
