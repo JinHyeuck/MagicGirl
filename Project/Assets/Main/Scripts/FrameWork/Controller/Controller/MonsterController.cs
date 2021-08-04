@@ -22,6 +22,9 @@ namespace GameBerry
         [SerializeField]
         private Animator m_monsterAnimator = null;
 
+        [SerializeField]
+        private Transform m_varianceTransform;
+
         private MonsterData m_myMonsterData = null;
 
         private PlayerController m_playerController = null;
@@ -142,9 +145,12 @@ namespace GameBerry
             }
         }
         //------------------------------------------------------------------------------------
-        public void OnDamage(double damage)
+        public void OnDamage(PlayerDamageData damage)
         {
-            m_monsterCurrentHp -= damage;
+            m_monsterCurrentHp -= damage.DamageValue;
+
+            Managers.HPMPVarianceManager.Instance.ShowVarianceText(damage.DamageType, damage.DamageValue, m_varianceTransform.position);
+
             if (m_monsterCurrentHp <= 0)
             {
                 ChangeState(MonsterState.Dead);

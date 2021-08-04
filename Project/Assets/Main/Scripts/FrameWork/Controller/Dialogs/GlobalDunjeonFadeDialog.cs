@@ -9,16 +9,17 @@ namespace GameBerry.UI
         [SerializeField]
         private Image m_fade;
 
+        //------------------------------------------------------------------------------------
         protected override void OnLoad()
         {
             Message.AddListener<GameBerry.Event.DoDunjeonFadeMsg>(DoDunjeonFade);
         }
-
+        //------------------------------------------------------------------------------------
         protected override void OnUnload()
         {
             Message.RemoveListener<GameBerry.Event.DoDunjeonFadeMsg>(DoDunjeonFade);
         }
-
+        //------------------------------------------------------------------------------------
         private void DoDunjeonFade(GameBerry.Event.DoDunjeonFadeMsg msg)
         {
             if (m_fade != null)
@@ -46,5 +47,6 @@ namespace GameBerry.UI
                 }
             }
         }
+        //------------------------------------------------------------------------------------
     }
 }

@@ -112,12 +112,11 @@ namespace GameBerry.Managers
             }
         }
         //------------------------------------------------------------------------------------
-        public void OnDamage(float range, double damage, Vector3 playerpos)
+        public void OnDamage(float range, PlayerDamageData damage, Vector3 playerpos)
         {
             var node = m_spawnedMonster_Linked.First;
             while (node != null)
             {
-                //if (Vector3.Distance(playerpos, node.Value.transform.position) < range)
                 if (MathDatas.Abs(playerpos.x - node.Value.transform.position.x) < range)
                 {
                     var nextnode = node.Next;
@@ -137,7 +136,6 @@ namespace GameBerry.Managers
             if (m_spawnedMonster_Dic.TryGetValue(spawnid, out monster) == true)
             {
                 m_spawnedMonster_Dic.Remove(spawnid);
-                //monster.gameObject.SetActive(false);
 
                 if (m_spawnedMonster_Linked.First.Value == monster)
                 {

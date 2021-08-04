@@ -91,9 +91,11 @@ public static class Define
     public static readonly double PlayerDefaultSkillDamagePer = 1.0;
 
     public static readonly double PlayerDefaultHP = 100.0;
+    public static readonly double PlayerDefaultHPPer = 1.0;
     public static readonly double PlayerDefaultHPRecovery = 1.0f;
 
     public static readonly double PlayerDefaultMP = 100.0;
+    public static readonly double PlayerDefaultMPPer = 1.0;
     public static readonly double PlayerDefaultMPRecovery = 10.0f;
 
     public static readonly double PlayerDefaultMoveSpeed = 2.0;

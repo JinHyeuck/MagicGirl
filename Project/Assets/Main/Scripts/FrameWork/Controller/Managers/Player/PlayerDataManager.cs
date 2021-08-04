@@ -226,13 +226,15 @@ namespace GameBerry.Managers
             PlayerDataOperator.SetOutPutMPRecovery();
         }
         //------------------------------------------------------------------------------------
-        public double GetAttackDamage(SkillData attackSkillData)
+        public PlayerDamageData GetAttackDamage(SkillData attackSkillData)
         {
-            double basedamage = PlayerDataOperator.GetAttackDamage();
+            PlayerDamageData damageData = PlayerDataOperator.GetAttackDamage();
 
             double skillratio = SkillDataManager.Instance.GetSkillOptionValue(attackSkillData) * PlayerDataContainer.SkillDamagePer;
 
-            return basedamage * skillratio;
+            damageData.DamageValue *= skillratio;
+
+            return damageData;
         }
         //------------------------------------------------------------------------------------
         public double GetOutPutHP()

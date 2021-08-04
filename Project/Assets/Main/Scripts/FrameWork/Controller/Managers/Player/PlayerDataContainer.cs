@@ -34,9 +34,25 @@ namespace GameBerry
         Max,
     }
 
+    public enum HpMpVarianceType
+    { 
+        None = 0,
+        NomalDamage,
+        CriticalDamage,
+        Miss,
+        RecoveryHP,
+        RecoveryMP,
+    }
+
     public class StatElementValue
     {
         public double StatValue = 0.0;
+    }
+
+    public struct PlayerDamageData
+    {
+        public double DamageValue;
+        public HpMpVarianceType DamageType;
     }
 
     public static class PlayerDataContainer
@@ -126,7 +142,7 @@ namespace GameBerry
         public static void SetOutPutHP()
         {
             PlayerDataContainer.HPBase = GetTotalAddStatValue(StatType.HPBase) + Define.PlayerDefaultHP;
-            PlayerDataContainer.HPPer = GetTotalAddStatValue(StatType.HPPer);
+            PlayerDataContainer.HPPer = GetTotalAddStatValue(StatType.HPPer) + Define.PlayerDefaultHPPer;
 
             PlayerDataContainer.OutPutHP = PlayerDataContainer.HPBase * PlayerDataContainer.HPPer;
         }
@@ -142,7 +158,7 @@ namespace GameBerry
         public static void SetOutPutMP()
         {
             PlayerDataContainer.MPBase = GetTotalAddStatValue(StatType.MPBase) + Define.PlayerDefaultMP;
-            PlayerDataContainer.MPPer = GetTotalAddStatValue(StatType.MPPer);
+            PlayerDataContainer.MPPer = GetTotalAddStatValue(StatType.MPPer) + Define.PlayerDefaultMPPer;
 
             PlayerDataContainer.OutPutMP = PlayerDataContainer.MPBase * PlayerDataContainer.MPPer;
         }
@@ -170,11 +186,15 @@ namespace GameBerry
             return AddStat;
         }
         //------------------------------------------------------------------------------------
-        public static double GetAttackDamage()
+        public static PlayerDamageData GetAttackDamage()
         {
-            bool ApplyCrtical = UnityEngine.Random.Range(0.0f, 100.0f) >= PlayerDataContainer.CriticalPer;
+            bool ApplyCrtical = UnityEngine.Random.Range(0.01f, 100.0f) <= PlayerDataContainer.CriticalPer;
 
-            return ApplyCrtical == true ? PlayerDataContainer.OutPutCriticalDamage : PlayerDataContainer.OutPutDamage;
+            PlayerDamageData damageData;
+            damageData.DamageType = ApplyCrtical == true ? HpMpVarianceType.CriticalDamage : HpMpVarianceType.NomalDamage;
+            damageData.DamageValue = ApplyCrtical == true ? PlayerDataContainer.OutPutCriticalDamage : PlayerDataContainer.OutPutDamage;
+
+            return damageData;
         }
         //------------------------------------------------------------------------------------
     }

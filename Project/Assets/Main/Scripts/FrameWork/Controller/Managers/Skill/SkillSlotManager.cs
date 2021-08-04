@@ -413,7 +413,7 @@ namespace GameBerry.Managers
             SkillDataManager.Instance.ReleaseSkillBuff(data);
         }
         //------------------------------------------------------------------------------------
-        private SkillData GetReadySkill(int currUserMp)
+        private SkillData GetReadySkill(double currUserMp)
         {
             var node = m_readyActiveSkillData.First;
 

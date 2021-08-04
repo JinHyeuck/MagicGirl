@@ -189,7 +189,7 @@ namespace GameBerry.Managers
         {
             Vector3 monsterstartpos = PlayerManager.Instance.GetPlayerController().transform.position;
             monsterstartpos.x += m_monsterStartPosGab;
-
+            monsterstartpos.y = -0.5f;
             if (m_currentDunjeonKinds == DunjeonKinds.DefaultDunjeon)
             {
                 m_currentDunjeonLogic.CreateMonster(m_currentDunjeonData.DunjeonMonsterID[Random.Range(0, m_currentDunjeonData.DunjeonMonsterID.Count)], monsterstartpos);

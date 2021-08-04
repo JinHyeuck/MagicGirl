@@ -62,3 +62,14 @@ MonoBehaviour:
   ContentName: 
   _uiLoader: {fileID: 3466451597695537350}
   dontDestroy: 0
+  m_varianceColor_List:
+  - VarianceType: 1
+    color: {r: 1, g: 1, b: 1, a: 1}
+  - VarianceType: 2
+    color: {r: 1, g: 0, b: 0.24313726, a: 1}
+  - VarianceType: 3
+    color: {r: 1, g: 0.8784314, b: 0, a: 1}
+  - VarianceType: 4
+    color: {r: 0.24705882, g: 1, b: 0, a: 1}
+  - VarianceType: 5
+    color: {r: 0, g: 1, b: 0.98039216, a: 1}

@@ -47,7 +47,7 @@ namespace GameBerry.Managers
             return m_playerController;
         }
         //------------------------------------------------------------------------------------
-        public int GetCurrentPlayerMP()
+        public double GetCurrentPlayerMP()
         {
             return m_playerController.CurrentMP;
         }

@@ -14,7 +14,8 @@ public class UICharacterState : MonoBehaviour
     private float m_hpDefaultWidth;
     private float m_mpDefaultWidth;
 
-    private void Init()
+    //------------------------------------------------------------------------------------
+    public void Init()
     {
         if (m_charHPBer != null)
             m_hpDefaultWidth = m_charHPBer.size.x;
@@ -23,7 +24,7 @@ public class UICharacterState : MonoBehaviour
             m_mpDefaultWidth = m_charMPBer.size.x;
     }
     //------------------------------------------------------------------------------------
-    private void SetHPBar(float ratio)
+    public void SetHPBar(double ratio)
     {
         if (m_charHPBer == null)
             return;
@@ -37,12 +38,12 @@ public class UICharacterState : MonoBehaviour
         }
         else
         {
-            size.x = m_hpDefaultWidth * ratio;
+            size.x = m_hpDefaultWidth * (float)ratio;
             m_charHPBer.size = size;
         }
     }
     //------------------------------------------------------------------------------------
-    private void SetMPBar(float ratio)
+    public void SetMPBar(double ratio)
     {
         if (m_charMPBer == null)
             return;
@@ -56,7 +57,7 @@ public class UICharacterState : MonoBehaviour
         }
         else
         {
-            size.x = m_mpDefaultWidth * ratio;
+            size.x = m_mpDefaultWidth * (float)ratio;
             m_charMPBer.size = size;
         }
     }
